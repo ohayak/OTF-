@@ -1,0 +1,270 @@
+{
+    "Accounts": {
+        "collection": "accounts",
+        "schema": {
+            "nom": "String",
+            "prenom": "String",
+            "titre": "String",
+            "sexe": "String",
+            "login": {"type": "String", "unique": "true"},
+            "password": "String",
+            "email": "String",
+            "telephone": "String",
+            "adresse1": "String",
+            "adresse2": "String",
+            "code_postal": "String",
+            "ville": "String",
+            "actif": "Boolean",
+            "notes": "String",
+            "actif": "Boolean",
+            "role": {
+              "type": "ObjectId",
+              "ref": "Role"
+            }
+        }
+
+    },
+    "AccountId": {
+        "collection": "accounts",
+        "schema": {
+            "_id": "ObjectId",
+            "nom": "String",
+            "prenom": "String",
+            "titre": "String",
+            "sexe": "String",
+            "login": {"type": "String", "unique": "true"},
+            "password": "String",
+            "email": "String",
+            "telephone": "String",
+            "adresse1": "String",
+            "adresse2": "String",
+            "code_postal": "String",
+            "ville": "String",
+            "actif": "Boolean",
+            "notes": "String",
+            "actif": "Boolean",
+            "role": {
+              "type": "ObjectId",
+              "ref": "Role"
+            }
+        }
+    },
+    "Role": {
+      "collection": "role",
+      "schema": {
+        "_id": "ObjectId",
+        "code": "String",
+        "libelle": "String"
+      }
+    },
+    "LogsAccounts": {
+        "collection": "logs",
+        "schema": {
+            "date": "String",
+            "event": "String",
+            "message": "String",
+            "ip": "String",
+            "session": "String",
+            "user_id": {
+                "type": "ObjectId",
+                "ref": "Accounts"
+            }
+
+        }
+    },
+    "Logs": {
+      "collection": "logs",
+      "schema": {
+        "date": "String",
+        "event": "String",
+        "message": "String",
+        "ip": "String",
+        "session": "String"
+      }
+    },
+    "Servers" : {
+        "collection": "servers",
+      "schema": {
+        "ip": "String",
+        "nom": "String",
+        "system": "String"
+      }
+    },
+    "Countries": {
+      "collection": "countries",
+      "schema": {
+        "_id": "ObjectId",
+        "name": "String",
+        "code": "String"
+      }
+    },
+    "Users": {
+        "collection": "users",
+        "schema": {
+          "_id": "ObjectId",
+          "name": "String",
+          "firstname": "String",
+          "visited_countries": [{
+            "type": "ObjectId",
+            "ref": "Countries"
+          }]
+        }
+    },
+    "Notifications": {
+	"collection": "notifications",
+	"schema": {
+	    "_id": "ObjectId",
+	    "type_notification": "String",
+	    "id_commentaire": {
+		"type": "ObjectId",
+		"ref": "Commentaires"
+	    },
+	    "id_utilisateur": {
+		"type": "ObjectId",
+		"ref": "Utilisateurs"
+	    }
+	}
+    },
+    "Commentaires": {
+	"collection": "commentaires",
+	"schema": {
+	    "_id": "ObjectId",
+	    "contenu_commentaire": "String",
+	    "date_commentaire": "Date",
+	    "id_auteur": {
+		"type": "ObjectId",
+		"ref": "Utilisateurs"
+	    },
+	    "id_conversation": {
+		"type": "ObjectId",
+		"ref": "Conversations"
+	    }
+	}
+    },
+    "Conversations": {
+	"collection": "conversations",
+	"schema": {
+	    "_id": "ObjectId",
+	    "titre_conversation": "String",
+	    "date_conversation": "Date",
+	    "conversation_resolue": "Boolean",
+	    "id_auteur": {
+		"type": "ObjectId",
+		"ref": "Utilisateurs"
+	    }
+	}
+    },
+    "Utilisateurs": {
+	"collection": "utilisateurs",
+	"schema": {
+	    "_id": "ObjectId",
+	    "pseudo_utilisateur": "String",
+	    "mail_utilisateur": "String",
+	    "mdp_utilisateur": "String",
+	    "droits_utilisateur": {
+		"type": "ObjectId",
+		"ref": "Role"
+	    }
+	}
+    },
+    "Composants": {
+	"collection": "composants",
+	"schema": {
+	    "_id": "ObjectId",
+	    "nom_composant": "String",
+	    "quantite_composant": "Number",
+	    "statut_composant": "String",
+	    "remarques_composant": "String",
+	    "id_categorie": {
+		"type": "ObjectId",
+		"ref": "Categories"
+	    },
+	    "id_sous_categorie": {
+		"type": "ObjectId",
+		"ref": "Sous_categories"
+	    }
+	}
+    },
+    "Categories": {
+	"collection": "categories",
+	"schema": {
+	    "_id": "ObjectId",
+	    "nom_categorie": "String"
+	}
+    },
+    "Sous_categories": {
+	"collection": "sous_categories",
+	"schema": {
+	    "_id": "ObjectId",
+	    "nom_sous_categorie": "String",
+	    "id_categorie": {
+		"type": "ObjectId",
+		"ref": "Categories"
+	    }
+	}
+    },
+    "Prets": {
+	"collection": "prets",
+	"schema": {
+	    "_id": "ObjectId",
+	    "quantite_pretee": "Number",
+	    "date_pret": "Date",
+	    "nom_emprunteur": "String",
+	    "id_composant": {
+		"type": "ObjectId",
+		"ref": "Composants"
+	    }
+	}
+    },
+    "Modifications": {
+	"collection": "modifications",
+	"schema": {
+	    "_id": "ObjectId",
+	    "type_modification": "String",
+	    "date_modification": "Date",
+	    "id_pret": {
+		"type": "ObjectId",
+		"ref": "Prets"
+	    },
+	    "id_composant_reel": {
+		"type": "ObjectId",
+		"ref": "Composants_reels"
+	    },
+	    "id_composant_avant_modification": {
+		"type": "ObjectId",
+		"ref": "Composants_avant_modification"
+	    },
+	    "id_composant_apres_modification": {
+		"type": "ObjectId",
+		"ref": "Composants_apres_modification"
+	    }
+	}
+    },
+    "Composants_reels": {
+	"collection": "composants_reels",
+	"schema": {
+	    "_id": {
+		"type": "ObjectId",
+		"ref": "Composants"
+	    }
+	}
+    },
+    "Composants_avant_modification": {
+	"collection": "composants_avant_modification",
+	"schema": {
+	    "_id": {
+		"type": "ObjectId",
+		"ref": "Composants"
+	    }
+	}
+    },
+    "Composants_apres_modification": {
+	"collection": "composants_apres_modification",
+	"schema": {
+	    "_id": {
+		"type": "ObjectId",
+		"ref": "Composants"
+	    }
+	}
+    }
+}
