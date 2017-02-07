@@ -1,0 +1,230 @@
+{
+    "GET/": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true
+    },
+    "GET/login": {
+        "module": "login",
+        "methode": "titre",
+        "screen": "login",
+        "auth": false
+    },
+    "POST/signupAccount": {
+        "module": "signupAccount", 
+        "methode": "signup", 
+        "screen": "index", 
+        "params_names": ["login", "password"],
+        "auth": false,
+        "data_model": "Accounts", 
+        "redirect": true, 
+        "redirect_action" : "index" 
+    },
+    "GET/logout": {
+        "module": "signupAccount",
+        "methode": "logout",
+        "screen": "login",
+        "params_names": [],
+        "auth": true,
+        "redirect": true,
+        "redirect_action" : "login"
+    },
+    "GET/multipart": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "multipart_oneFile",
+        "params_names": [],
+        "auth": true
+    },
+    "POST/uploadFile": {
+        "module": "uploader",
+        "methode": "oneFile",
+        "screen": "index",
+        "auth": true,
+        "redirect": true
+    },
+    "GET/user": {
+        "module": "finder",
+        "methode": "one",
+        "screen": "userOne",
+        "auth": true,
+        "params_names": ["login"],
+        "data_model": "Accounts"
+    },
+    "GET/users": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "liste_user",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Accounts",
+        "data_ref": "role"
+    },
+    "GET/json/usersjson": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "liste_user",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Accounts",
+        "data_ref": "role",
+        "return_type": "application/json"
+    },
+    "GET/fiche_profil": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "fiche_profil",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Accounts",
+        "data_ref": ["Role"]
+    },
+    "GET/logs": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "log_list",
+        "auth": false,
+        "params_names": [],
+        "data_model": "Logs",
+        "data_ref": "user_id"
+    },
+    "GET/json/logsjson": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "log_list",
+        "auth": false,
+        "params_names": [],
+        "data_model": "Logs",
+        "data_ref": "user_id",
+        "return_type": "application/json"
+    },
+    "POST/user": {
+        "module": "finder",
+        "methode": "one",
+        "screen": "userOne",
+        "auth": true,
+        "params_names": ["login"],
+        "data_model": "AccountId"
+    },
+    "GET/formadduser": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "formadduser",
+        "auth": true,
+        "data_model":"Role"
+    },
+    "POST/adduser": {
+        "module": "inserter",
+        "methode": "one",
+        "screen": "users",
+        "auth": true,
+        "params_names": ["login", "password", "nom", "prenom", "titre", "sexe", "password", "email", "telephone", "adresse1", "adresse2", "code_postal", "ville",  "actif", "notes", "role"],
+        "data_model": "Accounts",
+        "redirect": true,
+        "redirect_action" : "users"
+    },
+    "GET/fiche_user": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "formupdateuser",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Accounts",
+        "data_ref": ["Role"]
+    },
+    "POST/updateuser": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "users",
+        "auth": true,
+        "params_names": ["_id", "login", "password", "nom", "prenom", "titre", "sexe", "password", "email", "telephone", "adresse1", "adresse2", "code_postal", "ville",  "actif", "notes", "role"],
+        "data_model": "AccountId",
+        "redirect": true,
+        "redirect_action": "users"
+    },
+    "GET/deleteuser": {
+        "module": "deleter",
+        "methode": "oneById",
+        "screen": "users",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "AccountId",
+        "redirect": true,
+        "redirect_action": "users"
+    },
+    "GET/updatelogs": {
+        "module": "finder",
+        "methode": "one",
+        "screen": "formupdatelogs",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Logs"
+    },
+    "GET/index": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true
+    },
+    "GET/glances": {
+        "module": "glances",
+        "methode": "getData",
+        "screen": "glancesviewtab",
+        "auth": true
+    },
+    "GET/json/getdatanetwork" : {
+        "module": "glances",
+        "methode": "getDatanetwork",
+        "auth": false,
+        "return_type": "application/json"
+    },
+    "GET/listmulti" : {
+        "module": "finder",
+        "methode": "listMultiSchemas",
+        "screen": "resultmultischema",
+        "auth": true,
+        "params_names": [],
+        "data_model": ["Accounts", "Logs"]
+    },
+    "GET/listmultiasync" : {
+        "module": "finder",
+        "methode": "listMultiSchemasAsync",
+        "screen": "resultmultischema",
+        "auth": true,
+        "params_names": [],
+        "data_model": ["Accounts", "Logs"]
+    },
+    "GET/composants": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "tab_composants",
+        "auth":true
+    },
+    "GET/json/composantsjson": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "tab_composants",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Composants",
+	"data_ref": ["id_categorie", "id_sous_categorie"],
+        "return_type": "application/json"
+    },
+    "GET/composants_pretes": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "tab_composants_pretes",
+        "auth":true
+    },
+    "GET/json/composantsPretesjson": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "tab_composants_pretes",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Prets",
+	"data_ref": ["id_composant","id_categorie"],
+        "return_type": "application/json"
+    }
+}

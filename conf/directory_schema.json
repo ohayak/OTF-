@@ -130,7 +130,7 @@
 	"schema": {
 	    "_id": "ObjectId",
 	    "contenu_commentaire": "String",
-	    "date_commentaire": "Date",
+	    "date_commentaire": "String",
 	    "id_auteur": {
 		"type": "ObjectId",
 		"ref": "Utilisateurs"
@@ -146,7 +146,7 @@
 	"schema": {
 	    "_id": "ObjectId",
 	    "titre_conversation": "String",
-	    "date_conversation": "Date",
+	    "date_conversation": "String",
 	    "conversation_resolue": "Boolean",
 	    "id_auteur": {
 		"type": "ObjectId",
@@ -175,6 +175,7 @@
 	    "quantite_composant": "Number",
 	    "statut_composant": "String",
 	    "remarques_composant": "String",
+	    "quantite_pretee": "Number",
 	    "id_categorie": {
 		"type": "ObjectId",
 		"ref": "Categories"
@@ -208,7 +209,7 @@
 	"schema": {
 	    "_id": "ObjectId",
 	    "quantite_pretee": "Number",
-	    "date_pret": "Date",
+	    "date_pret": "String",
 	    "nom_emprunteur": "String",
 	    "id_composant": {
 		"type": "ObjectId",
@@ -221,7 +222,7 @@
 	"schema": {
 	    "_id": "ObjectId",
 	    "type_modification": "String",
-	    "date_modification": "Date",
+	    "date_modification": "String",
 	    "id_pret": {
 		"type": "ObjectId",
 		"ref": "Prets"
