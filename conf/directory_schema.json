@@ -175,7 +175,6 @@
 	    "quantite_composant": "Number",
 	    "statut_composant": "String",
 	    "remarques_composant": "String",
-	    "quantite_pretee": "Number",
 	    "id_categorie": {
 		"type": "ObjectId",
 		"ref": "Categories"

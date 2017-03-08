@@ -224,7 +224,13 @@
         "auth": true,
         "params_names": [],
         "data_model": "Prets",
-	"data_ref": ["id_composant","id_categorie"],
+	"data_ref": ["id_composant"],
         "return_type": "application/json"
     }
 }
+
+
+
+
+
+ 

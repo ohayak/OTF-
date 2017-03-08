@@ -8,7 +8,7 @@
     <script>
         //<![CDATA[
         $(document).ready(function() {
-            populateGenericDatatable("/composantsjson", "table_usagers", "_id", 10, []);
+            populateGenericDatatable("/composantsjson", "table_usagers", "_id", 10,  [], {buttons: [{edit_btn:true, name:"/modifier_composant", id_name:"_id"},{remove_btn:true, name:"/supprimer_composant ", id_name:"_id"}, {lend_btn:true, name:"/preter_composant", id_name:"_id"}]});
         });
         //]]>
     </script>
@@ -52,7 +52,6 @@
 				    <th mData="id_sous_categorie.nom_sous_categorie">Sous-catégorie</th>
 				    <th mData="quantite_composant">Quantité</th>
                                     <th mData="statut_composant">Statut</th>
-				    <th mData="quantite_pretee">Quantité prêtée</th>
                                     <th mData="remarques_composant">Remarques</th>
                                     <th></th>
                                 </tr>

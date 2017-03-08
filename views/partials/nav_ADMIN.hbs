@@ -197,16 +197,15 @@
                         <i class="fa fa-history"></i> <span>Logs</span>
                     </a>
                 </li>
-		 <li class="treeview">
-                    <a href="/composants">
-                        <i class="fa fa-history"></i> <span>Composants</span>
-                    </a>
-                 </li>
-		  <li class="treeview">
-                    <a href="/composants_pretes">
-                        <i class="fa fa-history"></i> <span>Composants prêtés</span>
-                    </a>
-                </li>
+		<li class="treeview {{#compare url 'composant' operator='indexof'}}active{{/compare}}">
+		  <a href="#">
+                    <i class="fa fa-wrench"></i> <span>Composants</span><i class="fa fa-angle-left pull-right"></i>
+                  </a>
+		  <ul class="treeview-menu">
+		    <li class="{{#compare url '/composants' operator='=='}}active{{/compare}}"><a href="/composants"><i class="fa fa-circle-o"></i> <span>Composants</span></a></li>
+		    <li class="{{#compare url '/composants_pretes' operator='=='}}active{{/compare}}"><a href="/composants_pretes"><i class="fa fa-circle-o"></i><span>Composants prêtés</span></a></li>
+		  </ul>
+		</li>
 		<br><br><br>
 	    </ul>
         </section>
