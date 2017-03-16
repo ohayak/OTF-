@@ -178,10 +178,14 @@
                         <i class="fa fa-home"></i> <span>Home</span>
                     </a>
                 </li>
-                <li class="treeview">
-                    <a href="/forum">
-                        <i class="fa fa-comment"></i> <span>Forum</span>
+                <li class="treeview {{#compare url 'forum' operator='indexof'}}active{{/compare}}">
+                    <a href="#">
+                        <i class="fa fa-comments"></i> <span>Forum</span><i class="fa fa-angle-left pull-right"></i>
                     </a>
+                    <ul class="treeview-menu">
+                        <li class="{{#compare url '/forum_title' operator='=='}}active{{/compare}}"><a href="/forum_title"><i class="fa fa-circle-o"></i> Liste des conversations</a></li>
+                        <li class="{{#compare url '/forum_newconv' operator='=='}}active{{/compare}}"><a href="/forum_newconv"><i class="fa fa-circle-o"></i> Nouvelle conversation</a></li>
+                    </ul>
                 </li>
                 <li class="treeview {{#compare url 'user' operator='indexof'}}active{{/compare}}">
                     <a href="#">
