@@ -203,12 +203,12 @@
     },
     "GET/json/composantsjson": {
         "module": "finder",
-        "methode": "populate",
+        "methode": "populateInfinite",
         "screen": "tab_composants",
         "auth": true,
         "params_names": [],
         "data_model": "Composants",
-	"data_ref": ["id_categorie", "id_sous_categorie"],
+	"data_ref": [["id_categorie"], ["id_sous_categorie"], ["sum", "tab_pretes", "quantite_pretee", "quantite_totale_pretee"]],
         "return_type": "application/json"
     },
     "GET/composants_pretes": {
