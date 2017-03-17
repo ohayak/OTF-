@@ -139,14 +139,22 @@ mongooseGeneric.prototype.popDocuments = function (_condition, _callback) {
 mongooseGeneric.prototype.popDocumentsInfinite = function (_condition, _callback) { // condition.ref = [[key1,..., keyn],...,[key1,...,keym]]
 
     // construction of populate paths
+    var make_sum = 0;
     var tab_populates = [];
     var new_populate = {};
+    var sum = 0;
     for(var i=0; i<_condition.ref.length; i++){
-	new_populate = {path: _condition.ref[i][_condition.ref[i].length-1]}; // most profound path
-	for(var j=_condition.ref[i].length-2; j>=0; j--){ // scroll inner-tabs from end to begining
-	    new_populate = {path: _condition.ref[i][j], populate: new_populate}; 
+	if(_condition.ref[i][0] != "sum"){
+	    new_populate = {path: _condition.ref[i][_condition.ref[i].length-1]}; // most profound path
+	    for(var j=_condition.ref[i].length-2; j>=0; j--){ // scroll inner-tabs from end to begining
+		new_populate = {path: _condition.ref[i][j], populate: new_populate}; 
+	    }
 	}
-	tab_populates[i] = new_populate;
+	else{
+	    make_sum ++;
+	    new_populate = {path: _condition.ref[i][1]}; // name of array to consider in schema
+	}
+	tab_populates.push(new_populate);
     }
 
     // call of all populate paths
@@ -160,10 +168,35 @@ mongooseGeneric.prototype.popDocumentsInfinite = function (_condition, _callback
             _callback(err, null);
         }
         else {
+	    if(make_sum){
+		for(var i=0; i<result.length; i++){
+		    var start_path = "";
+		    var end_path = "";
+		    var name = "";
+		    for(var j=0; j<_condition.ref.length; j++){
+			if(_condition.ref[j][0] === "sum"){
+			    start_path = _condition.ref[j][1];
+			    end_path = _condition.ref[j][2];
+			    name = _condition.ref[j][3];
+			}
+		    }
+		    var tab_to_sum = [];
+		    for(var k=0; k<result[i][start_path].length; k++){
+			tab_to_sum.push(result[i][start_path][k][end_path]);
+		    }
+		    var sum = 0;
+		    for(var k=0; k<tab_to_sum.length; k++){
+			sum += tab_to_sum[k];
+		    }
+		    result[i][name] = sum;
+		}
+	    }
             _callback(null, result);
         }
     });
 };
+
+
 
 
 mongooseGeneric.prototype.getPaginateDocuments = function (_condition, _callback) {

@@ -175,6 +175,8 @@
 	    "quantite_composant": "Number",
 	    "statut_composant": "String",
 	    "remarques_composant": "String",
+	    "quantite_totale_pretee": "Number",
+	    "tab_pretes": [{"type": "ObjectId", "ref": "Prets"}],
 	    "id_categorie": {
 		"type": "ObjectId",
 		"ref": "Categories"
