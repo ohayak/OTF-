@@ -246,11 +246,18 @@
         "redirect": true,
         "redirect_action": "composants_pretes"
     },
-    "GET/forum": {
-        "module": "forum",
-        "methode": "forumTitle",
+    "GET/forum_title": {
+        "module": "index",
+        "methode": "titre",
         "screen": "forum_title",
-        "auth": true
+        "auth":true
+    },
+    "GET/forum_newconv": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "forum_newconv",
+        "auth": true,
+        "data_model":"Conversations"
     }
 }
 
