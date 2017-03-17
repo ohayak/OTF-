@@ -258,6 +258,52 @@
         "screen": "forum_newconv",
         "auth": true,
         "data_model":"Conversations"
+    },
+    "POST/addcomposant": {
+        "module": "inserter",
+        "methode": "one",
+        "screen": "tab_composants",
+        "auth": true,
+        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant",   "quantite_pretee", "id_categorie", "id_sous_categorie"],
+        "data_model": "Composants",
+        "redirect": true,
+        "redirect_action" : "composants"
+    },
+    "GET/formaddcomposant": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "formaddcomposant",
+        "auth": true,
+        "data_model":"Composants"
+
+    },
+    "GET/deletecomposant": {
+        "module": "deleter",
+        "methode": "oneById",
+        "screen": "tab_composants",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Composants",
+        "redirect": false
+    },
+    "GET/fiche_composant": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "formupdatecomposant",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Composants",
+        "data_ref": []
+    },
+    "POST/updatecomposant": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "tab_composants",
+        "auth": true,
+        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant",   "quantite_pretee", "id_categorie", "id_sous_categorie"],
+        "data_model": "Composants",
+        "redirect": true,
+        "redirect_action": "composants"
     }
 }
 

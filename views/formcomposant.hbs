@@ -1,0 +1,86 @@
+<form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="{{#if result.one}}/updatecomposant{{else}}/addcomposant{{/if}}">
+  <div class="col-xs-12 col-sm-12">
+    <h3>{{#if result.one}} {{else}}Nouveau composant{{/if}}</h3>
+  </div>
+  
+<!--
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Mot de passe</label>
+    <div class="col-sm-5">
+          {{#if result.one}}
+          <input type="password" class="form-control" placeholder="Mot de passe" id="password" name="password"
+                 pattern=".{5,}" onchange="form.password2.pattern = this.value;" title="Minimum de 5 lettres ou chiffres" required="required">
+          {{else}}
+          <input type="password" class="form-control" placeholder="Mot de passe (si vide sera généré automatiquement)" id="password" name="password"
+                 pattern=".{5,}" onchange="form.password2.pattern = this.value;" title="Minimum de 5 lettres ou chiffres">
+          {{/if}}
+    </div>
+    <div class="col-sm-5">
+          {{#if result.one}}
+          <input type="password" class="form-control" placeholder="Mot de passe à nouveau" id="password2" name="password2"
+                 pattern=".{5,}" title="Les mots de passe ne correspondent pas" required="required">
+          {{else}}
+          <input type="password" class="form-control" placeholder="Mot de passe à nouveau" id="password2" name="password2"
+                 pattern=".{5,}" title="Les mots de passe ne correspondent pas">
+          {{/if}}
+    </div>
+  </div>
+-->
+
+
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Nom du composant</label>
+    <div class="col-sm-6">
+     <input class="form-control" placeholder="Nom du composant" type="text" name="nom_composant" title="This field is required" value="{{#if result.one}}{{result.one.nom_composant}}{{/if}}" required="required"/>
+    </div>
+  </div>
+
+
+
+<div class="form-group">
+<label for="inputName" class="col-sm-2 control-label">Quantité du composant</label>
+    <div class="col-sm-6">
+      <input class="form-control" placeholder="Quantité du composant" type="text" name="quantite_composant" title="This field is required" value="{{#if result.one}}{{result.one.quantite_composant}}{{/if}}" required="required"/>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Statut du composant</label>
+    <div class="col-sm-10">
+      <select class="form-control" id="statut" name="statut_composant" required="required">
+              {{#if result.one}}{{else}}
+ {{/if}}          <option value="En Stock" {{#if result.one}}{{#compare result.one.statut 'En stock' operator='=='}}selected{{/compare}}{{/if}} >En Stock</option>
+                  <option value="Epuisé" {{#if result.one}}{{#compare result.one.statut 'Epuisé' operator='=='}}selected{{/compare}}{{/if}} >Epuisé</option>
+                  <option value="En cours d'expédition" {{#if result.one}}{{#compare result.one.statut 'Epuisé' operator='=='}}selected{{/compare}}{{/if}} >En cours d'expédition</option>             
+      </select>
+    </div>
+  </div>     
+
+
+<div class="form-group">
+ <label for="inputName" class="col-sm-2 control-label">Quantité prétée</label>
+    <div class="col-sm-6">
+      <input class="form-control" placeholder="Quantité prétée" type="text" name="quantite_pretee" title="This field is required" value="{{#if result.one}}{{result.one.quantite_pretee}}{{/if}}" required="required"/>
+    </div>
+  </div>     
+
+
+<div class="form-group">
+ <label for="inputName" class="col-sm-2 control-label">Remarques sur le composant</label>
+    <div class="col-sm-6">
+      <input class="form-control" placeholder="Remarques sur le composant" type="text" name="remarques_composant" title="This field is required" value="{{#if result.one}}{{result.one.remarques_composant}}{{/if}}" required="required"/>
+    </div>
+  </div>     
+
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+          {{#if result.one}}
+          <input type="hidden" name="_id" value="{{result.one._id}}"/>
+          {{/if}}
+        <button type="submit" name="button" id="button" class="btn btn-primary">Valider</button>
+    </div>
+  </div>
+
+</form>
