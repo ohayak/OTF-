@@ -1,0 +1,51 @@
+<form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" id="formulaire" action="/pretercomposant">
+
+  
+  <div class="col-xs-12 col-sm-12">
+    <h3>Récapitulatif du prêt</h3>
+  </div>
+
+  
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Nom composant</label>
+    <div class="col-sm-4">
+      <input type="text" name="nom_composant" value="{{result.[0].nom_composant}}" disabled="disabled" autofocus/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Quantité initiale</label>
+    <div class="col-sm-4">
+      <input type="text" name="quantite_composant"  value="{{result.[0].quantite_composant}}" disabled="disabled" autofocus/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Emprunteur</label>
+    <div class="col-sm-4">
+      <input type="text" name="nom_emprunteur" value=""  autofocus/>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Quantité empruntée</label>
+    <div class="col-sm-4">
+      <input type="number" name="quantite_empruntee"  value="1" min="1" max="{{result.[0].quantite_composant}}"  autofocus/>
+    </div>
+  </div>
+
+
+
+  
+
+<!-- envoi formulaire -->
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+          {{#if result}}
+          <input type="hidden" name="id_composant" value="{{result.[0]._id}}"/>
+          {{/if}}
+        <button type="submit" name="button" id="button" class="btn btn-primary">Validate</button>
+    </div>
+  </div>
+
+</form>
