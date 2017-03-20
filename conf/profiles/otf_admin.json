@@ -229,20 +229,32 @@
     },
     "GET/rendre_composant": {
         "module": "finder",
-        "methode": "oneAndListMultiSchemas",
+        "methode": "populateInfinite",
         "screen": "formrendrecomposant",
         "auth": true,
         "params_names": ["_id"],
         "data_model": "Prets",
-        "data_ref": ["Composants"]
+        "data_ref": [["id_composant"]]
     },
     "POST/rendrecomposant": {
         "module": "updater",
-        "methode": "one",
+        "methode": "prets_rendus_incomplet",
         "screen": "formrendrecomposant",
         "auth": true,
-        "params_names": ["_id", "quantite_pretee", "date_pret", "nom_emprunteur", "id_composant"],
+        "params_names": ["_id", "quantite_pretee", "quantite_rendue"],
         "data_model": "Prets",
+	"data_ref" : [["id_composant", "tab_pretes"]],
+        "redirect": true,
+        "redirect_action": "composants_pretes"
+    },
+    "POST/supprimer_des_prets": {
+        "module": "deleter",
+        "methode": "prets_rendus_total",
+        "screen": "formrendrecomposant",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Prets",
+	"data_ref": [["id_composant", "tab_pretes"]], 
         "redirect": true,
         "redirect_action": "composants_pretes"
     },
