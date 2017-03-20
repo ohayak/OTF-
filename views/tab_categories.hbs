@@ -8,32 +8,53 @@
     <script>
         //<![CDATA[
         $(document).ready(function() {
-            populateGenericDatatable("/composantsjson", "table_usagers", "_id", 10,  [], {buttons: [{edit_btn:true, name:"/fiche_composant", id_name:"_id"},{remove_btn:true, name:"/deletecomposant", id_name:"_id"}, {lend_btn:true, name:"/preter_composant", id_name:"_id"}]});
+            populateGenericDatatable("/categoriesjson", "table_categories", "_id", 10,  [], {buttons: [{edit_btn:true, name:"/fiche_categories", id_name:"_id"},{remove_btn:true, name:"/deletecategories", id_name:"_id"}]});
+ 	    populateGenericDatatable("/souscategoriesjson", "table_sous_categories", "_id", 10,  [], {buttons: [{edit_btn:true, name:"/fiche_souscategories", id_name:"_id"},{remove_btn:true, name:"/deletesouscategories", id_name:"_id"}]});
+	$("[data-mask]").inputmask();
         });
         //]]>
     </script>
+
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Gestion des composants
+                Gestion des catégories
             </h1>
             <ol class="breadcrumb">
                 <li><a href="/index"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="#">Composants</a></li>
-                <li class="active">List</li>
+                <li class="active">Gérer catégories</li>
             </ol>
-        </section>
+
+	</section>
+
 
         <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!-- About Me Box -->
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            {{> formcategories}}
+			    {{> formsouscategories}}
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </section><!-- /.content -->
+       
         <section class="content">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box box-warning">
                         <div class="box-header">
-                            <h3 class="box-title">Liste des composants</h3>
+			<h3 class="box-title">Modifier/Supprimer</h3>
                             <!-- <div class="box-tools">
                               <div class="input-group" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
@@ -44,16 +65,26 @@
                             </div> -->
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <table class="table table-hover" id="table_usagers">
+			<h3 class="box-title">Liste des catégories</h3>
+                            <table class="table table-hover" id="table_categories">
                                 <thead>
                                   <tr>
-				    <th mData="nom_composant">Nom</th>
-				    <th mData="id_categorie.nom_categorie">Catégorie</th>
-				    <th mData="id_sous_categorie.nom_sous_categorie">Sous-catégorie</th>
-				    <th mData="quantite_composant">Quantité</th>
-				    <th mData="quantite_totale_pretee">Quantité prêtée</th>
-                                    <th mData="statut_composant">Statut</th>
-                                    <th mData="remarques_composant">Remarques</th>
+				    <th mData="nom_categorie">Nom</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="dataTables_empty" colspan="10"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+			<h3 class="box-title">Liste des sous-catégories</h3>
+			<table class="table table-hover" id="table_sous_categories">
+                                <thead>
+                                  <tr>
+				    <th mData="nom_sous_categorie">Nom</th>
+				   <th mData="id_categorie.nom_categorie">Catégorie mère</th>
                                     <th></th>
                                 </tr>
                                 </thead>

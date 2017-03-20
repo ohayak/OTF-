@@ -1,0 +1,50 @@
+<form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="{{#if result.one}}/updatecategories{{else}}/addcategories{{/if}}">
+  <div class="col-xs-12 col-sm-12">
+    <h3>{{#if result.one}} {{else}}Nouvelle Catégorie{{/if}}</h3>
+  </div>
+  
+<!--
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Mot de passe</label>
+    <div class="col-sm-5">
+          {{#if result.one}}
+          <input type="password" class="form-control" placeholder="Mot de passe" id="password" name="password"
+                 pattern=".{5,}" onchange="form.password2.pattern = this.value;" title="Minimum de 5 lettres ou chiffres" required="required">
+          {{else}}
+          <input type="password" class="form-control" placeholder="Mot de passe (si vide sera généré automatiquement)" id="password" name="password"
+                 pattern=".{5,}" onchange="form.password2.pattern = this.value;" title="Minimum de 5 lettres ou chiffres">
+          {{/if}}
+    </div>
+    <div class="col-sm-5">
+          {{#if result.one}}
+          <input type="password" class="form-control" placeholder="Mot de passe à nouveau" id="password2" name="password2"
+                 pattern=".{5,}" title="Les mots de passe ne correspondent pas" required="required">
+          {{else}}
+          <input type="password" class="form-control" placeholder="Mot de passe à nouveau" id="password2" name="password2"
+                 pattern=".{5,}" title="Les mots de passe ne correspondent pas">
+          {{/if}}
+    </div>
+  </div>
+-->
+
+
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Nom de la catégorie</label>
+    <div class="col-sm-6">
+     <input class="form-control" placeholder="Nom de la catégorie" type="text" name="nom_categorie" title="This field is required" value="{{#if result.one}}{{result.one.nom_categorie}}{{/if}}" required="required"/>
+    </div>
+  </div>
+
+
+
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+          {{#if result.one}}
+          <input type="hidden" name="_id" value="{{result.one._id}}"/>
+          {{/if}}
+        <button type="submit" name="button" id="button" class="btn btn-primary">Valider</button>
+    </div>
+  </div>
+
+</form>

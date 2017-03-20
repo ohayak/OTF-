@@ -7,7 +7,7 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>A</b>Ll</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Admin</b> OTFÂ²</span>
+            <span class="logo-lg"><b>Admin</b> OTF²</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -132,7 +132,7 @@
                                     <a href="/fiche_profil?_id={{user._id}}" class="btn btn-default btn-flat">Profil</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="/logout" class="btn btn-default btn-flat">DÃ©connexion</a>
+                                    <a href="/logout" class="btn btn-default btn-flat">Déconnexion</a>
                                 </div>
                             </li>
                         </ul>
@@ -212,10 +212,15 @@
                   </a>
 		  <ul class="treeview-menu">
 		    <li class="{{#compare url '/composants' operator='=='}}active{{/compare}}"><a href="/composants"><i class="fa fa-circle-o"></i> <span>Liste</span></a></li>
-  		    <li class="{{#compare url '/formaddcomposant' operator='=='}}active{{/compare}}"><a href="/formaddcomposant"><i class="fa fa-circle-o"></i> CrÃ©er</a></li>
-		    <li class="{{#compare url '/composants_pretes' operator='=='}}active{{/compare}}"><a href="/composants_pretes"><i class="fa fa-circle-o"></i><span>Composants prÃªtÃ©s</span></a></li>
+  		    <li class="{{#compare url '/formaddcomposant' operator='=='}}active{{/compare}}"><a href="/formaddcomposant"><i class="fa fa-circle-o"></i> Créer</a></li>
+		    <li class="{{#compare url '/composants_pretes' operator='=='}}active{{/compare}}"><a href="/composants_pretes"><i class="fa fa-circle-o"></i><span>Composants prêtés</span></a></li>
 		  </ul>
 		</li>
+ 		<li class="treeview">
+                    <a href="/categories">
+                        <i class="fa fa-archive"></i> <span>Gérer catégories</span>
+                    </a>
+                </li>
 		<br><br><br>
 	    </ul>
         </section>

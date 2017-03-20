@@ -335,6 +335,128 @@
         "data_model": "Composants",
         "redirect": true,
         "redirect_action": "composants"
+    },
+    "POST/addcategories": {
+        "module": "inserter",
+        "methode": "one",
+        "screen": "tab_categories",
+        "auth": true,
+        "params_names": ["_id","nom_categorie"],
+        "data_model": "Categories",
+        "redirect": true,
+        "redirect_action" : "categories"
+    },
+    "GET/formaddcategories": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "formaddcategories",
+        "auth": true,
+        "data_model":"Categories"
+    },
+    "GET/categories": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "tab_categories",
+        "auth":true
+    },
+    "POST/updatecategories": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "tab_categorie",
+        "auth": true,
+        "params_names": ["_id","nom_categorie"],
+        "data_model": "Categories",
+        "redirect": true,
+        "redirect_action": "categories"
+    },
+    "GET/fiche_categories": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "formupdatecategories",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Categories",
+        "data_ref": []
+    },
+    "GET/json/categoriesjson": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "tab_categories",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Categories",
+	"data_ref": "categories",
+        "return_type": "application/json"
+    },
+    "GET/deletecategories": {
+        "module": "deleter",
+        "methode": "oneById",
+        "screen": "tab_categories",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Categories",
+        "redirect": false
+    },
+        "POST/addsouscategories": {
+        "module": "inserter",
+        "methode": "one",
+        "screen": "tab_categories",
+        "auth": true,
+        "params_names": ["_id","nom_sous_categorie", "id_categorie"],
+        "data_model": "Sous_categories",
+        "redirect": true,
+        "redirect_action" : "souscategories"
+    },
+    "GET/formaddsouscategories": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "formaddsouscategories",
+        "auth": true,
+        "data_model":"Sous_categories"
+    },
+    "GET/souscategories": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "tab_categories",
+        "auth":true
+    },
+    "POST/updatesouscategories": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "tab_categorie",
+        "auth": true,
+        "params_names": ["_id","nom_sous_categorie","id_categorie"],
+        "data_model": "Sous_categories",
+        "redirect": true,
+        "redirect_action": "categories"
+    },
+    "GET/fiche_souscategories": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "formupdatesouscategories",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Sous_categories",
+        "data_ref": []
+    },
+    "GET/json/souscategoriesjson": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "tab_categories",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Sous_categories",
+	"data_ref": "sous_categories",
+        "return_type": "application/json"
+    },
+    "GET/deletesouscategories": {
+        "module": "deleter",
+        "methode": "oneById",
+        "screen": "tab_categories",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Sous_categories",
+        "redirect": false
     }
 }
 
