@@ -258,6 +258,25 @@
         "redirect": true,
         "redirect_action": "composants_pretes"
     },
+    "GET/preter_composant": {
+        "module": "finder",
+        "methode": "populateInfinite",
+        "screen": "formpretercomposant",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Composants",
+        "data_ref": [["tab_pretes"]]
+    },
+    "POST/pretercomposant": {
+        "module": "updater",
+        "methode": "newPret",
+        "screen": "formpretercomposant",
+        "auth": true,
+        "params_names": ["_id", "quantite_pretee", "date_pret", "nom_emprunteur", "id_composant"],
+        "data_model": "Prets",
+        "redirect": true,
+        "redirect_action": "composants"
+    },
     "GET/forum_title": {
         "module": "index",
         "methode": "titre",

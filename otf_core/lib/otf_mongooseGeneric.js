@@ -355,17 +355,31 @@ mongooseGeneric.prototype.modification_pretes = function (_condition, _callback)
 
 
 mongooseGeneric.prototype.lendObject = function(_values, _callback){
-/*
-    // création du prêt
-    if(!_values.hasOwnProperty("_id"))
-      _values._id = new ObjectId();
-    var m = new this.document(_values);
-    m.save(function (){});
+	// création du prêt
+	if(!_values.hasOwnProperty("_id"))
+	    _values._id = new ObjectId();
+	var m = new this.document(_values);
+	m.save(function (){});
 
-    // rajout du pret dans la liste d'ids prêtés
-    var id_composant = _values.id_composant;
-    var model = GLOBAL.schemas["Composants"];
-    model.document.update({"_id": id_composant}, {$set: }, function(){});*/
+	// populate de la table des composants
+	var model = GLOBAL.schemas["Composants"];
+	var id_composant = _values.id_composant;
+	var tab_pretes = [];
+	var quantite_initiale;
+	var quantite_pretee = _values.quantite_pretee;
+	model.document.find({"_id": id_composant}, function(err,result){
+	    if(err) _callback(err,null);
+	    else{
+		quantite_initiale = result[0].quantite_composant;
+		tab_pretes = result[0].tab_pretes;
+		tab_pretes.push(_values._id);
+		var quantite_composant = parseInt(quantite_initiale) - parseInt(quantite_pretee);
+		
+		// mise à jour de la table des composants
+		model.document.update({"_id": id_composant}, {$set: {"tab_pretes": tab_pretes, "quantite_composant": quantite_composant}}, function(){});
+		_callback(null,result);
+	    }
+	});
 };
 
 

@@ -1,3 +1,4 @@
+{{#if result.[0].quantite_composant}}
 <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" id="formulaire" action="/pretercomposant">
 
   
@@ -9,32 +10,68 @@
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Nom composant</label>
     <div class="col-sm-4">
-      <input type="text" name="nom_composant" value="{{result.[0].nom_composant}}" disabled="disabled" autofocus/>
+      <input type="text" name="nom_composant" value="{{result.[0].nom_composant}}" disabled="disabled" required="required" autofocus/>
     </div>
   </div>
 
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Quantité initiale</label>
     <div class="col-sm-4">
-      <input type="text" name="quantite_composant"  value="{{result.[0].quantite_composant}}" disabled="disabled" autofocus/>
+      <input type="text" name="quantite_composant"  value="{{result.[0].quantite_composant}}" disabled="disabled" required="required" autofocus/>
     </div>
   </div>
 
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Emprunteur</label>
     <div class="col-sm-4">
-      <input type="text" name="nom_emprunteur" value=""  autofocus/>
+      <input type="text" id="nom_emprunteur" name="nom_emprunteur" value=""  required="required" autofocus/>
     </div>
   </div>
   
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Quantité empruntée</label>
     <div class="col-sm-4">
-      <input type="number" name="quantite_empruntee"  value="1" min="1" max="{{result.[0].quantite_composant}}"  autofocus/>
+      <input type="number" name="quantite_pretee"  value="1" min="1" max="{{result.[0].quantite_composant}}"  required="required" autofocus/>
     </div>
   </div>
 
+  
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Date du prêt</label>
+    <div class="col-sm-4">
+      <input type="number" id="jour_pret"  value="01" min="01" max="31"   required="required" autofocus/>
+      <input type="number" id="mois_pret"  value="01" min="01" max="12"  required="required" autofocus/>
+      <input type="number" id="annee_pret"  value="0000"  required="required" autofocus/>
+    </div>
+  </div>
 
+  <script>
+    var now = new Date();
+    
+    var annee = now.getFullYear();
+    document.getElementById('annee_pret').value = annee;
+    
+    var mois = now.getMonth() + 1;
+    document.getElementById('mois_pret').value = mois;
+    
+    var jour = now.getDate();
+    document.getElementById('jour_pret').value = jour; 
+
+
+    document.getElementById('annee_pret').addEventListener('change',function(e){
+    document.getElementById('date_pret').value = document.getElementById('annee_pret').value + " " + document.getElementById('mois_pret').value + " " + document.getElementById('jour_pret').value ;
+    });
+    document.getElementById('mois_pret').addEventListener('change',function(e){
+    document.getElementById('date_pret').value = document.getElementById('annee_pret').value + " " + document.getElementById('mois_pret').value + " " + document.getElementById('jour_pret').value ;
+    });
+    document.getElementById('jour_pret').addEventListener('change',function(e){
+    document.getElementById('date_pret').value = document.getElementById('annee_pret').value + " " + document.getElementById('mois_pret').value + " " + document.getElementById('jour_pret').value ;
+    });
+    document.getElementById('nom_emprunteur').addEventListener('change',function(e){
+    document.getElementById('date_pret').value = document.getElementById('annee_pret').value + " " + document.getElementById('mois_pret').value + " " + document.getElementById('jour_pret').value ;
+
+    });
+  </script>
 
   
 
@@ -43,9 +80,12 @@
     <div class="col-sm-offset-2 col-sm-10">
           {{#if result}}
           <input type="hidden" name="id_composant" value="{{result.[0]._id}}"/>
+	  <input type="hidden" name="date_pret" id="date_pret" value="0"/>
           {{/if}}
         <button type="submit" name="button" id="button" class="btn btn-primary">Validate</button>
     </div>
   </div>
 
 </form>
+{{else}}Ce composant n'est plus en stock, on ne peut donc plus le prêter.
+{{/if}}
