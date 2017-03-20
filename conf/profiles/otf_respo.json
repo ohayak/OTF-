@@ -1,0 +1,181 @@
+{
+    "GET/": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true
+    },
+    "GET/index": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true
+    },
+    "GET/login": {
+        "module": "login",
+        "methode": "titre",
+        "screen": "login",
+        "auth": false
+    },
+    "POST/signupAccount": {
+        "module": "signupAccount",
+        "methode": "signup",
+        "screen": "index",
+        "params_names": ["login", "password"],
+        "auth": false,
+        "data_model": "Accounts",
+        "redirect": true,
+        "redirect_action" : "index"
+    },
+    "GET/logout": {
+        "module": "signupAccount",
+        "methode": "logout",
+        "screen": "login",
+        "params_names": [],
+        "auth": false,
+        "redirect": true,
+        "redirect_action" : "login"
+    },
+    "GET/logs": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "log_list",
+        "auth": false,
+        "params_names": [],
+        "data_model": "Logs"
+    },
+    "GET/testcontenttype" : {
+        "module": "finder",
+        "methode": "list",
+        "screen": "log_list",
+        "auth": false,
+        "return_type" : "text/plain",
+        "params_names": [],
+        "data_model": "Logs"
+    },
+    "GET/jsoncontenttype" : {
+        "module": "finder",
+        "methode": "list",
+        "screen": "log_list",
+        "auth": false,
+        "return_type" : "application/json",
+        "params_names": [],
+        "data_model": "Logs"
+    },
+    "GET/fiche_profil": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "fiche_profil",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Accounts",
+        "data_ref": ["Role"]
+    },
+    "GET/json/logsjson": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "log_list",
+        "auth": false,
+        "params_names": [],
+        "data_model": "Logs",
+        "data_ref": "user_id",
+        "return_type": "application/json"
+    },
+    "GET/composants": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "tab_composants",
+        "auth":true
+    },
+    "GET/json/composantsjson": {
+        "module": "finder",
+        "methode": "populateInfinite",
+        "screen": "tab_composants",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Composants",
+	"data_ref": [["id_categorie"], ["id_sous_categorie"], ["sum", "tab_pretes", "quantite_pretee", "quantite_totale_pretee"]],
+        "return_type": "application/json"
+    },
+    "GET/composants_pretes": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "tab_composants_pretes",
+        "auth":true
+    },
+    "GET/json/composantsPretesjson": {
+        "module": "finder",
+        "methode": "populateInfinite",
+        "screen": "tab_composants_pretes",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Prets",
+	"data_ref": [["id_composant", "id_categorie"], ["id_composant", "id_sous_categorie", "id_categorie"]],
+        "return_type": "application/json"
+    },
+    "GET/rendre_composant": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "formrendrecomposant",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Prets",
+        "data_ref": ["Composants"]
+    },
+    "POST/rendrecomposant": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "formrendrecomposant",
+        "auth": true,
+        "params_names": ["_id", "quantite_pretee", "date_pret", "nom_emprunteur", "id_composant"],
+        "data_model": "Prets",
+        "redirect": true,
+        "redirect_action": "composants_pretes"
+    },
+    "POST/addcomposant": {
+        "module": "inserter",
+        "methode": "one",
+        "screen": "tab_composants",
+        "auth": true,
+        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant",   "quantite_pretee", "id_categorie", "id_sous_categorie"],
+        "data_model": "Composants",
+        "redirect": true,
+        "redirect_action" : "composants"
+    },
+    "GET/formaddcomposant": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "formaddcomposant",
+        "auth": true,
+        "data_model":"Composants"
+
+    },
+    "GET/deletecomposant": {
+        "module": "deleter",
+        "methode": "oneById",
+        "screen": "tab_composants",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Composants",
+        "redirect": false
+    },
+    "GET/fiche_composant": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "formupdatecomposant",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Composants",
+        "data_ref": []
+    },
+    "POST/updatecomposant": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "tab_composants",
+        "auth": true,
+        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant",   "quantite_pretee", "id_categorie", "id_sous_categorie"],
+        "data_model": "Composants",
+        "redirect": true,
+        "redirect_action": "composants"
+    }
+}
