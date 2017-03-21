@@ -354,10 +354,11 @@
         "data_model":"Categories"
     },
     "GET/categories": {
-        "module": "index",
-        "methode": "titre",
+        "module": "finder",
+        "methode": "list",
         "screen": "tab_categories",
-        "auth":true
+        "auth":true,
+	"data_model": "Categories"
     },
     "POST/updatecategories": {
         "module": "updater",
@@ -397,7 +398,7 @@
         "data_model": "Categories",
         "redirect": false
     },
-        "POST/addsouscategories": {
+    "POST/addsouscategories": {
         "module": "inserter",
         "methode": "one",
         "screen": "tab_categories",
