@@ -1,0 +1,83 @@
+<form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" id="formulaire" action="/modifier_mon_email">
+
+  
+  <div class="col-xs-12 col-sm-12">
+    <h3>Modifier mon email</h3>
+  </div>
+
+  
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Nouvel email</label>
+    <div class="col-sm-4">
+      <input type="text" name="email1" value="" autofocus/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Confirmer nouvel email</label>
+    <div class="col-sm-4">
+      <input type="text" name="email2" value="" autofocus/>
+    </div>
+  </div>
+
+
+  <!-- envoi formulaire -->
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+          {{#if result}}
+          <input type="hidden" name="_id" value="{{result.[0]._id}}"/>
+	  <input type="hidden" name="email" value=""/>
+          {{/if}}
+        <button type="submit" name="button" id="button" class="btn btn-primary">Validate</button>
+    </div>
+  </div>
+
+</form>
+
+
+<!-- *************************************************************************************************************-->
+
+
+<form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" id="formulaire" action="/modifier_mon_mdp">
+
+  
+  <div class="col-xs-12 col-sm-12">
+    <h3>Modifier mon mot de passe</h3>
+  </div>
+
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Ancien mot de passe</label>
+    <div class="col-sm-4">
+      <input type="text" name="password_actuel" value=""  autofocus/>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Nouveau mot de passe</label>
+    <div class="col-sm-4">
+      <input type="text" name="password1" value=""  autofocus/>
+    </div>
+  </div>
+
+    <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Confirmer nouveau mot de passe</label>
+    <div class="col-sm-4">
+      <input type="text" name="password2" value=""  autofocus/>
+    </div>
+  </div>
+
+
+  
+
+<!-- envoi formulaire -->
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+          {{#if result}}
+          <input type="hidden" name="_id" value="{{result.[0]._id}}"/>
+	  <input type="hidden" name="password" value=""/>
+          {{/if}}
+        <button type="submit" name="button" id="button" class="btn btn-primary">Validate</button>
+    </div>
+  </div>
+
+</form>

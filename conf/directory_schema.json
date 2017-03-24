@@ -2,13 +2,13 @@
     "Accounts": {
         "collection": "accounts",
         "schema": {
-            "nom": "String",
+            "nom": "String", 
             "prenom": "String",
             "titre": "String",
             "sexe": "String",
-            "login": {"type": "String", "unique": "true"},
-            "password": "String",
-            "email": "String",
+            "login": {"type": "String", "unique": "true"}, 
+            "password": "String", 
+            "email": "String", 
             "telephone": "String",
             "adresse1": "String",
             "adresse2": "String",
