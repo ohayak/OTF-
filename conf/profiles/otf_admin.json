@@ -196,10 +196,11 @@
         "data_model": ["Accounts", "Logs"]
     },
     "GET/composants": {
-        "module": "index",
-        "methode": "titre",
+        "module": "finder",
+        "methode": "list",
         "screen": "tab_composants",
-        "auth":true
+        "auth":true,
+	"data_model": "Composants"
     },
     "GET/json/composantsjson": {
         "module": "finder",
@@ -363,7 +364,7 @@
     "POST/updatecategories": {
         "module": "updater",
         "methode": "one",
-        "screen": "tab_categorie",
+        "screen": "tab_update_categorie",
         "auth": true,
         "params_names": ["_id","nom_categorie"],
         "data_model": "Categories",
@@ -406,7 +407,7 @@
         "params_names": ["_id","nom_sous_categorie", "id_categorie"],
         "data_model": "Sous_categories",
         "redirect": true,
-        "redirect_action" : "souscategories"
+        "redirect_action" : "categories"
     },
     "GET/formaddsouscategories": {
         "module": "finder",
@@ -415,16 +416,10 @@
         "auth": true,
         "data_model":"Sous_categories"
     },
-    "GET/souscategories": {
-        "module": "index",
-        "methode": "titre",
-        "screen": "tab_categories",
-        "auth":true
-    },
     "POST/updatesouscategories": {
         "module": "updater",
         "methode": "one",
-        "screen": "tab_categorie",
+        "screen": "tab_update_categorie",
         "auth": true,
         "params_names": ["_id","nom_sous_categorie","id_categorie"],
         "data_model": "Sous_categories",
