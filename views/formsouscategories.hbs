@@ -47,14 +47,13 @@
      <input class="form-control" placeholder="Nom de la sous-catégorie" type="text" name="nom_sous_categorie" title="This field is required" value="{{#if result.one}}{{result.one.nom_sous_categorie}}{{/if}}" required="required"/>
     </div>
   </div>
-
-
-
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-          {{#if result.one}}
-          <input type="hidden" name="_id" value="{{result.one._id}}"/>
-          {{/if}}
+	  <select class="form-control" name="id_categorie" required="required">
+	  {{#each result}}
+	  <option value="{{_id}}">{{nom_categorie}}</option>
+	  {{/each}}
+	</select>
         <button type="submit" name="button" id="button" class="btn btn-primary">Valider</button>
     </div>
   </div>
