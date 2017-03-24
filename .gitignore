@@ -2,59 +2,7 @@
 *~
 
 
-# Exclusion des fichiers et dossiers a la racine sauf conf et views
-COPYRIGHT.txt
-LICENSE.txt
-README.md
-app.js
-beans/
-benchmark.sh
-bin/
-debug.sh
-dump.rdb
-dump/
-log/
-node_modules/
-otf_core/
-public/
-package.json
-start.sh
 
-
-# Exclusion des fichiers et dossiers a ne pas toucher dans conf
-conf/config.json
-conf/log4js.json
-conf/models/
-conf/profiles/otf_default.json
-conf/profiles/otf_user.json
-
-
-# Exclusion des fichiers et dossiers a ne pas toucher dans views
-views/layouts
-views/501.hbs
-views/countries_list.hbs
-views/country.hbs
-views/fiche_profil.hbs
-views/formadduser.hbs
-views/formsignin.hbs
-views/formupdatelogs.hbs
-views/formupdateuser.hbs
-views/glancesviewtab.hbs
-views/index.hbs
-views/liste_user.hbs
-views/login.hbs
-views/log_list.hbs
-views/multipart_form.hbs
-views/multipart_oneFile.hbs
-views/resultmultischema.hbs
-views/user_list_OLD.hbs
-views/userOne.hbs
-views/partials/flash_message.hbs
-views/partials/footer.hbs
-views/partials/head.hbs
-views/partials/nav_DEFAULT.hbs
-views/partials/nav.hbs
-views/partials/nav_USER.hbs
 
 
 

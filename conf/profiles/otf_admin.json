@@ -458,6 +458,34 @@
         "params_names": ["_id"],
         "data_model": "Sous_categories",
         "redirect": false
+    },
+    "GET/mon_compte": {
+        "module": "finder",
+        "methode": "one",
+        "screen": "layout_mon_compte",
+        "auth": true,
+        "params_names": ["login"],
+        "data_model": "AccountId"
+    },
+    "POST/modifier_mon_email": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "layout_mon_compte",
+        "auth": true,
+        "params_names": ["_id", "email"],
+        "data_model": "AccountId",
+        "redirect": true,
+        "redirect_action": "users"
+    },
+    "POST/modifier_mon_mdp": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "layout_mon_compte",
+        "auth": true,
+        "params_names": ["_id", "password"],
+        "data_model": "AccountId",
+        "redirect": true,
+        "redirect_action": "users"
     }
 }
 
