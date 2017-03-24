@@ -1,0 +1,48 @@
+{
+    "name": "lx-helpers",
+    "version": "0.5.1",
+    "author": {
+        "name": "Litixsoft GmbH",
+        "email": "info@litixsoft.de"
+    },
+    "maintainers": [
+        {
+            "name": "Timo Liebetrau",
+            "email": "t.liebetrau@litixsoft.de"
+        },
+        {
+            "name": "Dominic Sachs",
+            "email": "d.sachs@litixsoft.de"
+        },
+        {
+            "name": "Andreas Krummsdorf",
+            "email": "a.krummsdorf@litixsoft.de"
+        }
+    ],
+    "description": "Tiny helper lib with useful functions :-)",
+    "keywords": [
+        "utils",
+        "helpers",
+        "arrays",
+        "clone",
+        "iterate"
+    ],
+    "main": "./lx-helpers.js",
+    "license": "MIT",
+    "homepage": "https://github.com/litixsoft/lx-helpers",
+    "ignore": [
+        "lib",
+        "node_modules",
+        "test",
+        ".*",
+        "CHANGELOG.md",
+        "Gruntfile.js",
+        "LICENSE",
+        "package.json",
+        "validate-commit-msg.js"
+    ],
+    "dependencies": {
+    },
+    "devDependencies": {
+    }
+}

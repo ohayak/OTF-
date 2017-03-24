@@ -1,0 +1,26 @@
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "nav"}}
+    {{> nav}}
+{{/content}}
+{{#content "page"}}
+	<!-- Page Content -->
+    <div id="containerform" class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12">
+                <h3>UpdateLogs</h3>
+            </div>
+        </div>
+        <script>
+            //<![CDATA[
+            $(document).ready(function() {
+                setFormUpdate({{{json result}}}, "/setlog");
+            });
+            //]]>
+        </script>
+    </div>
+{{/content}}
+{{#content "footer"}}
+    {{> footer}}
+{{/content}}
