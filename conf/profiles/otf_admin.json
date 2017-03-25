@@ -306,7 +306,7 @@
         "methode": "list",
         "screen": "formaddcomposant",
         "auth": true,
-        "data_model":"Composants"
+        "data_model":"Categorie"
 
     },
     "GET/deletecomposant": {
