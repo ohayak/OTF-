@@ -10,6 +10,24 @@
  * Core: General Layout Style
  * -------------------------
  */
+
+html {
+background-image:url(../img/robot_fond.jpg);
+position:relative;
+}
+
+.img-responsive{
+padding: 25px;
+position:relative;
+}
+
+@media all and (max-width: 1000px){
+width:90%;
+padding: 2px;
+position:relative;
+}
+
+
 html,
 body {
   min-height: 100%;
@@ -26,6 +44,8 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+
 /* Layout */
 .wrapper {
   min-height: 100%;
@@ -3202,22 +3222,35 @@ table.text-center th {
 .register-page {
   background: #d2d6de;
 }
+
+
+
 .login-box,
 .register-box {
-  background-color: antiquewhite;
+  background-color: lemonchiffon;
   width: 360px;
   margin: 7% auto;
+position:absolute;top:130px;left:350px;
+border: 3px grey solid;
+border-radius: 20px;
+padding-top: 20px;
+padding-bottom: 14px;
+
 }
-@media (max-width: 768px) {
+@media all and (max-width: 1024px){
   .login-box,
   .register-box {
-    width: 90%;
+    width: 70%;
+	height: 70%;
     margin-top: 20px;
+position: relative;
+top:10px;left:10px;
   }
+
 }
 .login-box-body,
 .register-box-body {
-  background-color: antiquewhite;
+  background-color: lemonchiffon;
   padding: 20px;
   border-top: 0;
   color: #666;

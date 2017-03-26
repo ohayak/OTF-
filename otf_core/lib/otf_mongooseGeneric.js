@@ -52,6 +52,28 @@ mongooseGeneric.prototype.getDocuments = function (_condition, _callback) {
     });
 };
 
+
+mongooseGeneric.prototype.getMultiDocuments = function (_condition, _callback) {
+    var t1 = new Date().getMilliseconds();
+    this.document.find(_condition, function (err, result) {
+        if (err) {
+            _callback(err, null);
+        }
+        else {
+            var t2 = new Date().getMilliseconds();
+            logger.info('Into mongooseGeneric.getDocuments TIME : ' + (t2 - t1) + ' ms');
+
+	    var tabNomCategories = [];
+	    for(var i = 0; i<result.length; i++){
+		tabNomCategories.push(result[i].nom_categorie);
+	    }
+	    result.tabCategories = tabNomCategories;
+            _callback(null, result);
+        }
+    });
+};
+
+
 mongooseGeneric.prototype.deleteDocument = function (_condition, _callback) {
 
     this.document.remove(_condition, function (err, result) {
