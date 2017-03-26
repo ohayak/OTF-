@@ -112,6 +112,42 @@ exports.finder = {
         }
     },
 
+    the_one_connected: function (req, cb) {
+        // Input security Controle
+        if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
+            error = new Error('req.session undefined');
+            return cb(error);
+        }
+        //
+        var _controler = req.session.controler;
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state
+        //@TODO not safety
+        logger.debug('Finders.one params  : ', _controler.params);
+        //logger.debug('Finders.one params  : ', _controler.params['login'].source);
+        logger.debug('Finders.one room    : ', _controler.room);
+        logger.debug('Finders.one model   : ' + _controler.data_model);
+        logger.debug('Finders.one schema  : ' + _controler.schema);
+        // Test emit WebSocket Event
+        logger.debug(" One User emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
+        try {
+            var model = GLOBAL.schemas[_controler.data_model];
+            model.getDocument({"_id": req.session.login_info.user._id}, function (err, one_user) {
+                logger.debug('Utilisateurs :', one_user);
+                one_user.str =  JSON.stringify(one_user);
+                return cb(null, {result: one_user, "state": state, room: _controler.room});
+            });
+
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.error(err);
+        }
+    },
+
+
     oneAndListMultiSchemas: function (req, cb) {
         var t1 = new Date().getMilliseconds();
         // Input security Controle

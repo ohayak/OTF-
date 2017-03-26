@@ -456,10 +456,10 @@
     },
     "GET/mon_compte": {
         "module": "finder",
-        "methode": "one",
+        "methode": "the_one_connected",
         "screen": "layout_mon_compte",
         "auth": true,
-        "params_names": ["login"],
+        "params_names": [],
         "data_model": "AccountId"
     },
     "POST/modifier_mon_email": {
@@ -470,7 +470,7 @@
         "params_names": ["_id", "email"],
         "data_model": "AccountId",
         "redirect": true,
-        "redirect_action": "users"
+        "redirect_action": "mon_compte"
     },
     "POST/modifier_mon_mdp": {
         "module": "updater",
@@ -480,8 +480,9 @@
         "params_names": ["_id", "password"],
         "data_model": "AccountId",
         "redirect": true,
-        "redirect_action": "users"
+        "redirect_action": "mon_compte"
     }
+
 }
 
 

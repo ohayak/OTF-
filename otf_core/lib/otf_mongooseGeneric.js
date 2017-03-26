@@ -406,6 +406,28 @@ mongooseGeneric.prototype.lendObject = function(_values, _callback){
 
 
 
+mongooseGeneric.prototype.deleteComposant = function (_condition, _callback) {
+
+    var model = GLOBAL.schemas["Composants"];
+    model.document.find(_condition,function(err,result){
+	if(err){
+	    _callback(err,null);
+	}
+	else{
+	    var tab_ids_pretes = result[0].tab_pretes;
+	    var model_pretes = GLOBAL.schemas["Prets"];
+	    for(var i=0; i<tab_ids_pretes.length; i++){
+		model_pretes.document.remove({"_id": tab_ids_pretes[i]}, function(){});
+	    }
+	    model.document.remove(_condition, function (){});
+	    _callback(null, result);
+	}
+    });
+
+};
+
+
+
 mongooseGeneric.prototype.getPaginateDocuments = function (_condition, _callback) {
 
     this.document.findPaginated(_condition.query, function (err, result) {

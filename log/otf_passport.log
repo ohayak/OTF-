@@ -128,3 +128,58 @@
 [2017-03-26 16:21:55.492] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.com","notes":"presque rien","__v":0,"actif":false}
 [2017-03-26 16:22:03.321] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.com","notes":"presque rien","__v":0,"actif":false}
 [2017-03-26 16:22:03.349] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.com","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:36:53.471] [DEBUG] otf_passport - OTF² Passport  login [admin], password: [otf], body [[object Object]]
+[2017-03-26 16:36:53.491] [DEBUG] otf_passport - OTF² PASSEPORT _account :  { _id: 543fbd936fae706dd241f2ac,
+  titre: 'Mr',
+  nom: 'MASCARON',
+  prenom: 'Stephane',
+  login: 'admin',
+  password: 'otf',
+  role: 
+   { _id: 57601801cbb47caf29000001,
+     code: 'admin',
+     libelle: 'Administrateur' },
+  adresse1: '152 Wireless Road',
+  adresse2: '',
+  code_postal: '10330',
+  ville: 'Bangkok',
+  telephone: '07-07-07-07-07',
+  email: 'toto@truc.fr',
+  notes: 'presque rien',
+  __v: 0,
+  actif: false }
+[2017-03-26 16:36:53.493] [DEBUG] otf_passport - OTF² Passport account find : [{"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}], session id [6O8VXNA3eqcFsfYiC5eE7rgCYEhqv1xw]
+[2017-03-26 16:36:53.495] [DEBUG] otf_passport - OTF² Passport SerializeUser  account : {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:36:53.522] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:37:14.414] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:37:14.415] [DEBUG] otf_passport - OTF² Passport  login [admin], password: [otf], body [[object Object]]
+[2017-03-26 16:37:14.421] [DEBUG] otf_passport - OTF² PASSEPORT _account :  { _id: 543fbd936fae706dd241f2ac,
+  titre: 'Mr',
+  nom: 'MASCARON',
+  prenom: 'Stephane',
+  login: 'admin',
+  password: 'otf',
+  role: 
+   { _id: 57601801cbb47caf29000001,
+     code: 'admin',
+     libelle: 'Administrateur' },
+  adresse1: '152 Wireless Road',
+  adresse2: '',
+  code_postal: '10330',
+  ville: 'Bangkok',
+  telephone: '07-07-07-07-07',
+  email: 'toto@truc.fr',
+  notes: 'presque rien',
+  __v: 0,
+  actif: false }
+[2017-03-26 16:37:14.422] [DEBUG] otf_passport - OTF² Passport account find : [{"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}], session id [6O8VXNA3eqcFsfYiC5eE7rgCYEhqv1xw]
+[2017-03-26 16:37:14.422] [DEBUG] otf_passport - OTF² Passport SerializeUser  account : {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:37:14.433] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:37:23.988] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:37:45.475] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:37:45.493] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:37:52.004] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:37:52.026] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:38:14.528] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:38:14.541] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
+[2017-03-26 16:38:17.849] [DEBUG] otf_passport - OTF² Passport DeserializeUser  account: {"_id":"543fbd936fae706dd241f2ac","titre":"Mr","nom":"MASCARON","prenom":"Stephane","login":"admin","password":"otf","role":{"_id":"57601801cbb47caf29000001","code":"admin","libelle":"Administrateur"},"adresse1":"152 Wireless Road","adresse2":"","code_postal":"10330","ville":"Bangkok","telephone":"07-07-07-07-07","email":"toto@truc.fr","notes":"presque rien","__v":0,"actif":false}
