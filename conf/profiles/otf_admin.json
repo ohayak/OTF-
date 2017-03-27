@@ -282,25 +282,22 @@
         "module": "finder",
         "methode": "populate",
         "screen": "forum_title",
-        "auth": true,
-        "params_names": [],
-        "data_model": "Conversations",
-        "data_ref": "id_auteur"
+        "auth":true
     },
     "GET/forum_newconv": {
         "module": "index",
         "methode": "titre",
         "screen": "forum_newconv",
-        "auth": true
-    },
-     "POST/addconv": {
-        "module": "inserter",
-        "methode": "newConversation",
-        "screen": "forum_newconv",
         "auth": true,
+        "data_model":"Conversations"
+    },
+    "POST/addconv": {
+         "module": "inserter",
+         "methode": "newConversation",
+         "screen": "forum_newconv",
+         "auth": true,
          "params_names": ["titre_conversation", "contenu_commentaire"],
-        "redirect": true,
-         "redirect_action" : "forum_title"
+         "redirect": true,          "redirect_action" : "forum_title"
      },
     "POST/addcomposant": {
         "module": "inserter",
@@ -317,7 +314,7 @@
         "methode": "list",
         "screen": "formaddcomposant",
         "auth": true,
-        "data_model":"Categorie"
+        "data_model":"Composants"
 
     },
     "GET/deletecomposant": {
@@ -375,7 +372,7 @@
     "POST/updatecategories": {
         "module": "updater",
         "methode": "one",
-        "screen": "tab_update_categorie",
+        "screen": "tab_categorie",
         "auth": true,
         "params_names": ["_id","nom_categorie"],
         "data_model": "Categories",
@@ -407,10 +404,8 @@
         "screen": "tab_categories",
         "auth": true,
         "params_names": ["_id"],
-        "data_model": ["Categories", "Sous_categories"],
-	"data_ref": ["nom_categorie", "id_categorie"],
-        "redirect": true,
-	"redirect_action": "categories"
+        "data_model": "Categories",
+        "redirect": false
     },
     "POST/addsouscategories": {
         "module": "inserter",
@@ -432,7 +427,7 @@
     "POST/updatesouscategories": {
         "module": "updater",
         "methode": "one",
-        "screen": "tab_update_categorie",
+        "screen": "tab_categorie",
         "auth": true,
         "params_names": ["_id","nom_sous_categorie","id_categorie"],
         "data_model": "Sous_categories",
@@ -441,11 +436,11 @@
     },
     "GET/fiche_souscategories": {
         "module": "finder",
-        "methode": "oneAndListMultiSchemas",
+        "methode": "listMultiple",
         "screen": "formupdatesouscategories",
         "auth": true,
         "params_names": ["_id"],
-        "data_model": "Sous_categories",
+        "data_model": "Categories",
         "data_ref": []
     },
     "GET/json/souscategoriesjson": {

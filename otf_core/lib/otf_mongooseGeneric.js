@@ -55,6 +55,7 @@ mongooseGeneric.prototype.getDocuments = function (_condition, _callback) {
 
 mongooseGeneric.prototype.getMultiDocuments = function (_condition, _callback) {
     var t1 = new Date().getMilliseconds();
+	
     this.document.find(_condition, function (err, result) {
         if (err) {
             _callback(err, null);
@@ -63,14 +64,31 @@ mongooseGeneric.prototype.getMultiDocuments = function (_condition, _callback) {
             var t2 = new Date().getMilliseconds();
             logger.info('Into mongooseGeneric.getDocuments TIME : ' + (t2 - t1) + ' ms');
 
-	    var tabNomCategories = [];
-	    for(var i = 0; i<result.length; i++){
-		tabNomCategories.push(result[i].nom_categorie);
-	    }
-	    result.tabCategories = tabNomCategories;
-            _callback(null, result);
-        }
-    });
+	    var model = GLOBAL.schemas["Sous_categories"];
+	    model.document.find(_condition, function (err,result2){
+        	if (err) {
+          	  _callback(err, null);
+       		 }
+		else{
+		    var tabNomCategories = [];
+	   	    for(var i = 0; i<result.length; i++){
+	       	  	var tab = [];
+			tab.push(result[i].nom_categorie);
+			for(var j = 0; j<result2.length; j++){
+			    if(result[i].id_categorie == result2[j].id_categorie)
+				tab.push(result2[j].nom_sous_categorie);
+			    tabNomCategories.push([tab]);
+	   		 }
+		     }
+	        result.tabCategories = tabNomCategories;
+		_callback(null, result2);
+logger.debug("-----------------------------------------------------------------------------");
+logger.debug(tabNomCategories);
+logger.debug("-----------------------------------------------------------------------------");
+            
+		}});
+	   _callback(null, result);
+    }});
 };
 
 
@@ -422,6 +440,27 @@ mongooseGeneric.prototype.deleteComposant = function (_condition, _callback) {
 	    model.document.remove(_condition, function (){});
 	    _callback(null, result);
 	}
+    });
+
+};
+
+
+mongooseGeneric.prototype.deleteComposant = function (_condition, _callback) {
+
+    var model = GLOBAL.schemas["Composants"];
+    model.document.find(_condition,function(err,result){
+       if(err){
+           _callback(err,null);
+       }
+       else{
+           var tab_ids_pretes = result[0].tab_pretes;
+           var model_pretes = GLOBAL.schemas["Prets"];
+           for(var i=0; i<tab_ids_pretes.length; i++){
+               model_pretes.document.remove({"_id": tab_ids_pretes[i]}, function(){});
+           }
+           model.document.remove(_condition, function (){});
+           _callback(null, result);
+       }
     });
 
 };
