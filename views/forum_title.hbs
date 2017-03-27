@@ -15,12 +15,15 @@
         </section>
         <!-- Main content -->
         <section class="content">
-          <!-- ================= widgets accueil ======================= -->
-          <div class="row">
-            <div class="col-xs-12">
-                
-            </div><!-- /.col -->
-          </div><!-- /.row -->
+	  {{#each result}}
+	  <div class="box box-primary bg-gray">
+	    <div class="box-body">
+	      <h3 class="box-title">{{titre_conversation}}</h3>
+	      <p>Par {{id_auteur.prenom}} {{id_auteur.nom}}</p>
+	      <p>Date {{date_conversation}}</p>
+	    </div>
+	  </div>
+	  {{/each}}
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 

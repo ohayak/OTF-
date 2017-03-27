@@ -133,7 +133,7 @@
 	    "date_commentaire": "String",
 	    "id_auteur": {
 		"type": "ObjectId",
-		"ref": "Utilisateurs"
+		"ref": "Accounts"
 	    },
 	    "id_conversation": {
 		"type": "ObjectId",
@@ -150,7 +150,7 @@
 	    "conversation_resolue": "Boolean",
 	    "id_auteur": {
 		"type": "ObjectId",
-		"ref": "Utilisateurs"
+		"ref": "Accounts"
 	    }
 	}
     },

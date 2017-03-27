@@ -279,18 +279,29 @@
         "redirect_action": "composants"
     },
     "GET/forum_title": {
-        "module": "index",
-        "methode": "titre",
+        "module": "finder",
+        "methode": "populate",
         "screen": "forum_title",
-        "auth":true
+        "auth": true,
+        "params_names": [],
+        "data_model": "Conversations",
+        "data_ref": "id_auteur"
     },
     "GET/forum_newconv": {
-        "module": "finder",
-        "methode": "list",
+        "module": "index",
+        "methode": "titre",
+        "screen": "forum_newconv",
+        "auth": true
+    },
+     "POST/addconv": {
+        "module": "inserter",
+        "methode": "newConversation",
         "screen": "forum_newconv",
         "auth": true,
-        "data_model":"Conversations"
-    },
+         "params_names": ["titre_conversation", "contenu_commentaire"],
+        "redirect": true,
+         "redirect_action" : "forum_title"
+     },
     "POST/addcomposant": {
         "module": "inserter",
         "methode": "one",

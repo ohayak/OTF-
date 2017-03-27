@@ -44,5 +44,41 @@ exports.inserter = {
         // ici params est un tableau d'objet à insérer
         /* TODO écrire l'insertion générique d'une liste d'objets avec mongoDB, via mongoose. */
 
+    },
+
+    newConversation: function (req, cb){
+	var _controler = req.session.controler;
+        var model = GLOBAL.schemas["Conversations"];
+        //@TODO not safety
+        logger.debug('path    : ', _controler.path);
+        logger.debug('room    : ', _controler.room);
+        logger.debug('model   : ', _controler.data_model);
+        logger.debug('params  : ', _controler.params);
+        logger.debug('schema  : ', _controler.schema);
+        //-- Accounts Model
+        //var modele = mongoose.model(model);
+        // Test Emit WebSocket Event
+        logger.debug(" One User emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
+	var id_conv, nb_inserted1;
+        try {
+            model.createDocument({ titre_conversation: _controler.params.titre_conversation, date_conversation: new Date().toString(), conversation_resolue: false, id_auteur: req.session.login_info.user._id }, function (err, nb_inserted) {
+                logger.debug('nombre documents insérés :', nb_inserted);
+		id_conv = nb_inserted._id;
+		nb_inserted1 = nb_inserted;
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            return cb(err);
+        }
+	model = GLOBAL.schemas["Commentaires"];
+	try {
+            model.createDocument({ contenu_commentaire: _controler.params.contenu_commentaire, date_commentaire: new Date().toString(), id_auteur: req.session.login_info.user._id, id_conversation: id_conv }, function (err, nb_inserted) {
+                logger.debug('nombre documents insérés :', nb_inserted);
+                return cb(null, {data: {conversation: nb_inserted1, commentaires: nb_inserted}, room: _controler.room});
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            return cb(err);
+        }
     }
+
 };
