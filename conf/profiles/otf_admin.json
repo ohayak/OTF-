@@ -392,19 +392,21 @@
     },
     "GET/deletecategories": {
         "module": "deleter",
-        "methode": "oneById",
+        "methode": "oneAndSetToDefaultReference",
         "screen": "tab_categories",
         "auth": true,
         "params_names": ["_id"],
-        "data_model": "Categories",
-        "redirect": false
+        "data_model": ["Categories", "Sous_categories"],
+	"data_ref": ["nom_categorie", "id_categorie"],
+        "redirect": true,
+	"redirect_action": "categories"
     },
     "POST/addsouscategories": {
         "module": "inserter",
         "methode": "one",
         "screen": "tab_categories",
         "auth": true,
-        "params_names": ["_id","nom_sous_categorie", "id_categorie"],
+        "params_names": ["nom_sous_categorie", "id_categorie"],
         "data_model": "Sous_categories",
         "redirect": true,
         "redirect_action" : "categories"

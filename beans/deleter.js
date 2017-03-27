@@ -92,6 +92,64 @@ exports.deleter = {
             logger.error(err);
         }
     },
+    
+    // suprime un document, et modifie tout ceux qui le référencé, il référenceront un document appeler "Default" 
+    // data_model = [model a suprimet, model a modifier 1, model a modifier 2, ...]
+    // data_ref = [clé contenant la valeur "Default"(souvant le nom), clé 1 contenan le lien verl le model a suprimet,
+    //             clé 2 contenan le lien verl le model a suprimet ...]
+    oneAndSetToDefaultReference: function(req, cb){
+	// CONTROLER
+        var _controler = req.session.controler;
+        //@TODO not safety
+        logger.debug('room   : ', _controler.room);
+        logger.debug('model  : ' + _controler.data_model);
+        logger.debug('params  : ', _controler.params);
+	logger.debug('ref  : ', _controler.data_ref);
+        //-- Accounts Model
+        //var modele = mongoose.model(model);
+        // Test Emit WebSocket Event
+        logger.debug(" Deleted One Categorie emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
+        try {
+            var modeld = GLOBAL.schemas[_controler.data_model[0]];
+            modeld.deleteDocument({_id: _controler.params._id}, function (err, nb_deleted) {
+                logger.debug('delete row :', nb_deleted);
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.error(err);
+        }
+	try {
+	    var cond = {};
+	    cond[_controler.data_ref[0]] = "Default";
+	    modeld.getDocument(cond, function (err, one_default) {
+		logger.debug('Default document :', one_default);
+		var modelu, condition, value;
+		for(var i=1; i<_controler.data_model.length; i++){
+		    modelu = GLOBAL.schemas[_controler.data_model[i]];
+		    condition = {};
+		    value = {};
+		    condition[_controler.data_ref[i]] = _controler.params._id;
+		    value[_controler.data_ref[i]] = one_default._id;
+		    try {
+			modelu.updateDocuments(condition, value, function (err, numberAffected) {
+			    if (err) {
+				logger.info('----> error : ' + err);
+			    } else {
+				logger.debug('modification id référence : ', numberAffected);
+				return cb(null, {data: numberAffected, room: _controler.room});
+			    }
+			});
+		    } catch (errc) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+			logger.debug('----> error catch : ' + errc);
+			return cb(err);
+		    }
+		}
+	    });
+	    
+	} catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+	    logger.error(err);
+	}
+    },
 
     list: function (req, cb) {
         // ici params est un tableau d'objet à insérer
