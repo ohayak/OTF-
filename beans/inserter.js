@@ -13,6 +13,13 @@ var mongoose = require('mongoose');
  * SET users datas into MongoDB.
  */
 
+function htmlEscape(text) {
+   return text.replace(/&/g, '&amp;').
+     replace(/</g, '&lt;').  // it's not neccessary to escape >
+     replace(/"/g, '&quot;').
+     replace(/'/g, '&#039;');
+}
+
 exports.inserter = {
     one: function (req, cb) {
         var _controler = req.session.controler;
