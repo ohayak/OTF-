@@ -293,6 +293,14 @@
         "auth": true,
         "data_model":"Conversations"
     },
+    "GET/forum_conv": {
+        "module": "finder",
+        "methode": "populateCommantaires",
+        "screen": "forum_conv",
+        "auth": true,
+        "data_model":"Commentaires",
+	"params_names": ["id_conversation"]
+    },
     "POST/addconv": {
          "module": "inserter",
          "methode": "newConversation",

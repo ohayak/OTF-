@@ -419,5 +419,35 @@ exports.finder = {
             logger.error(err);
             return (err, null);
         }
+    },
+    
+    populateCommantaires: function(req, cb) {
+	// Input security Controle
+        if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
+            error = new Error('req.session undefined');
+            return cb(error);
+        }
+        var _controler = req.session.controler;
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state
+        //
+        //
+        logger.debug(" Finder.populate call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
+        try {
+            var model = GLOBAL.schemas[_controler.data_model];
+            //var _params = { query: _controler.params, ref: _controler.data_ref};
+            model.getDocuments(_controler.params, function (err, list) {
+                logger.debug('populateCommantaires Result  :', list);
+                logger.debug('req.session : ' , req.session );
+                list.str = JSON.stringify(list);
+                return cb(null, {result: list}); //, user:req.session.login_info.user, "state": state, room: _controler.room});
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.error(err);
+        }
     }
 };

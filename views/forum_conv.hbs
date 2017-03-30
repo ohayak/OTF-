@@ -10,21 +10,20 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Bienvenue sur le forum Eirbot. Liste des conversations.
+	    Comantaires
           </h1>
         </section>
         <!-- Main content -->
         <section class="content">
+	  {{result.str}}
 	  {{#each result}}
-	  <a href="/forum_conv?id_conversation={{_id}}">
-	    <div class="box box-primary bg-gray">
-	      <div class="box-body">
-		<h3 class="box-title">{{titre_conversation}}</h3>
-		<p>Par {{id_auteur.prenom}} {{id_auteur.nom}}</p>
-		<p>Date {{date_conversation}}</p>
-	      </div>
+	  <div class="box box-primary bg-gray">
+	    <div class="box-body">
+	      <h3 class="box-title">{{id_auteur}}</h3>
+	      <p>{{contenu_commentaire}}</p>
+	      <p>Date {{date_commentaire}}</p>
 	    </div>
-	  </a>
+	  </div>
 	  {{/each}}
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
