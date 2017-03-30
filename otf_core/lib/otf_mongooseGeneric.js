@@ -52,8 +52,23 @@ mongooseGeneric.prototype.getDocuments = function (_condition, _callback) {
     });
 };
 
-
 mongooseGeneric.prototype.getMultiDocuments = function (_condition, _callback) {
+    var t1 = new Date().getMilliseconds();
+    this.document.find(_condition).populate({path:"id_categorie"}).exec(function (err, result) {
+        if (err) {
+            _callback(err, null);
+        }
+        else {
+            logger.debug("--------------------------RESULT:---------------------------------------------------");
+			logger.debug(result[0].id_categorie.nom_categorie);
+			logger.debug("-----------------------------------------------------------------------------");
+            _callback(null, result);
+        }
+    });
+};
+
+
+/*mongooseGeneric.prototype.getMultiDocuments = function (_condition, _callback) {
     var t1 = new Date().getMilliseconds();
 	
     this.document.find(_condition, function (err, result) {
@@ -63,33 +78,54 @@ mongooseGeneric.prototype.getMultiDocuments = function (_condition, _callback) {
         else {
             var t2 = new Date().getMilliseconds();
             logger.info('Into mongooseGeneric.getDocuments TIME : ' + (t2 - t1) + ' ms');
-
-	    var model = GLOBAL.schemas["Sous_categories"];
-	    model.document.find(_condition, function (err,result2){
+        	var model1 = GLOBAL.schemas["Categories"];
+	    	model1.document.find(_condition, function (err,result1){
         	if (err) {
           	  _callback(err, null);
        		 }
-		else{
-		    var tabNomCategories = [];
-	   	    for(var i = 0; i<result.length; i++){
-	       	  	var tab = [];
-			tab.push(result[i].nom_categorie);
-			for(var j = 0; j<result2.length; j++){
-			    if(result[i].id_categorie == result2[j].id_categorie)
-				tab.push(result2[j].nom_sous_categorie);
-			    tabNomCategories.push([tab]);
-	   		 }
-		     }
-	        result.tabCategories = tabNomCategories;
-		_callback(null, result2);
-logger.debug("-----------------------------------------------------------------------------");
-logger.debug(tabNomCategories);
-logger.debug("-----------------------------------------------------------------------------");
-            
-		}});
+			else{
+				var tabNomCategories = [];
+				var model2 = GLOBAL.schemas["Sous_categories"];
+				model2.document.find(_condition, function (err,result2){
+					if (err) {
+	          	    _callback(err, null);
+	       		 	}
+					else{
+				
+				   	    for(var i = 0; i<result1.length; i++){
+					       	  	var tab = [];
+							tab.push(result1[i].nom_categorie);
+							for(var j = 0; j<result2.length; j++){
+							logger.debug("-------------------------------VALEUR CAT----------------------------------------------");
+							logger.debug(result1[i]._id);
+							logger.debug("-----------------------------------------------------------------------------");
+							logger.debug("-------------------------------VALEUR SOUS-CAT----------------------------------------------");
+							logger.debug(result2[j].id_categorie);
+							logger.debug("-----------------------------------------------------------------------------");
+							    if(!(result1[i]._id < result2[j].id_categorie || result1[i]._id > result2[j].id_categorie)){
+									logger.debug("-----------------------------------COUCOU------------------------------------------");
+									tab.push(result2[j].nom_sous_categorie);
+							    }
+							}
+						tabNomCategories.push(tab);
+						}
+				    result.tabCategories = tabNomCategories;
+					_callback(null, result2);
+					logger.debug("--------------------------tabCategories---------------------------------------------------");
+					logger.debug(result.tabCategories);
+					logger.debug("-----------------------------------------------------------------------------");
+			            
+					}
+				});
+			_callback(null, result1);
+			}
+			logger.debug("--------------------------RESULT:---------------------------------------------------");
+			logger.debug(result);
+			logger.debug("-----------------------------------------------------------------------------");
+		});
 	   _callback(null, result);
     }});
-};
+};*/
 
 
 mongooseGeneric.prototype.deleteDocument = function (_condition, _callback) {

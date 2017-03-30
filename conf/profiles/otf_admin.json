@@ -311,10 +311,10 @@
     },
     "GET/formaddcomposant": {
         "module": "finder",
-        "methode": "list",
+        "methode": "listMultiple",
         "screen": "formaddcomposant",
         "auth": true,
-        "data_model":"Composants"
+        "data_model":"Sous_categories"
 
     },
     "GET/deletecomposant": {
@@ -404,10 +404,10 @@
         "screen": "tab_categories",
         "auth": true,
         "params_names": ["_id"],
-	"data_model": ["Categories", "Sous_categories"],
-	"data_ref": ["nom_categorie", "id_categorie"],
+        "data_model": ["Categories", "Sous_categories"],
+        "data_ref": ["nom_categorie", "id_categorie"],
         "redirect": true,
-	"redirect_action": "categories"
+        "redirect_action": "categories"
     },
     "POST/addsouscategories": {
         "module": "inserter",
@@ -438,21 +438,21 @@
     },
     "GET/fiche_souscategories": {
         "module": "finder",
-        "methode": "listMultiple",
+        "methode": "oneAndListMultiSchemas",
         "screen": "formupdatesouscategories",
         "auth": true,
         "params_names": ["_id"],
-        "data_model": "Categories",
+        "data_model": "Sous_categories",
         "data_ref": []
     },
     "GET/json/souscategoriesjson": {
         "module": "finder",
-        "methode": "populate",
+        "methode": "populateInfinite",
         "screen": "tab_categories",
         "auth": true,
         "params_names": [],
         "data_model": "Sous_categories",
-	"data_ref": "sous_categories",
+	"data_ref": [["id_categorie"]],
         "return_type": "application/json"
     },
     "GET/deletesouscategories": {
