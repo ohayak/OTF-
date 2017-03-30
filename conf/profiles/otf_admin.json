@@ -282,7 +282,9 @@
         "module": "finder",
         "methode": "populate",
         "screen": "forum_title",
-        "auth":true
+        "auth":true,
+	"data_ref": "id_auteur",
+	"data_model": "Conversations"
     },
     "GET/forum_newconv": {
         "module": "index",
