@@ -1,0 +1,126 @@
+<!-- <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="{{#if result.one}}/updateaccount{{else}}/addaccount{{/if}}"> -->
+<!--   <div class="col-xs-12 col-sm-12"> -->
+<!--     <h3>{{#if result.one}} {{else}}Nouveau compte{{/if}}</h3> -->
+<!--   </div> -->
+
+<!--   <div class="form-group"> -->
+<!--     <label for="inputName" class="col-sm-2 control-label">Login</label> -->
+<!--     <div class="col-sm-6"> -->
+<!--       <input class="form-control" placeholder="Login" type="text" name="login" title="This field is required" value="{{#if result.one}}{{result.one.login}}{{/if}}" required="required"/> -->
+<!--     </div> -->
+<!--   </div> -->
+
+<!--   <div class="form-group"> -->
+<!--     <label for="inputName" class="col-sm-2 control-label">Adresse email</label> -->
+<!--     <div class="col-sm-6"> -->
+<!--       <input class="form-control" placeholder="Adresse email" type="text" name="mail" title="This field is required" value="{{#if result.one}}{{result.one.email}}{{/if}}" required="required"/> -->
+<!--     </div> -->
+<!--   </div> -->
+
+<!--   <div class="form-group"> -->
+<!--     <label for="inputName" class="col-sm-2 control-label">Mot de passe</label> -->
+<!--     <div class="col-sm-6"> -->
+<!--       <input class="form-control" placeholder="Mot de passe" type="password" name="password" title="This field is required" value="{{#if result.one}}{{result.one.password}}{{/if}}" required="required"/> -->
+<!--     </div> -->
+<!--   </div> -->
+
+<!--   <div class="form-group"> -->
+<!--     <label for="inputName" class="col-sm-2 control-label">Confirmer le mot de passe</label> -->
+<!--     <div class="col-sm-6"> -->
+<!--       <input class="form-control" placeholder="Confirmer le mot de passe" type="password" name="password2" title="This field is required" value="{{#if result.one}}{{result.one.password}}{{/if}}" required="required"/> -->
+<!--     </div> -->
+<!--   </div> -->
+
+<!--   <div class="form-group"> -->
+<!--     <label for="inputName" class="col-sm-2 control-label">Nom du rôle</label> -->
+<!--     <div class="col-sm-10"> -->
+<!--       <select class="form-control" id="statut" name="role" required="required"> -->
+<!-- 	{{#if result.one}}{{else}} -->
+<!-- 	{{/if}}          <option value="Utilisateur" {{#if result.one}}{{#compare result.one.statut 'Utilisateur' operator='=='}}selected{{/compare}}{{/if}} >Utilisateur</option> -->
+<!-- 	<option value="Responsable" {{#if result.one}}{{#compare result.one.statut 'Responsable' operator='=='}}selected{{/compare}}{{/if}} >Responsable</option> -->
+<!-- 	<option value="Administrateur" {{#if result.one}}{{#compare result.one.statut 'Administrateur' operator='=='}}selected{{/compare}}{{/if}} >Administrateur</option>              -->
+<!--       </select> -->
+<!--     </div> -->
+<!--   </div>   -->
+
+<!--   <div class="form-group"> -->
+<!--     <div class="col-sm-offset-2 col-sm-10"> -->
+<!--       {{#if result.one}} -->
+<!--       <input type="hidden" name="_id" value="{{result.one._id}}"/> -->
+<!--       {{/if}} -->
+<!--       <button type="submit" name="button" id="button" class="btn btn-primary">Valider</button> -->
+<!--     </div> -->
+<!--   </div> -->
+
+<!-- </form> -->
+
+
+<form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="{{#if result.one}}/updateaccount{{else}}/addaccount{{/if}}">
+  <div class="col-xs-12 col-sm-12">
+    <h3>{{#if result.one}} {{else}}Nouveau compte{{/if}}</h3>
+  </div>
+
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Login / Mot de passe</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" placeholder="Login" id="login" name="login" required="required" value="{{#if result.one}}{{result.one.login}}{{/if}}">
+    </div>
+    <div class="col-sm-3">
+      <input type="password" class="form-control" placeholder="Mot de passe" id="login" name="password" required="required" value="{{#if result.one}}{{result.one.password}}{{/if}}">
+    </div>
+    <div class="col-sm-3">
+      <input type="password" class="form-control" placeholder="Confirmer le mot de passe" id="password2" name="password2" required="required" value="{{#if result.one}}{{result.one.password}}{{/if}}">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Adresse email</label>
+    <div class="col-sm-5">
+      <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+	<input class="form-control" type="email" placeholder="Adresse email" name="email" value="{{#if result.one}}{{result.one.email}}{{/if}}" title="'Ce champs est requis et doit être de la forme 'example@domain.com'" onchange="form.email2.pattern = this.value;" required="required"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">Nom du rôle</label>
+    <div class="col-sm-10">
+      <select class="form-control" id="role" name="Nom du rôle" required="required">
+          {{#compare url 'tab_accounts' operator='indexof'}}
+              {{#each result.Role}}
+                  <option value="{{this._id}}" {{#compare this._id.id ../result.one.role.id operator='==='}}selected{{/compare}}>{{this.code}} - {{this.libelle}}</option>
+              {{/each}}
+          {{else}}
+              {{#each result}}
+                  <option value="{{this._id}}">{{this.code}} - {{this.libelle}}</option>
+              {{/each}}
+          {{/compare}}
+      </select>
+    </div>
+  </div>
+
+  <!-- <div class="form-group"> -->
+  <!--   <label for="inputName" class="col-sm-2 control-label">Nom du rôle</label> -->
+  <!--   <div class="col-sm-2"> -->
+  <!--     <select class="form-control" id="role" name="Nom du rôle" required="required"> -->
+  <!-- 	{{#if result.one}}{{else}} -->
+  <!-- 	<option value="" disabled selected></option> -->
+  <!-- 	{{/if}} -->
+  <!-- 	<option value="Utilisateur" {{#if result.one}}{{#compare result.one.role 'Utilisateur' operator='=='}}selected{{/compare}}{{/if}}>Utilisateur</option> -->
+  <!-- 	<option value="Responsable" {{#if result.one}}{{#compare result.one.role 'Responsable' operator='=='}}selected{{/compare}}{{/if}}>Responsable</option> -->
+  <!-- 	<option value="Administrateur" {{#if result.one}}{{#compare result.one.role 'Administrateur' operator='=='}}selected{{/compare}}{{/if}}>Administrateur</option> -->
+  <!--     </select> -->
+  <!--   </div> -->
+  <!-- </div> -->
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      {{#if result.one}}
+      <input type="hidden" name="_id" value="{{result.one._id}}"/>
+      {{/if}}
+      <button type="submit" name="button" id="button" class="btn btn-primary">Validate</button>
+    </div>
+  </div>
+
+</form>
+
