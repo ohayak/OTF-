@@ -244,7 +244,7 @@
         "auth": true,
         "params_names": ["_id", "quantite_pretee", "quantite_rendue"],
         "data_model": "Prets",
-	"data_ref" : [["id_composant", "tab_pretes"]],
+	"data_ref" : [["id_composant", "tab_pretes"], ["id_composant", "id_categorie"], ["id_composant", "id_sous_categorie"]],
         "redirect": true,
         "redirect_action": "composants_pretes"
     },
@@ -255,7 +255,7 @@
         "auth": true,
         "params_names": ["_id"],
         "data_model": "Prets",
-	"data_ref": [["id_composant", "tab_pretes"]], 
+	"data_ref": [["id_composant", "tab_pretes"], ["id_composant", "id_categorie"], ["id_composant", "id_sous_categorie"]], 
         "redirect": true,
         "redirect_action": "composants_pretes"
     },
@@ -349,7 +349,7 @@
     },
     "GET/deletecomposant": {
         "module": "deleter",
-        "methode": "oneById",
+        "methode": "delete_composant",
         "screen": "tab_composants",
         "auth": true,
         "params_names": ["_id"],
@@ -367,10 +367,10 @@
     },
     "POST/updatecomposant": {
         "module": "updater",
-        "methode": "one",
+        "methode": "one_and_modif",
         "screen": "tab_composants",
         "auth": true,
-        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant",   "quantite_pretee", "id_categorie", "id_sous_categorie"],
+        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant", "statut_composant",  "quantite_pretee", "id_categorie", "id_sous_categorie"],
         "data_model": "Composants",
         "redirect": true,
         "redirect_action": "composants"
@@ -521,8 +521,71 @@
         "data_model": "AccountId",
         "redirect": true,
         "redirect_action": "mon_compte"
+    },
+    "GET/historique": {
+        "module": "finder",
+        "methode": "populateInfinite",
+        "screen": "historique",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Modifications",
+	"data_ref": [["ids_suppressions", "id_composant", "id_categorie"], ["id_suppressions", "id_composant", "id_sous_categorie"], ["id_pret", "id_composant"], ["id_composant"], ["id_avant", "id_categorie"], ["id_apres", "id_categorie"], ["id_avant", "id_sous_categorie"], ["id_apres", "id_sous_categorie"], ["id_prete_avant", "id_composant", "id_categorie"], ["id_prete_avant", "id_composant", "id_sous_categorie"], ["id_prete_apres", "id_composant", "id_categorie"], ["id_prete_apres", "id_composant", "id_sous_categorie"]]
+    },
+    "POST/effacer_de_historique": {
+        "module": "deleter",
+        "methode": "delete_modification",
+        "screen": "historique",
+        "auth": true,
+        "params_names": ["modif_a_effacer"],
+        "data_model": "Modifications",
+        "redirect": true,
+        "redirect_action": "historique"
+    },
+    "POST/redirection_update": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true,
+        "params_names": ["_id"],
+        "redirect": true,
+        "redirect_action": "fiche_composant"
+    },
+    "POST/redirection_rendre": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true,
+        "params_names": ["_id"],
+        "redirect": true,
+        "redirect_action": "rendre_composant"
+    },
+    "POST/redirection_preter": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true,
+        "params_names": ["_id"],
+        "redirect": true,
+        "redirect_action": "preter_composant"
+    },
+    "POST/redirection_nouveau_composant": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true,
+        "params_names": [],
+        "redirect": true,
+        "redirect_action": "formaddcomposant"
+    },
+    "POST/redirection_composants": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true,
+        "params_names": [],
+        "redirect": true,
+        "redirect_action": "composants"
     }
-
 }
 
 

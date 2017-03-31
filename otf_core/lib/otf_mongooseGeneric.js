@@ -827,6 +827,7 @@ mongooseGeneric.prototype.deleteModification = function (_condition, _callback) 
 	    _callback(null, result);
 	}
     });
+};
 
 
 
