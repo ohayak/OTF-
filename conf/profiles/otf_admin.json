@@ -302,12 +302,22 @@
 	"params_names": ["id_conversation"]
     },
     "POST/addconv": {
-         "module": "inserter",
-         "methode": "newConversation",
-         "screen": "forum_newconv",
-         "auth": true,
-         "params_names": ["titre_conversation", "contenu_commentaire"],
-         "redirect": true,          "redirect_action" : "forum_title"
+        "module": "inserter",
+        "methode": "newConversation",
+        "screen": "forum_newconv",
+        "auth": true,
+        "params_names": ["titre_conversation", "contenu_commentaire"],
+        "redirect": true,
+	"redirect_action" : "forum_title"
+    },
+    "GET/deleteconv": {
+        "module": "deleter",
+        "methode": "delConversation",
+        "screen": "index",
+        "auth": true,
+        "params_names": ["_id"],
+        "redirect": true,
+	"redirect_action" : "forum_title"
      },
     "POST/addcomposant": {
         "module": "inserter",
