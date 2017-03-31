@@ -8,6 +8,7 @@ var logger = require('log4js').getLogger('finder');
 logger.setLevel(GLOBAL.config["LOGS"].level);
 var mongoose = require('mongoose');
 var genericModel = require('../otf_core/lib/otf_mongooseGeneric');
+var outil = require("./outil");
 
 /*
  * GET users listing.
@@ -443,6 +444,9 @@ exports.finder = {
             model.getDocuments(_controler.params, function (err, list) {
                 logger.debug('populateCommantaires Result  :', list);
                 logger.debug('req.session : ' , req.session );
+		list.sort(function(com1, com2){
+		    return outil.compareStringDate(com2.date_commentaire, com2.date_commentaire);
+		});
                 list.str = JSON.stringify(list);
                 return cb(null, {result: list}); //, user:req.session.login_info.user, "state": state, room: _controler.room});
             });
