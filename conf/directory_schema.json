@@ -218,55 +218,92 @@
 	    }
 	}
     },
-    "Modifications": {
+     "Modifications": {
 	"collection": "modifications",
 	"schema": {
 	    "_id": "ObjectId",
 	    "type_modification": "String",
 	    "date_modification": "String",
+	    "modification": "Boolean",
+	    "rendu_partiel": "Boolean",
+	    "rendu_total": "Boolean",
+	    "pret": "Boolean",
+	    "creation": "Boolean",
+	    "suppression": "Boolean",
+	    "ids_suppressions": [{"type": "ObjectId", "ref": "Pretes_avant_modification"}],
 	    "id_pret": {
 		"type": "ObjectId",
 		"ref": "Prets"
 	    },
-	    "id_composant_reel": {
+	    "id_composant": {
 		"type": "ObjectId",
-		"ref": "Composants_reels"
+		"ref": "Composants"
 	    },
-	    "id_composant_avant_modification": {
+	    "id_avant": {
 		"type": "ObjectId",
 		"ref": "Composants_avant_modification"
 	    },
-	    "id_composant_apres_modification": {
+	    "id_apres": {
 		"type": "ObjectId",
 		"ref": "Composants_apres_modification"
-	    }
-	}
-    },
-    "Composants_reels": {
-	"collection": "composants_reels",
-	"schema": {
-	    "_id": {
+	    },
+	    "id_prete_apres": {
 		"type": "ObjectId",
-		"ref": "Composants"
+		"ref": "Pretes_apres_modification"
+	    },
+	    "id_prete_avant": {
+		"type": "ObjectId",
+		"ref": "Pretes_avant_modification"
 	    }
 	}
     },
     "Composants_avant_modification": {
 	"collection": "composants_avant_modification",
 	"schema": {
-	    "_id": {
-		"type": "ObjectId",
-		"ref": "Composants"
-	    }
+	    "_id" : "ObjectId",
+	    "nom_composant": "String",
+	    "quantite_composant": "Number",
+	    "statut_composant": "String",
+	    "remarques_composant": "String",
+	    "categorie": "String",
+	    "sous_categorie": "String"
 	}
     },
     "Composants_apres_modification": {
 	"collection": "composants_apres_modification",
 	"schema": {
-	    "_id": {
-		"type": "ObjectId",
-		"ref": "Composants"
-	    }
+	    "_id": "ObjectId",
+	    "nom_composant": "String",
+	    "quantite_composant": "Number",
+	    "statut_composant": "String",
+	    "remarques_composant": "String",
+	    "categorie": "String",
+	    "sous_categorie": "String"
+	}
+    },
+    "Pretes_avant_modification": {
+	"collection": "pretes_avant_modification",
+	"schema": {
+	    "_id": "ObjectId",
+	    "quantite_pretee": "Number",
+	    "date_pret": "String",
+	    "nom_emprunteur": "String",
+	    "nom_composant": "String",
+	    "categorie": "String",
+	    "sous_categorie": "String"
+	}
+    },
+    "Pretes_apres_modification": {
+	"collection": "pretes_apres_modification",
+	"schema": {
+	    "_id": "ObjectId",
+	    "quantite_pretee": "Number",
+	    "date_pret": "String",
+	    "nom_emprunteur": "String",
+	    "nom_composant": "String",
+	    "categorie": "String",
+	    "sous_categorie": "String"
 	}
     }
 }
+
