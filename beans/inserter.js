@@ -82,6 +82,23 @@ exports.inserter = {
             return cb(err);
         }
 	
-    }
+    },
 
+    newCommentaire: function(req, cb) {
+	var _controler = req.session.controler;
+        var model = GLOBAL.schemas["Commentaires"];
+        logger.debug('path    : ', _controler.path);
+        logger.debug('room    : ', _controler.room);
+        logger.debug('params  : ', _controler.params);
+        logger.debug(" One User emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
+        try {
+            model.createDocument({ contenu_commentaire: _controler.params.contenu_commentaire, date_commentaire: new Date().toString(), id_auteur: req.session.login_info.user._id, id_conversation: _controler.params.id_conversation }, function (err, nb_inserted) {
+                logger.debug('nombre documents insérés :', nb_inserted);
+                return cb(null, {data: nb_inserted, room: _controler.room});
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            return cb(err);
+        }
+    }
 };

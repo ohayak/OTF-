@@ -310,6 +310,15 @@
         "redirect": true,
 	"redirect_action" : "forum_title"
     },
+    "POST/addcom": {
+        "module": "inserter",
+        "methode": "newCommentaire",
+        "screen": "forum_title",
+        "auth": true,
+        "params_names": ["id_conversation", "contenu_commentaire"],
+        "redirect": true,
+	"redirect_action" : "forum_conv"
+    },
     "GET/deleteconv": {
         "module": "deleter",
         "methode": "delConversation",
