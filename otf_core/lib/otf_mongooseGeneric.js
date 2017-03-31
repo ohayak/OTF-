@@ -299,6 +299,11 @@ mongooseGeneric.prototype.popDocumentsInfinite = function (_condition, _callback
 
 
 
+
+
+
+
+
 // quand on rend tous les composants empruntés
 mongooseGeneric.prototype.suppression_pretes = function (_condition, _callback){
     
@@ -370,12 +375,73 @@ mongooseGeneric.prototype.suppression_pretes = function (_condition, _callback){
 	    }
 	    var _values = {"tab_pretes": new_tab_ids, "quantite_composant" : new_nbr_composants};
 	    doc.remove({_id: id_pret}, function() {});
+
+
+	    //mise à jour des modifications
+	    var now = new Date();
+	    var annee = now.getFullYear();
+	    var mois = now.getMonth() + 1;
+	    var jour = now.getDate();
+	    var date = jour + "/" + mois + "/" + annee;
+	    var id_avant = new ObjectId();
+	    var id_apres = new ObjectId();
+	    var id_modif = new ObjectId();
+	    var id_prete_avant = new ObjectId();
+	    var id_default = new ObjectId();
+
+	    var modification = {"_id":id_modif, "type_modification":"Rendu total d'un composant prêté", "date_modification":date , "modification":0, "rendu_partiel":0, "rendu_total":1, "pret":0, "creation":0, "suppression":0, "id_composant":id_composant, "id_pret": id_default, "id_avant":id_avant, "id_apres":id_apres, "ids_suppressions":[], "id_prete_avant":id_prete_avant, "id_prete_apres":id_default};
+
+	    var avant = {"_id":id_avant, "nom_composant": result[0].id_composant.nom_composant, "quantite_composant":result[0].id_composant.quantite_composant, "statut_composant": result[0].id_composant.statut_composant, "remarques_composant":result[0].id_composant.remarques_composant, "categorie":result[0].id_composant.id_categorie.nom_categorie, "sous_categorie":result[0].id_composant.id_sous_categorie.nom_sous_categorie};
+
+	    var apres = {"_id":id_apres, "nom_composant": result[0].id_composant.nom_composant, "quantite_composant":new_nbr_composants, "statut_composant": result[0].id_composant.statut_composant, "remarques_composant":result[0].id_composant.remarques_composant, "categorie":result[0].id_composant.id_categorie.nom_categorie, "sous_categorie":result[0].id_composant.id_sous_categorie.nom_sous_categorie};
+
+	    var prete_avant = {"_id": id_prete_avant, "quantite_pretee": result[0].quantite_pretee, "date_pret":result[0].date_pret, "nom_emprunteur":result[0].nom_emprunteur, "nom_composant":result[0].id_composant.nom_composant, "categorie": result[0].id_composant.id_categorie.nom_categorie, "sous_categorie":result[0].id_composant.id_sous_categorie.nom_sous_categorie};
+	    
+	    var modele_modif = GLOBAL.schemas["Modifications"];
+
+	    var modele_avant = GLOBAL.schemas["Composants_avant_modification"];
+
+	    var modele_apres = GLOBAL.schemas["Composants_apres_modification"];
+
+	    var modele_prete_avant = GLOBAL.schemas["Pretes_avant_modification"];
+
+	    var mo = new modele_modif.document(modification);
+
+	    var av = new modele_avant.document(avant);
+
+	    var ap = new modele_apres.document(apres);
+
+	    var pr_av = new modele_prete_avant.document(prete_avant);
+
+	    mo.save(function(){});
+
+	    av.save(function(){});
+
+	    ap.save(function(){});
+
+	    pr_av.save(function(){});
+
+	    
 	    var model = GLOBAL.schemas["Composants"];
 	    model.document.update({_id: id_composant}, { $set: _values}, function() {});
 	    _callback(null, result);
 	}
     });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -442,15 +508,84 @@ mongooseGeneric.prototype.modification_pretes = function (_condition, _callback)
 	    var quantite_rendue = _condition.query.quantite_rendue;
 	    var quantite_initiale = result[0].id_composant.quantite_composant;
 	    var new_quantite = parseInt(quantite_initiale) + parseInt(quantite_rendue);
+
+
+
+	    //mise à jour des modifications
+	    var now = new Date();
+	    var annee = now.getFullYear();
+	    var mois = now.getMonth() + 1;
+	    var jour = now.getDate();
+	    var date = jour + "/" + mois + "/" + annee;
+	    var id_avant = new ObjectId();
+	    var id_apres = new ObjectId();
+	    var id_modif = new ObjectId();
+	    var id_prete_avant = new ObjectId();
+	    var id_prete_apres = new ObjectId();
+	    var id_default = new ObjectId();
+
+	    var modification = {"_id":id_modif, "type_modification":"Rendu partiel d'un composant prêté", "date_modification":date , "modification":0, "rendu_partiel":1, "rendu_total":0, "pret":0, "creation":0, "suppression":0, "id_composant":result[0].id_composant._id, "id_pret":id_default, "id_avant":id_avant, "id_apres":id_apres, "ids_suppressions":[], "id_prete_avant":id_prete_avant, "id_prete_apres":id_prete_apres};
+
+	    var avant = {"_id":id_avant, "nom_composant": result[0].id_composant.nom_composant, "quantite_composant":result[0].id_composant.quantite_composant, "statut_composant": result[0].id_composant.statut_composant, "remarques_composant":result[0].id_composant.remarques_composant, "categorie":result[0].id_composant.id_categorie.nom_categorie, "sous_categorie":result[0].id_composant.id_sous_categorie.nom_sous_categorie};
+
+	    var apres = {"_id":id_apres, "nom_composant": result[0].id_composant.nom_composant, "quantite_composant":new_quantite, "statut_composant": result[0].id_composant.statut_composant, "remarques_composant":result[0].id_composant.remarques_composant, "categorie":result[0].id_composant.id_categorie.nom_categorie, "sous_categorie":result[0].id_composant.id_sous_categorie.nom_sous_categorie};
+
+	    var prete_avant = {"_id": id_prete_avant, "quantite_pretee": result[0].quantite_pretee, "date_pret":result[0].date_pret, "nom_emprunteur":result[0].nom_emprunteur,  "nom_composant":result[0].id_composant.nom_composant, "categorie": result[0].id_composant.id_categorie.nom_categorie, "sous_categorie": result[0].id_composant.id_sous_categorie.nom_sous_categorie};
+
+	    var prete_apres = {"_id": id_prete_apres, "quantite_pretee": quantite_pretee, "date_pret":result[0].date_pret, "nom_emprunteur":result[0].nom_emprunteur, "nom_composant":result[0].id_composant.nom_composant, "categorie": result[0].id_composant.id_categorie.nom_categorie, "sous_categorie": result[0].id_composant.id_sous_categorie.nom_sous_categorie};
+	    
+	    var modele_modif = GLOBAL.schemas["Modifications"];
+
+	    var modele_avant = GLOBAL.schemas["Composants_avant_modification"];
+
+	    var modele_apres = GLOBAL.schemas["Composants_apres_modification"];
+
+	    var modele_prete_avant = GLOBAL.schemas["Pretes_avant_modification"];
+
+	    var modele_prete_apres = GLOBAL.schemas["Pretes_apres_modification"];
+
+	    var mo = new modele_modif.document(modification);
+
+	    var av = new modele_avant.document(avant);
+
+	    var ap = new modele_apres.document(apres);
+
+	    var pr_av = new modele_prete_avant.document(prete_avant);
+
+	    var pr_ap = new modele_prete_apres.document(prete_apres);
+
+	    mo.save(function(){});
+
+	    av.save(function(){});
+
+	    ap.save(function(){});
+
+	    pr_av.save(function(){});
+
+	    pr_ap.save(function(){});
+
+
+	    
 	    // nouvelle quantité pour le prêt
 	    doc.update({"_id": result[0]._id}, { $set: {"quantite_pretee": quantite_pretee}}, { multi: true }, function (){});
 	    var model = GLOBAL.schemas["Composants"];
+	    
 	    // nouvelle quantite pour le composant
 	    model.document.update({"_id": result[0].id_composant._id}, {$set: {"quantite_composant" : new_quantite}}, function(){});
 	    _callback(null, result);
 	}
     });
 };
+
+
+
+
+
+
+
+
+
+
 
 
 mongooseGeneric.prototype.lendObject = function(_values, _callback){
@@ -466,13 +601,59 @@ mongooseGeneric.prototype.lendObject = function(_values, _callback){
 	var tab_pretes = [];
 	var quantite_initiale;
 	var quantite_pretee = _values.quantite_pretee;
-	model.document.find({"_id": id_composant}, function(err,result){
+    model.document.find({"_id": id_composant}).populate({path:"id_categorie"}).populate({path:"id_sous_categorie"}).exec(function(err,result){
 	    if(err) _callback(err,null);
 	    else{
 		quantite_initiale = result[0].quantite_composant;
 		tab_pretes = result[0].tab_pretes;
 		tab_pretes.push(_values._id);
 		var quantite_composant = parseInt(quantite_initiale) - parseInt(quantite_pretee);
+
+		
+		//mise à jour des modifications
+		var now = new Date();
+		var annee = now.getFullYear();
+		var mois = now.getMonth() + 1;
+		var jour = now.getDate();
+		var date = jour + "/" + mois + "/" + annee;
+		var id_avant = new ObjectId();
+		var id_apres = new ObjectId();
+		var id_modif = new ObjectId();
+		var id_prete_apres = new ObjectId();
+		var id_default_prete_avant = new ObjectId();
+
+		var modification = {"_id":id_modif, "type_modification":"Prêt d'un composant", "date_modification":date , "modification":0, "rendu_partiel":0, "rendu_total":0, "pret":1, "creation":0, "suppression":0, "id_composant":id_composant, "id_pret": _values._id, "id_avant":id_avant, "id_apres":id_apres, "ids_suppressions":[], "id_prete_avant":id_default_prete_avant, "id_prete_apres":id_prete_apres};
+
+		var avant = {"_id":id_avant, "nom_composant": result[0].nom_composant, "quantite_composant":result[0].quantite_composant, "statut_composant": result[0].statut_composant, "remarques_composant":result[0].remarques_composant, "categorie":result[0].id_categorie.nom_categorie, "sous_categorie":result[0].id_sous_categorie.nom_sous_categorie};
+
+		var apres = {"_id":id_apres, "nom_composant": result[0].nom_composant, "quantite_composant":result[0].quantite_composant - _values.quantite_pretee, "statut_composant": result[0].statut_composant, "remarques_composant":result[0].remarques_composant, "categorie":result[0].id_categorie.nom_categorie, "sous_categorie":result[0].id_sous_categorie.nom_sous_categorie};
+
+		var prete_apres = {"_id": id_prete_apres, "quantite_pretee": _values.quantite_pretee, "date_pret":_values.date_pret, "nom_emprunteur":_values.nom_emprunteur, "nom_composant":result[0].nom_composant, "categorie": result[0].id_categorie.nom_categorie, "sous_categorie": result[0].id_sous_categorie.nom_sous_categorie};
+		
+		var modele_modif = GLOBAL.schemas["Modifications"];
+
+		var modele_avant = GLOBAL.schemas["Composants_avant_modification"];
+
+		var modele_apres = GLOBAL.schemas["Composants_apres_modification"];
+
+		var modele_prete_apres = GLOBAL.schemas["Pretes_apres_modification"];
+
+		var mo = new modele_modif.document(modification);
+
+		var av = new modele_avant.document(avant);
+
+		var ap = new modele_apres.document(apres);
+
+		var pr_ap = new modele_prete_apres.document(prete_apres);
+
+		mo.save(function(){});
+
+		av.save(function(){});
+
+		ap.save(function(){});
+
+		pr_ap.save(function(){});
+
 		
 		// mise à jour de la table des composants
 		model.document.update({"_id": id_composant}, {$set: {"tab_pretes": tab_pretes, "quantite_composant": quantite_composant}}, function(){});
@@ -483,19 +664,66 @@ mongooseGeneric.prototype.lendObject = function(_values, _callback){
 
 
 
+
+
+
+
+
+
 mongooseGeneric.prototype.deleteComposant = function (_condition, _callback) {
 
     var model = GLOBAL.schemas["Composants"];
-    model.document.find(_condition,function(err,result){
+    model.document.find(_condition).populate({path:"tab_pretes", populate: {path: "id_composant", populate: {path: "id_categorie"}}}).populate({path:"tab_pretes", populate: {path: "id_composant", populate: {path: "id_sous_categorie"}}}).populate({path: "id_categorie"}).populate({path:"id_sous_categorie"}).exec(function(err,result){
 	if(err){
 	    _callback(err,null);
 	}
 	else{
-	    var tab_ids_pretes = result[0].tab_pretes;
+	    var tab_ids_pretes = []; 
+	    for(var i=0; i<result[0].tab_pretes.length; i++){
+		tab_ids_pretes.push(result[0].tab_pretes[i]._id);
+	    }
 	    var model_pretes = GLOBAL.schemas["Prets"];
 	    for(var i=0; i<tab_ids_pretes.length; i++){
 		model_pretes.document.remove({"_id": tab_ids_pretes[i]}, function(){});
 	    }
+
+
+	    //mise à jour des modifications
+	    var now = new Date();
+	    var annee = now.getFullYear();
+	    var mois = now.getMonth() + 1;
+	    var jour = now.getDate();
+	    var date = jour + "/" + mois + "/" + annee;
+	    var id_default = new ObjectId();
+	    var id_modif = new ObjectId();
+	    var id_avant = new ObjectId();
+
+	    var avant = {"_id":id_avant, "nom_composant": result[0].nom_composant, "quantite_composant":result[0].quantite_composant, "statut_composant": result[0].statut_composant, "remarques_composant":result[0].remarques_composant, "categorie":result[0].id_categorie.nom_categorie, "sous_categorie":result[0].id_sous_categorie.nom_sous_categorie};
+
+
+	    //boucle pour stocker les anciens prêtés dans les modifications
+	    var tab_new_ids = [];
+	    for(var i=0; i<tab_ids_pretes.length; i++){
+		var id_prete_avant = new ObjectId();
+		tab_new_ids.push(id_prete_avant);
+		var prete_avant = {"_id": id_prete_avant, "quantite_pretee": result[0].tab_pretes[i].quantite_pretee, "date_pret":result[0].tab_pretes[i].date_pret, "nom_emprunteur":result[0].tab_pretes[i].nom_emprunteur, "nom_composant":result[0].tab_pretes[i].id_composant.nom_composant, "categorie":result[0].id_categorie.nom_categorie, "sous_categorie": result[0].id_sous_categorie.nom_sous_categorie};
+		var modele_prete_avant = GLOBAL.schemas["Pretes_avant_modification"];
+		var pr_av = new modele_prete_avant.document(prete_avant);
+		pr_av.save(function(){});
+	    }
+
+	    var modification = {"_id":id_modif, "type_modification":"Suppression d'un composant et des composants prêtés associés", "date_modification":date , "modification":0, "rendu_partiel":0, "rendu_total":0, "pret":0, "creation":0, "suppression":1, "id_composant":id_default, "id_pret": id_default, "id_avant":id_avant, "id_apres":id_default, "ids_suppressions":tab_new_ids, "id_prete_avant":id_default, "id_prete_apres":id_default};
+
+	    
+	    var modele_modif = GLOBAL.schemas["Modifications"];
+	    var modele_avant = GLOBAL.schemas["Composants_avant_modification"];
+
+	    var mo = new modele_modif.document(modification);
+	    var av = new modele_avant.document(avant);
+
+	    mo.save(function(){});
+	    av.save(function(){});
+	    
 	    model.document.remove(_condition, function (){});
 	    _callback(null, result);
 	}
@@ -504,25 +732,101 @@ mongooseGeneric.prototype.deleteComposant = function (_condition, _callback) {
 };
 
 
-mongooseGeneric.prototype.deleteComposant = function (_condition, _callback) {
 
+
+
+
+
+mongooseGeneric.prototype.updateAndModif = function (_conditions, _values, _callback) {
+
+    
     var model = GLOBAL.schemas["Composants"];
-    model.document.find(_condition,function(err,result){
-       if(err){
-           _callback(err,null);
-       }
-       else{
-           var tab_ids_pretes = result[0].tab_pretes;
-           var model_pretes = GLOBAL.schemas["Prets"];
-           for(var i=0; i<tab_ids_pretes.length; i++){
-               model_pretes.document.remove({"_id": tab_ids_pretes[i]}, function(){});
-           }
-           model.document.remove(_condition, function (){});
-           _callback(null, result);
-       }
-    });
+    model.document.find({"_id": _conditions._id}).populate({path:"id_categorie"}).populate({path:"id_sous_categorie"}).exec(function (err, result) {
+        if (err) {
+            _callback(err, null);
+        }
+        else {
+	    //mise à jour des modifications
+	    var now = new Date();
+	    var annee = now.getFullYear();
+	    var mois = now.getMonth() + 1;
+	    var jour = now.getDate();
+	    var date = jour + "/" + mois + "/" + annee;
+	    var id_avant = new ObjectId();
+	    var id_apres = new ObjectId();
+	    var id_modif = new ObjectId();
+	    var id_default = new ObjectId();
+	    
+	    var modification = {"_id":id_modif, "type_modification":"Modification des attributs d'un composant", "date_modification":date , "modification":1, "rendu_partiel":0, "rendu_total":0, "pret":0, "creation":0, "suppression":0, "id_composant":_conditions._id, "id_pret":id_default, "id_avant":id_avant, "id_apres":id_apres, "ids_suppressions":[], "id_prete_avant":id_default, "id_prete_apres":id_default};  
+	    
+	    var avant = {"_id":id_avant, "nom_composant": result[0].nom_composant, "quantite_composant":result[0].quantite_composant, "statut_composant": result[0].statut_composant, "remarques_composant":result[0].remarques_composant, "categorie":result[0].id_categorie.nom_categorie, "sous_categorie":result[0].id_sous_categorie.nom_sous_categorie};
+	    
+	    var apres = {"_id":id_apres, "nom_composant": _values.nom_composant, "quantite_composant":_values.quantite_composant, "statut_composant": _values.statut_composant, "remarques_composant":_values.remarques_composant, "categorie":_values.id_categorie.nom_categorie, "sous_categorie":_values.id_sous_categorie.nom_sous_categorie};
+	    
+	    var modele_modif = GLOBAL.schemas["Modifications"];
+	    
+	    var modele_avant = GLOBAL.schemas["Composants_avant_modification"];
+	    
+	    var modele_apres = GLOBAL.schemas["Composants_apres_modification"];
+	    
+	    var mo = new modele_modif.document(modification);
+	    
+	    var av = new modele_avant.document(avant);
+	    
+	    var ap = new modele_apres.document(apres);
+	    
+	    mo.save(function(){});
+	    
+	    av.save(function(){});
+	    
+	    ap.save(function(){});
+	    
 
+	    // MAJ des composants
+	    model.document.update(_conditions, { $set: _values},function(){});
+	    _callback(null, result);
+        }
+    });
 };
+
+
+
+
+
+
+
+
+mongooseGeneric.prototype.deleteModification = function (_condition, _callback) {
+
+    var modele_modification = GLOBAL.schemas["Modifications"];
+    var modele_composant_avant = GLOBAL.schemas["Composants_avant_modification"];
+    var modele_composant_apres = GLOBAL.schemas["Composants_apres_modification"];
+    var modele_pretes_avant = GLOBAL.schemas["Pretes_avant_modification"];
+    var modele_pretes_apres = GLOBAL.schemas["Pretes_apres_modification"];
+
+    modele_modification.document.find(_condition._id, function(err, result){
+	if(err){
+	    _callback(err, null);
+	}
+	else{
+	    var avant = result[0].id_avant;
+	    var apres = result[0].id_apres;
+	    var prete_avant = result[0].id_prete_avant;
+	    var prete_apres = result[0].id_prete_apres;
+	    var tab_pretes = result[0].ids_suppressions;
+
+	    modele_composant_avant.document.remove({_id: avant}, function(){});
+	    modele_composant_apres.document.remove({_id: apres}, function(){});
+	    modele_pretes_avant.document.remove({_id: prete_avant}, function(){});
+	    modele_pretes_apres.document.remove({_id: prete_apres}, function(){});
+	    modele_modification.document.remove({_id: _condition._id}, function(){});
+	    for(var i=0; i<tab_pretes.length; i++){
+		modele_pretes_avant.document.remove({_id: tab_pretes[i]}, function(){});
+	    }
+	    
+	    _callback(null, result);
+	}
+    });
 
 
 

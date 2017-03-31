@@ -38,6 +38,29 @@ exports.deleter = {
         }
     },
 
+        delete_modification: function (req, cb) {
+        // CONTROLER
+        var _controler = req.session.controler;
+        //@TODO not safety
+        logger.debug('room   : ', _controler.room);
+        logger.debug('model  : ' + _controler.data_model);
+        logger.debug('params  : ', _controler.params);
+        //-- Accounts Model
+        //var modele = mongoose.model(model);
+        // Test Emit WebSocket Event
+        logger.debug(" Deleted One User emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
+        try {
+            var model = GLOBAL.schemas[_controler.data_model];
+            model.deleteModification({_id: _controler.params.modif_a_effacer}, function (err, nb_deleted) {
+                logger.debug('delete row :', nb_deleted);
+                return cb(null, {data: nb_deleted, room: _controler.room});
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.error(err);
+        }
+    },
+
     delete_composant: function (req, cb) {
         // CONTROLER
         var _controler = req.session.controler;
