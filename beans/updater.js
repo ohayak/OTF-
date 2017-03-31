@@ -39,6 +39,31 @@ exports.updater = {
     },
 
 
+    one_and_modif: function (req, cb) {
+        var _controler = req.session.controler;
+        var values = _controler.params;
+        // ici params est un objet simple à insérer
+        var theId = values._id;
+	logger.debug('id updater : ', theId);
+        delete values._id;
+        var model = GLOBAL.schemas[_controler.data_model];
+        logger.debug('params updater : ', values);
+        try {
+            model.updateAndModif({_id: theId}, values, function (err, numberAffected) {
+                if (err) {
+                    logger.info('----> error : ' + err);
+                } else {
+                    logger.debug('modification utilisateur : ', numberAffected);
+                    return cb(null, {data: numberAffected, room: _controler.room});
+                }
+            });
+        } catch (errc) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.debug('----> error catch : ' + errc);
+            return cb(err);
+        }
+    },
+
+
     prets_rendus_incomplet: function (req, cb) {
         // Input security Controle
         if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {

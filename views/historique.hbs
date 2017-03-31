@@ -1,0 +1,412 @@
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "nav"}}
+    {{> nav}}
+{{/content}}
+{{#content "page"}}
+    <script>
+        //<![CDATA[
+        $(document).ready(function(){
+            $("[data-mask]").inputmask();
+        });
+    </script>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Historique des modifications
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/index"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#">Historique</a></li>
+            </ol>
+        </section>
+
+
+
+
+	
+
+        <!-- Main content -->
+        <section class="content">
+
+	   {{#each result}}
+          <div class="row">
+	   
+	    <div class="col-md-1"></div>
+            <div class="col-md-10">
+
+              <!-- About Me Box -->
+              <div class="box box-primary">
+                <div class="box-body">
+
+		  <style>
+		    .title {width:14%; border:1px solid black; text-align:center; font-weight:bold;}
+		    .other {width:14%; border:1px solid black; text-align:center; font-weight:normal;}
+		  </style>
+		  
+		  <!-- ********************************************************************************************************************************************************-->
+		  
+		  <div style="text-align:center; font-weight:bold; color:SteelBlue; font-size: 17px;"> Le {{this.date_modification}}, {{this.type_modification}}: </div> 
+
+		  <!-- ********************************************************************************************************************************************************-->
+		  
+		  {{#if this.modification}}
+		  <div style="font-weight:bold;">Changements au niveau du composant</div>
+		  <table style="width:100%; border:1px solid black;">
+		    <tr>
+		      <th></th>
+		      <th class="title">Nom composant</th>
+		      <th class="title">Catégorie</th>
+		      <th class="title">Sous catégorie</th>
+		      <th class="title">Quantité</th>
+		      <th class="title">Statut</th>
+		      <th class="title">Remarques</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Avant </th>
+		      <th class="other">{{this.id_avant.nom_composant}}</th>
+		      <th class="other">{{this.id_avant.categorie}}</th>
+		      <th class="other">{{this.id_avant.sous_categorie}}</th>
+		      <th class="other">{{this.id_avant.quantite_composant}}</th>
+		      <th class="other">{{this.id_avant.statut_composant}}</th>
+		      <th class="other">{{this.id_avant.remarques_composant}}</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Après </th>
+		      <th class="other">{{this.id_apres.nom_composant}}</th>
+		      <th class="other">{{this.id_apres.categorie}}</th>
+		      <th class="other">{{this.id_apres.sous_categorie}}</th>
+		      <th class="other">{{this.id_apres.quantite_composant}}</th>
+		      <th class="other">{{this.id_apres.statut_composant}}</th>
+		      <th class="other">{{this.id_apres.remarques_composant}}</th>
+		    </tr>
+		    
+		  </table>
+		  {{/if}}
+
+		  <!-- ********************************************************************************************************************************************************-->
+		  
+		  {{#if this.pret}}
+		  <div style="font-weight:bold;">Changements au niveau du composant</div>
+		  <table style="width:100%; border:1px solid black;">
+		    <tr>
+		      <th></th>
+		      <th class="title">Nom composant</th>
+		      <th class="title">Catégorie</th>
+		      <th class="title">Sous catégorie</th>
+		      <th class="title">Quantité</th>
+		      <th class="title">Statut</th>
+		      <th class="title">Remarques</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Avant </th>
+		      <th class="other">{{this.id_avant.nom_composant}}</th>
+		      <th class="other">{{this.id_avant.categorie}}</th>
+		      <th class="other">{{this.id_avant.sous_categorie}}</th>
+		      <th class="other">{{this.id_avant.quantite_composant}}</th>
+		      <th class="other">{{this.id_avant.statut_composant}}</th>
+		      <th class="other">{{this.id_avant.remarques_composant}}</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Après </th>
+		      <th class="other">{{this.id_apres.nom_composant}}</th>
+		      <th class="other">{{this.id_apres.categorie}}</th>
+		      <th class="other">{{this.id_apres.sous_categorie}}</th>
+		      <th class="other">{{this.id_apres.quantite_composant}}</th>
+		      <th class="other">{{this.id_apres.statut_composant}}</th>
+		      <th class="other">{{this.id_apres.remarques_composant}}</th>
+		    </tr>
+		    
+		  </table>
+		  <br>
+		  <div style="font-weight:bold;">Nouveau prêt</div>
+		  <table style="width:100%; border:1px solid black;">
+		    <tr>
+		      <th></th>
+		      <th class="title">Nom composant</th>
+		      <th class="title">Catégorie</th>
+		      <th class="title">Sous catégorie</th>
+		      <th class="title">Quantite empruntée</th>
+		      <th class="title">Date emprunt</th>
+		      <th class="title">Nom emprunteur</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Nouveau prêt</th>
+		      <th class="other">{{this.id_prete_apres.nom_composant}}</th>
+		      <th class="other">{{this.id_prete_apres.categorie}}</th>
+		      <th class="other">{{this.id_prete_apres.sous_categorie}}</th>
+		      <th class="other">{{this.id_prete_apres.quantite_pretee}}</th>
+		      <th class="other">{{this.id_prete_apres.date_pret}}</th>
+		      <th class="other">{{this.id_prete_apres.nom_emprunteur}}</th>
+		    </tr>
+		    
+		  </table>
+		  {{/if}}
+
+		  <!-- ********************************************************************************************************************************************************-->
+
+		  {{#if this.rendu_total}}
+		  <div style="font-weight:bold;">Changements au niveau du composant</div>
+		  <table style="width:100%; border:1px solid black;">
+		    <tr>
+		      <th></th>
+		      <th class="title">Nom composant</th>
+		      <th class="title">Catégorie</th>
+		      <th class="title">Sous catégorie</th>
+		      <th class="title">Quantité</th>
+		      <th class="title">Statut</th>
+		      <th class="title">Remarques</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Avant </th>
+		      <th class="other">{{this.id_avant.nom_composant}}</th>
+		      <th class="other">{{this.id_avant.categorie}}</th>
+		      <th class="other">{{this.id_avant.sous_categorie}}</th>
+		      <th class="other">{{this.id_avant.quantite_composant}}</th>
+		      <th class="other">{{this.id_avant.statut_composant}}</th>
+		      <th class="other">{{this.id_avant.remarques_composant}}</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Après </th>
+		      <th class="other">{{this.id_apres.nom_composant}}</th>
+		      <th class="other">{{this.id_apres.categorie}}</th>
+		      <th class="other">{{this.id_apres.sous_categorie}}</th>
+		      <th class="other">{{this.id_apres.quantite_composant}}</th>
+		      <th class="other">{{this.id_apres.statut_composant}}</th>
+		      <th class="other">{{this.id_apres.remarques_composant}}</th>
+		    </tr>
+		    
+		  </table>
+		  <br>
+		  <div style="font-weight:bold;">Ancien prêt (rendu en totalité)</div>
+		  <table style="width:100%; border:1px solid black;">
+		    <tr>
+		      <th></th>
+		      <th class="title">Nom composant</th>
+		      <th class="title">Catégorie</th>
+		      <th class="title">Sous catégorie</th>
+		      <th class="title">Quantite empruntée</th>
+		      <th class="title">Date emprunt</th>
+		      <th class="title">Nom emprunteur</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Ancien prêt</th>
+		      <th class="other">{{this.id_prete_avant.nom_composant}}</th>
+		      <th class="other">{{this.id_prete_avant.categorie}}</th>
+		      <th class="other">{{this.id_prete_avant.sous_categorie}}</th>
+		      <th class="other">{{this.id_prete_avant.quantite_pretee}}</th>
+		      <th class="other">{{this.id_prete_avant.date_pret}}</th>
+		      <th class="other">{{this.id_prete_avant.nom_emprunteur}}</th>
+		    </tr>
+		    
+		  </table>
+		  {{/if}}
+
+		  <!-- ********************************************************************************************************************************************************-->
+
+		  {{#if this.rendu_partiel}}
+		  <div style="font-weight:bold;">Changements au niveau du composant</div>
+		  <table style="width:100%; border:1px solid black;">
+		    <tr>
+		      <th></th>
+		      <th class="title">Nom composant</th>
+		      <th class="title">Catégorie</th>
+		      <th class="title">Sous catégorie</th>
+		      <th class="title">Quantité</th>
+		      <th class="title">Statut</th>
+		      <th class="title">Remarques</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Avant </th>
+		      <th class="other">{{this.id_avant.nom_composant}}</th>
+		      <th class="other">{{this.id_avant.categorie}}</th>
+		      <th class="other">{{this.id_avant.sous_categorie}}</th>
+		      <th class="other">{{this.id_avant.quantite_composant}}</th>
+		      <th class="other">{{this.id_avant.statut_composant}}</th>
+		      <th class="other">{{this.id_avant.remarques_composant}}</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Après </th>
+		      <th class="other">{{this.id_apres.nom_composant}}</th>
+		      <th class="other">{{this.id_apres.categorie}}</th>
+		      <th class="other">{{this.id_apres.sous_categorie}}</th>
+		      <th class="other">{{this.id_apres.quantite_composant}}</th>
+		      <th class="other">{{this.id_apres.statut_composant}}</th>
+		      <th class="other">{{this.id_apres.remarques_composant}}</th>
+		    </tr>
+		    
+		  </table>
+		  <br>
+		  <div style="font-weight:bold;">Changements au niveau du prêt</div>
+		  <table style="width:100%; border:1px solid black;">
+		    <tr>
+		      <th></th>
+		      <th class="title">Nom composant</th>
+		      <th class="title">Catégorie</th>
+		      <th class="title">Sous catégorie</th>
+		      <th class="title">Quantite empruntée</th>
+		      <th class="title">Date emprunt</th>
+		      <th class="title">Nom emprunteur</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Avant </th>
+		      <th class="other">{{this.id_prete_avant.nom_composant}}</th>
+		      <th class="other">{{this.id_prete_avant.categorie}}</th>
+		      <th class="other">{{this.id_prete_avant.sous_categorie}}</th>
+		      <th class="other">{{this.id_prete_avant.quantite_pretee}}</th>
+		      <th class="other">{{this.id_prete_avant.date_pret}}</th>
+		      <th class="other">{{this.id_prete_avant.nom_emprunteur}}</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Après </th>
+		      <th class="other">{{this.id_prete_apres.nom_composant}}</th>
+		      <th class="other">{{this.id_prete_apres.categorie}}</th>
+		      <th class="other">{{this.id_prete_apres.sous_categorie}}</th>
+		      <th class="other">{{this.id_prete_apres.quantite_pretee}}</th>
+		      <th class="other">{{this.id_prete_apres.date_pret}}</th>
+		      <th class="other">{{this.id_prete_apres.nom_emprunteur}}</th>
+		    </tr>
+		  </table>
+		  {{/if}}
+
+
+		  <!-- ********************************************************************************************************************************************************-->
+
+		  {{#if this.suppression}}
+		 <div style="font-weight:bold;">Composant supprimé</div>
+		  <table style="width:100%; border:1px solid black;">
+		    <tr>
+		      <th></th>
+		      <th class="title">Nom composant</th>
+		      <th class="title">Catégorie</th>
+		      <th class="title">Sous catégorie</th>
+		      <th class="title">Quantité</th>
+		      <th class="title">Statut</th>
+		      <th class="title">Remarques</th>
+		    </tr>
+		    <tr>
+		      <th class="title"> Composant supprimé </th>
+		      <th class="other">{{this.id_avant.nom_composant}}</th>
+		      <th class="other">{{this.id_avant.categorie}}</th>
+		      <th class="other">{{this.id_avant.sous_categorie}}</th>
+		      <th class="other">{{this.id_avant.quantite_composant}}</th>
+		      <th class="other">{{this.id_avant.statut_composant}}</th>
+		      <th class="other">{{this.id_avant.remarques_composant}}</th>
+		    </tr>
+		    
+		  </table>
+		  <br>
+		  <div style="font-weight:bold;">Prêts supprimés (prêts initialement associés au composant supprimé)</div>
+		  <table style="width:100%; border:1px solid black;">
+		    <tr>
+		      <th></th>
+		      <th class="title">Nom composant</th>
+		      <th class="title">Catégorie</th>
+		      <th class="title">Sous catégorie</th>
+		      <th class="title">Quantite empruntée</th>
+		      <th class="title">Date emprunt</th>
+		      <th class="title">Nom emprunteur</th>
+		    </tr>
+		    {{#each this.ids_suppressions}}
+		    <tr>
+		      <th class="title"> Prêt supprimé </th>
+		      <th class="other">{{this.nom_composant}}</th>
+		      <th class="other">{{this.categorie}}</th>
+		      <th class="other">{{this.sous_categorie}}</th>
+		      <th class="other">{{this.quantite_pretee}}</th>
+		      <th class="other">{{this.date_pret}}</th>
+		      <th class="other">{{this.nom_emprunteur}}</th>
+		    </tr>
+		    {{/each}}
+		  </table>
+		  {{/if}}
+
+
+		  <!-- ********************************************************************************************************************************************************-->
+		  
+		  {{#if this.creation}}
+		  creation
+		  {{/if}}
+		  
+		 
+
+
+
+
+
+		  
+		  <!-- ***************************************  FORMULAIRES *************************************************** -->
+		</div><!-- /.row -->
+		<div class="row">
+		  <br>
+		  <div class="col-md-6">
+		  <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" id="formulaire" action="/effacer_de_historique">
+		    <div class="form-group">
+		      <div class="col-sm-offset-5 col-sm-10">
+			<input type="hidden" name="modif_a_effacer" value="{{this._id}}"/>
+			<button type="submit" name="valider" id="button" value="valider" class="btn btn-primary">Effacer de l'historique</button>
+		      </div>
+		    </div>
+		  </form>
+		  </div>
+
+		  <div class="col-md-6">
+		  <form class="form-horizontal" id="formulaire_redirection" role="form" method="POST" accept-charset="utf-8" id="formulaire" action="{{#if this.modification}}/redirection_update{{else}}{{#if this.pret}}/redirection_rendre{{else}}{{#if this.rendu_total}}/redirection_preter{{else}}{{#if this.rendu_partiel}}/redirection_preter{{else}}{{#if this.suppression}}/redirection_nouveau_composant{{else}}{{#if this.creation}}/redirection_composants{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}">
+		    <div class="form-group">
+		      <div class="col-sm-offset-1 col-sm-10">
+			
+			{{#if this.modification}}
+			<input type="hidden" name="_id" value="{{this.id_composant._id}}"/>
+			{{/if}}
+			
+			{{#if this.pret}}
+			<input type="hidden" name="_id" value="{{this.id_pret._id}}"/>
+			{{/if}}
+			
+			{{#if this.rendu_total}}
+			<input type="hidden" name="_id" value="{{this.id_composant._id}}"/>
+			{{/if}}
+			
+			{{#if this.rendu_partiel}}
+			<input type="hidden" name="_id" value="{{this.id_composant._id}}"/>
+			{{/if}}
+			
+
+			<button type="submit" name="annuler" id="button" value="annuler" class="btn btn-primary">Formulaire pour annuler le changement</button>
+		      </div>
+		    </div>
+		  </form>
+		  </div>
+		</div>
+
+
+
+		
+		  
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div><!-- /.col -->
+	    <div class="col-md-1"></div>
+	    
+          
+	  <br><br>
+	  {{/each}}
+        </section><!-- /.content -->
+
+	
+
+
+
+
+
+
+	
+    </div><!-- /.content-wrapper -->
+
+{{/content}}
+{{#content "footer"}}
+    {{> footer}}
+{{/content}}
