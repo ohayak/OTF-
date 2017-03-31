@@ -283,8 +283,8 @@
         "methode": "populate",
         "screen": "forum_title",
         "auth":true,
-	"data_ref": "id_auteur",
-	"data_model": "Conversations"
+        "data_ref": "id_auteur",
+        "data_model": "Conversations"
     },
     "GET/forum_newconv": {
         "module": "index",
@@ -293,14 +293,15 @@
         "auth": true,
         "data_model":"Conversations"
     },
-    "GET/forum_conv": {
-        "module": "finder",
-        "methode": "populateCommantaires",
-        "screen": "forum_conv",
-        "auth": true,
-        "data_model":"Commentaires",
-	"params_names": ["id_conversation"]
+     "GET/forum_conv": {
+         "module": "finder",
+         "methode": "populateCommantaires",
+         "screen": "forum_conv",
+         "auth": true,
+         "data_model":"Commentaires",
+         "params_names": ["id_conversation"]
     },
+
     "POST/addconv": {
         "module": "inserter",
         "methode": "newConversation",
@@ -308,32 +309,32 @@
         "auth": true,
         "params_names": ["titre_conversation", "contenu_commentaire"],
         "redirect": true,
-	"redirect_action" : "forum_title"
+        "redirect_action" : "forum_title"
     },
-    "POST/addcom": {
-        "module": "inserter",
-        "methode": "newCommentaire",
-        "screen": "forum_title",
-        "auth": true,
-        "params_names": ["id_conversation", "contenu_commentaire"],
-        "redirect": true,
-	"redirect_action" : "forum_conv"
-    },
-    "GET/deleteconv": {
-        "module": "deleter",
-        "methode": "delConversation",
-        "screen": "index",
-        "auth": true,
-        "params_names": ["_id"],
-        "redirect": true,
-	"redirect_action" : "forum_title"
+     "POST/addcom": {
+         "module": "inserter",
+         "methode": "newCommentaire",
+         "screen": "forum_title",
+         "auth": true,
+         "params_names": ["id_conversation", "contenu_commentaire"],
+         "redirect": true,
+        "redirect_action" : "forum_conv"
+     },
+     "GET/deleteconv": {
+         "module": "deleter",
+         "methode": "delConversation",
+         "screen": "index",
+         "auth": true,
+         "params_names": ["_id"],
+         "redirect": true,
+         "redirect_action" : "forum_title"
      },
     "POST/addcomposant": {
         "module": "inserter",
-        "methode": "one",
+        "methode": "oneComponent",
         "screen": "tab_composants",
         "auth": true,
-        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant",   "quantite_pretee", "id_categorie", "id_sous_categorie"],
+        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant",   "quantite_pretee", "statut_composant", "id_categorie", "tab_pretes", "id_sous_categorie"],
         "data_model": "Composants",
         "redirect": true,
         "redirect_action" : "composants"
@@ -357,7 +358,7 @@
     },
     "GET/fiche_composant": {
         "module": "finder",
-        "methode": "oneAndListMultiSchemas",
+        "methode": "one",
         "screen": "formupdatecomposant",
         "auth": true,
         "params_names": ["_id"],
@@ -450,7 +451,7 @@
     },
     "GET/formaddsouscategories": {
         "module": "finder",
-        "methode": "list",
+        "methode": "listMultiple",
         "screen": "formaddsouscategories",
         "auth": true,
         "data_model":"Sous_categories"

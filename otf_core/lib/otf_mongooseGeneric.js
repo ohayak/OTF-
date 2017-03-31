@@ -59,74 +59,68 @@ mongooseGeneric.prototype.getMultiDocuments = function (_condition, _callback) {
             _callback(err, null);
         }
         else {
-            logger.debug("--------------------------RESULT:---------------------------------------------------");
-			logger.debug(result[0].id_categorie.nom_categorie);
+			var tabNomCategories = [];
+			for(var i = 0; i<result.length; i++){
+				var categorie = {};
+				var tab_sous_categories = [];
+				var sous_categorie = {}
+				var ok = 1;
+				logger.debug("--------------------------NOM CAT---------------------------------------------------");
+				logger.debug(result[i].id_categorie.nom_categorie);
+				logger.debug("-----------------------------------------------------------------------------");
+				for (var k = 0; k<tabNomCategories.length; k++) {
+					logger.debug("--------------------------ID--------------------------------------------------");
+					logger.debug(result[i].id_categorie._id);
+					logger.debug(tabNomCategories[k]._id);
+					logger.debug("-----------------------------------------------------------------------------");
+					if(!(result[i].id_categorie._id < tabNomCategories[k]._id || result[i].id_categorie._id > tabNomCategories[k]._id)){
+					    ok = 0;
+					}
+				}
+				logger.debug("--------------------------OK--------------------------------------------------");
+				logger.debug(ok);
+				logger.debug("-----------------------------------------------------------------------------");
+				if(ok==1){
+					categorie._id = result[i].id_categorie._id;
+					categorie.nom_categorie = result[i].id_categorie.nom_categorie;
+					for(var j = 0; j<result.length; j++){
+						if(!(result[i].id_categorie._id < result[j].id_categorie._id || result[i].id_categorie._id > result[j].id_categorie._id)){
+							logger.debug("-----------------------------------COUCOU------------------------------------------");
+							sous_categorie._id = result[j]._id;
+							logger.debug("--------------------------ID--------------------------------------------------");
+							logger.debug(sous_categorie._id);
+							logger.debug("-----------------------------------------------------------------------------");
+							sous_categorie.nom_sous_categorie = result[j].nom_sous_categorie;
+							tab_sous_categories.push(sous_categorie);
+						}
+					}
+					categorie.sous_categories = tab_sous_categories;
+					tabNomCategories.push(categorie);
+				}
+				
+			}
+			result.tabCategories = tabNomCategories;
+			logger.debug("--------------------------RESULT:---------------------------------------------------");
+			logger.debug(result.tabCategories);
 			logger.debug("-----------------------------------------------------------------------------");
-            _callback(null, result);
+        	_callback(null, result);
         }
     });
 };
 
 
-/*mongooseGeneric.prototype.getMultiDocuments = function (_condition, _callback) {
-    var t1 = new Date().getMilliseconds();
-	
-    this.document.find(_condition, function (err, result) {
+mongooseGeneric.prototype.deleteDocument = function (_condition, _callback) {
+
+    this.document.remove(_condition, function (err, result) {
         if (err) {
             _callback(err, null);
         }
         else {
-            var t2 = new Date().getMilliseconds();
-            logger.info('Into mongooseGeneric.getDocuments TIME : ' + (t2 - t1) + ' ms');
-        	var model1 = GLOBAL.schemas["Categories"];
-	    	model1.document.find(_condition, function (err,result1){
-        	if (err) {
-          	  _callback(err, null);
-       		 }
-			else{
-				var tabNomCategories = [];
-				var model2 = GLOBAL.schemas["Sous_categories"];
-				model2.document.find(_condition, function (err,result2){
-					if (err) {
-	          	    _callback(err, null);
-	       		 	}
-					else{
-				
-				   	    for(var i = 0; i<result1.length; i++){
-					       	  	var tab = [];
-							tab.push(result1[i].nom_categorie);
-							for(var j = 0; j<result2.length; j++){
-							logger.debug("-------------------------------VALEUR CAT----------------------------------------------");
-							logger.debug(result1[i]._id);
-							logger.debug("-----------------------------------------------------------------------------");
-							logger.debug("-------------------------------VALEUR SOUS-CAT----------------------------------------------");
-							logger.debug(result2[j].id_categorie);
-							logger.debug("-----------------------------------------------------------------------------");
-							    if(!(result1[i]._id < result2[j].id_categorie || result1[i]._id > result2[j].id_categorie)){
-									logger.debug("-----------------------------------COUCOU------------------------------------------");
-									tab.push(result2[j].nom_sous_categorie);
-							    }
-							}
-						tabNomCategories.push(tab);
-						}
-				    result.tabCategories = tabNomCategories;
-					_callback(null, result2);
-					logger.debug("--------------------------tabCategories---------------------------------------------------");
-					logger.debug(result.tabCategories);
-					logger.debug("-----------------------------------------------------------------------------");
-			            
-					}
-				});
-			_callback(null, result1);
-			}
-			logger.debug("--------------------------RESULT:---------------------------------------------------");
-			logger.debug(result);
-			logger.debug("-----------------------------------------------------------------------------");
-		});
-	   _callback(null, result);
-    }});
-};*/
+            _callback(null, _condition);
+        }
+    });
 
+};
 
 mongooseGeneric.prototype.deleteDocument = function (_condition, _callback) {
 
@@ -154,6 +148,35 @@ mongooseGeneric.prototype.createDocument = function (_values, _callback) {
         else {
             _callback(null, _values);
         }
+    });
+
+};
+
+mongooseGeneric.prototype.createDocumentComponent = function (_values, _callback) {
+
+	var model = GLOBAL.schemas["Sous_categories"];
+	model.document.find({_id:_values.id_sous_categorie}).populate({path:"id_categorie"}).exec(function (err, result) {
+        if (err) {
+            _callback(err, null);
+        }
+        else {
+        logger.debug("--------------------------VALUE--------------------------------------------------");
+		logger.debug(_values);
+		logger.debug("-----------------------------------------------------------------------------");
+
+    		if(!_values.hasOwnProperty("_id")){
+     			 _values._id = new ObjectId();
+     			 _values.id_categorie = result[0].id_categorie._id;
+      			_values.tab_pretes = [];
+        		logger.debug("--------------------------VALUE--------------------------------------------------");
+				logger.debug(_values);
+				logger.debug("-----------------------------------------------------------------------------");
+			}	
+		var mod = GLOBAL.schemas["Composants"];
+    	var m = new mod.document(_values);
+    	m.save(function(){});
+    	_callback(null, _values);
+		}
     });
 
 };

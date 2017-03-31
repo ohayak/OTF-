@@ -39,6 +39,31 @@ exports.inserter = {
 
     },
 
+    oneComponent: function (req, cb) {
+        var _controler = req.session.controler;
+        var model = GLOBAL.schemas[_controler.data_model];
+        //@TODO not safety
+        logger.debug('path    : ', _controler.path);
+        logger.debug('room    : ', _controler.room);
+        logger.debug('model   : ', _controler.data_model);
+        logger.debug('params  : ', _controler.params);
+        logger.debug('schema  : ', _controler.schema);
+        //-- Accounts Model
+        //var modele = mongoose.model(model);
+        // Test Emit WebSocket Event
+        logger.debug(" One User emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
+        try {
+            model.createDocumentComponent(_controler.params, function (err, nb_inserted) {
+                logger.debug('nombre documents insérés :', nb_inserted);
+                return cb(null, {data: nb_inserted, room: _controler.room});
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            return cb(err);
+        }
+
+    },
+
     list: function (req, cb) {
         var _controler = req.session.controler;
         // ici params est un tableau d'objet à insérer
