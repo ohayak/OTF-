@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Modifier les données des sous-catégories
+                Gestion des comptes
             </h1>
             <ol class="breadcrumb">
                 <li><a href="/index"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="#">Update Sous-catégorie</a></li>
-                <li class="active">Create</li>
+                <li><a href="#">Gérer les comptes</a></li>
+                <li class="active">Créer</li>
             </ol>
         </section>
 
@@ -34,27 +34,7 @@
                     <!-- About Me Box -->
                     <div class="box box-primary">
                         <div class="box-body">
-                           <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="/updatesouscategories">
-  <div class="col-xs-12 col-sm-12">
-  </div>
-  
-
-  <div class="form-group">
-    <label for="inputName" class="col-sm-2 control-label">Nom de la sous-catégorie</label>
-    <div class="col-sm-6">
-     <input class="form-control" placeholder="Nom de la sous-catégorie" type="text" name="nom_sous_categorie" title="This field is required" value="{{result.one.nom_sous_categorie}}" required="required"/>
-    </div>
-  </div> 
-
- 
- <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-          <input type="hidden" name="_id" value="{{result.one._id}}"/>
-        <button type="submit" name="button" id="button" class="btn btn-primary">Valider</button>
-    </div>
-  </div>
-
-</form>
+                            {{> formaccount}}
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
                 </div><!-- /.col -->

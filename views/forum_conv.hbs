@@ -1,0 +1,48 @@
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "nav"}}
+  {{> nav}}
+{{/content}}
+{{#content "page"}}
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+	    Comantaires
+          </h1>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+	  {{#each result}}
+	  <div class="box box-primary bg-gray">
+	    <p class="box-title">{{id_auteur}} - le {{date_commentaire}}</p>
+	    <div class="box-body ">
+	      <p>{{contenu_commentaire}}</p>
+	    </div>
+	  </div>
+	  {{/each}}
+	  <div class="box box-primary">
+	    <div class="box-body">
+	      <h3 class="box-title">Nouveau commantaire</h3>
+              <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="/addcom">
+		<div class="form-group">
+		  <label for="contenu_commentaire">
+		  </label>
+		  <div class="col-sm-6">
+		    <textarea class="form-control" name="contenu_commentaire" rows="5" cols="100"></textarea>
+		  </div>
+		  <input type="hidden" name="id_conversation"  value="{{result.[0].id_conversation}}" />
+		</div>
+		<button type="submit" name="button" id="button" class="btn btn-primary">Valider</button>
+	      </form>
+	    </div>
+	  </div>
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+
+{{/content}}
+{{#content "footer"}}
+    {{> footer}}
+{{/content}}

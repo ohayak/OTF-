@@ -21,6 +21,16 @@
 	      <h3 class="box-title">{{titre_conversation}}</h3>
 	      <p>Par {{id_auteur.prenom}} {{id_auteur.nom}}</p>
 	      <p>Date {{date_conversation}}</p>
+	      <div class="col-sm-8">
+		<a href="/deleteconv?_id={{_id}}">
+		  <button type="button" class="btn btn-danger">Suprimer</button>
+		</a>
+	      </div>
+	      <div class="col-sm-6">
+		<a href="/forum_conv?id_conversation={{_id}}">
+		  <button type="button" class="btn btn-info">Voir les commantaires</button>
+		</a>
+	      </div>
 	    </div>
 	  </div>
 	  {{/each}}

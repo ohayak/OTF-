@@ -282,7 +282,9 @@
         "module": "finder",
         "methode": "populate",
         "screen": "forum_title",
-        "auth":true
+        "auth":true,
+        "data_ref": "id_auteur",
+        "data_model": "Conversations"
     },
     "GET/forum_newconv": {
         "module": "index",
@@ -291,30 +293,58 @@
         "auth": true,
         "data_model":"Conversations"
     },
-    "POST/addconv": {
-         "module": "inserter",
-         "methode": "newConversation",
-         "screen": "forum_newconv",
+     "GET/forum_conv": {
+         "module": "finder",
+         "methode": "populateCommantaires",
+         "screen": "forum_conv",
          "auth": true,
-         "params_names": ["titre_conversation", "contenu_commentaire"],
-         "redirect": true,          "redirect_action" : "forum_title"
+         "data_model":"Commentaires",
+         "params_names": ["id_conversation"]
+    },
+
+    "POST/addconv": {
+        "module": "inserter",
+        "methode": "newConversation",
+        "screen": "forum_newconv",
+        "auth": true,
+        "params_names": ["titre_conversation", "contenu_commentaire"],
+        "redirect": true,
+        "redirect_action" : "forum_title"
+    },
+     "POST/addcom": {
+         "module": "inserter",
+         "methode": "newCommentaire",
+         "screen": "forum_title",
+         "auth": true,
+         "params_names": ["id_conversation", "contenu_commentaire"],
+         "redirect": true,
+        "redirect_action" : "forum_conv"
+     },
+     "GET/deleteconv": {
+         "module": "deleter",
+         "methode": "delConversation",
+         "screen": "index",
+         "auth": true,
+         "params_names": ["_id"],
+         "redirect": true,
+         "redirect_action" : "forum_title"
      },
     "POST/addcomposant": {
         "module": "inserter",
-        "methode": "one",
+        "methode": "oneComponent",
         "screen": "tab_composants",
         "auth": true,
-        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant",   "quantite_pretee", "id_categorie", "id_sous_categorie"],
+        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant",   "quantite_pretee", "statut_composant", "id_categorie", "tab_pretes", "id_sous_categorie"],
         "data_model": "Composants",
         "redirect": true,
         "redirect_action" : "composants"
     },
     "GET/formaddcomposant": {
         "module": "finder",
-        "methode": "list",
+        "methode": "listMultiple",
         "screen": "formaddcomposant",
         "auth": true,
-        "data_model":"Composants"
+        "data_model":"Sous_categories"
 
     },
     "GET/deletecomposant": {
@@ -328,7 +358,7 @@
     },
     "GET/fiche_composant": {
         "module": "finder",
-        "methode": "oneAndListMultiSchemas",
+        "methode": "one",
         "screen": "formupdatecomposant",
         "auth": true,
         "params_names": ["_id"],
@@ -404,8 +434,10 @@
         "screen": "tab_categories",
         "auth": true,
         "params_names": ["_id"],
-        "data_model": "Categories",
-        "redirect": false
+        "data_model": ["Categories", "Sous_categories"],
+        "data_ref": ["nom_categorie", "id_categorie"],
+        "redirect": true,
+        "redirect_action": "categories"
     },
     "POST/addsouscategories": {
         "module": "inserter",
@@ -419,7 +451,7 @@
     },
     "GET/formaddsouscategories": {
         "module": "finder",
-        "methode": "list",
+        "methode": "listMultiple",
         "screen": "formaddsouscategories",
         "auth": true,
         "data_model":"Sous_categories"
@@ -436,21 +468,21 @@
     },
     "GET/fiche_souscategories": {
         "module": "finder",
-        "methode": "listMultiple",
+        "methode": "oneAndListMultiSchemas",
         "screen": "formupdatesouscategories",
         "auth": true,
         "params_names": ["_id"],
-        "data_model": "Categories",
+        "data_model": "Sous_categories",
         "data_ref": []
     },
     "GET/json/souscategoriesjson": {
         "module": "finder",
-        "methode": "populate",
+        "methode": "populateInfinite",
         "screen": "tab_categories",
         "auth": true,
         "params_names": [],
         "data_model": "Sous_categories",
-	"data_ref": "sous_categories",
+	"data_ref": [["id_categorie"]],
         "return_type": "application/json"
     },
     "GET/deletesouscategories": {

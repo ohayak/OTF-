@@ -73,7 +73,7 @@
 
 				  <div class="form-group">
 				<label for="inputName" class="col-sm-2 control-label">Catégorie mère</label>
-				    <div class="col-sm-10">
+				    <div class="col-sm-6">
 					  <select class="form-control" name="id_categorie" required="required">
 					  {{#each result}}
 					  <option value="{{_id}}">{{nom_categorie}}</option>
@@ -141,7 +141,7 @@
                                 <thead>
                                   <tr>
 				    <th mData="nom_sous_categorie">Nom</th>
-				   <th mData="id_categorie">Catégorie mère</th>
+				   <th mData="id_categorie.nom_categorie">Catégorie mère</th>
                                     <th></th>
                                 </tr>
                                 </thead>

@@ -150,6 +150,30 @@ exports.deleter = {
 	    logger.error(err);
 	}
     },
+    delConversation : function(req, cb) {
+	 var _controler = req.session.controler;
+        logger.debug('room   : ', _controler.room);
+        logger.debug('params  : ', _controler.params);
+        logger.debug(" Deleted One Conv emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
+        try {
+            var modelconv = GLOBAL.schemas["Conversations"];
+            modelconv.deleteDocument({_id: _controler.params._id}, function (err, nb_deleted) {
+                logger.debug('delete row :', nb_deleted);
+		try {
+		    var modelcomm = GLOBAL.schemas["Commentaires"];
+		    modelcomm.deleteDocument({id_conversation: _controler.params._id}, function (err, nb_deleted) {
+			logger.debug('delete row :', nb_deleted);
+			return cb(null, {data: nb_deleted, room: _controler.room});
+		    });
+		} catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+		    logger.error(err);
+		}
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.error(err);
+        }
+    },
 
     list: function (req, cb) {
         // ici params est un tableau d'objet à insérer

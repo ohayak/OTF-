@@ -39,6 +39,31 @@ exports.inserter = {
 
     },
 
+    oneComponent: function (req, cb) {
+        var _controler = req.session.controler;
+        var model = GLOBAL.schemas[_controler.data_model];
+        //@TODO not safety
+        logger.debug('path    : ', _controler.path);
+        logger.debug('room    : ', _controler.room);
+        logger.debug('model   : ', _controler.data_model);
+        logger.debug('params  : ', _controler.params);
+        logger.debug('schema  : ', _controler.schema);
+        //-- Accounts Model
+        //var modele = mongoose.model(model);
+        // Test Emit WebSocket Event
+        logger.debug(" One User emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
+        try {
+            model.createDocumentComponent(_controler.params, function (err, nb_inserted) {
+                logger.debug('nombre documents insérés :', nb_inserted);
+                return cb(null, {data: nb_inserted, room: _controler.room});
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            return cb(err);
+        }
+
+    },
+
     list: function (req, cb) {
         var _controler = req.session.controler;
         // ici params est un tableau d'objet à insérer
@@ -65,20 +90,40 @@ exports.inserter = {
             model.createDocument({ titre_conversation: _controler.params.titre_conversation, date_conversation: new Date().toString(), conversation_resolue: false, id_auteur: req.session.login_info.user._id }, function (err, nb_inserted) {
                 logger.debug('nombre documents insérés :', nb_inserted);
 		id_conv = nb_inserted._id;
+		logger.debug('\n\n\n ID CONV :'+id_conv+'\n\n\n');
 		nb_inserted1 = nb_inserted;
+		model = GLOBAL.schemas["Commentaires"];
+		try {
+		    logger.debug('\n\n\n ID CONV :'+id_conv+'\n\n\n');
+		    model.createDocument({ contenu_commentaire: _controler.params.contenu_commentaire, date_commentaire: new Date().toString(), id_auteur: req.session.login_info.user._id, id_conversation: id_conv }, function (err, nb_inserted) {
+			logger.debug('nombre documents insérés :', nb_inserted);
+			return cb(null, {data: {conversation: nb_inserted1, commentaires: nb_inserted}, room: _controler.room});
+		    });
+		} catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+		    return cb(err);
+		}
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             return cb(err);
         }
-	model = GLOBAL.schemas["Commentaires"];
-	try {
-            model.createDocument({ contenu_commentaire: _controler.params.contenu_commentaire, date_commentaire: new Date().toString(), id_auteur: req.session.login_info.user._id, id_conversation: id_conv }, function (err, nb_inserted) {
+	
+    },
+
+    newCommentaire: function(req, cb) {
+	var _controler = req.session.controler;
+        var model = GLOBAL.schemas["Commentaires"];
+        logger.debug('path    : ', _controler.path);
+        logger.debug('room    : ', _controler.room);
+        logger.debug('params  : ', _controler.params);
+        logger.debug(" One User emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
+        try {
+            model.createDocument({ contenu_commentaire: _controler.params.contenu_commentaire, date_commentaire: new Date().toString(), id_auteur: req.session.login_info.user._id, id_conversation: _controler.params.id_conversation }, function (err, nb_inserted) {
                 logger.debug('nombre documents insérés :', nb_inserted);
-                return cb(null, {data: {conversation: nb_inserted1, commentaires: nb_inserted}, room: _controler.room});
+                return cb(null, {data: nb_inserted, room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             return cb(err);
         }
     }
-
 };
