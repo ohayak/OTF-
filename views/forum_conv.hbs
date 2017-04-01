@@ -19,7 +19,7 @@
 	  <div class="box box-primary bg-gray">
 	    <p class="box-title">{{id_auteur.login}} - le <span class="date_com">{{date_commentaire}}</span></p>
 	    <div class="box-body ">
-	      <p class="contenu_com" >{{contenu_commentaire}}</p>
+	      <p class="cont_com">{{contenu_commentaire}}</p>
 	    </div>
 	  </div>
 	  {{/each}}
@@ -39,6 +39,7 @@
 	      </form>
 	    </div>
 	  </div>
+	  <p id="res"></p>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
       <script>
@@ -47,6 +48,9 @@
 		var tab = date.split(' ');
 		$(this).text(tab[2]+' '+tab[0]+' '+tab[1]+' '
 			     +' '+tab[3]+' à '+tab[4]);
+	    });
+	    $(".cont_com").each(function(){
+		$(this).html($(this).text());
 	    });
       </script>
 
