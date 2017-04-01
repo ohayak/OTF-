@@ -17,9 +17,9 @@
         <section class="content">
 	  {{#each result}}
 	  <div class="box box-primary bg-gray">
-	    <p class="box-title">{{id_auteur}} - le {{date_commentaire}}</p>
+	    <p class="box-title">{{id_auteur}} - le <span class="date_com">{{date_commentaire}}</span></p>
 	    <div class="box-body ">
-	      <p>{{contenu_commentaire}}</p>
+	      <p class="contenu_com" >{{contenu_commentaire}}</p>
 	    </div>
 	  </div>
 	  {{/each}}
@@ -41,6 +41,14 @@
 	  </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
+      <script>
+	    $(".date_com").each(function(){
+		var date = $(this).text();
+		var tab = date.split(' ');
+		$(this).text(tab[2]+' '+tab[0]+' '+tab[1]+' '
+			     +' '+tab[3]+' à '+tab[4]);
+	    });
+      </script>
 
 {{/content}}
 {{#content "footer"}}
