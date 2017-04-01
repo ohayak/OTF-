@@ -445,7 +445,40 @@ exports.finder = {
                 logger.debug('populateCommantaires Result  :', JSON.stringify(list));
                 logger.debug('req.session : ' , req.session );
 		list.sort(function(com1, com2){
-		    return outil.compareStringDate(com2.date_commentaire, com2.date_commentaire);
+		    return Date.parse(com1.date_commentaire) <= Date.parse(com2.date_commentaire) ;
+		});
+                list.str = JSON.stringify(list);
+                return cb(null, {result: list}); //, user:req.session.login_info.user, "state": state, room: _controler.room});
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.error(err);
+        }
+    },
+
+    populateConversations: function (req, cb) {
+        // Input security Controle
+        if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
+            error = new Error('req.session undefined');
+            return cb(error);
+        }
+        var _controler = req.session.controler;
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state
+        //
+        //
+        logger.debug(" Finder.populate call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
+        try {
+            var model = GLOBAL.schemas[_controler.data_model];
+            var _params = { query: _controler.params, ref: _controler.data_ref};
+            model.popDocuments(_params, function (err, list) {
+                logger.debug('Populate Result  :', list);
+                logger.debug('req.session : ' , req.session );
+		list.sort(function(conv1, conv2){
+		    return Date.parse(conv1.date_conversation) <= Date.parse(conv2.date_conversation);
 		});
                 list.str = JSON.stringify(list);
                 return cb(null, {result: list}); //, user:req.session.login_info.user, "state": state, room: _controler.room});

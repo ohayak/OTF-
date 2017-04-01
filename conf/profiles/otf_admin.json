@@ -280,7 +280,7 @@
     },
     "GET/forum_title": {
         "module": "finder",
-        "methode": "populate",
+        "methode": "populateConversations",
         "screen": "forum_title",
         "auth":true,
         "data_ref": "id_auteur",
