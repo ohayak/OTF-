@@ -280,7 +280,7 @@
     },
     "GET/forum_title": {
         "module": "finder",
-        "methode": "populate",
+        "methode": "populateConversations",
         "screen": "forum_title",
         "auth":true,
         "data_ref": "id_auteur",
@@ -299,7 +299,8 @@
          "screen": "forum_conv",
          "auth": true,
          "data_model":"Commentaires",
-         "params_names": ["id_conversation"]
+         "params_names": ["id_conversation"],
+	 "data_ref": "id_auteur"
     },
 
     "POST/addconv": {

@@ -20,7 +20,7 @@
 	    <div class="box-body">
 	      <h3 class="box-title">{{titre_conversation}}</h3>
 	      <p>Par {{id_auteur.prenom}} {{id_auteur.nom}}</p>
-	      <p>Date {{date_conversation}}</p>
+	      <p>Date : le <span class="date_conv">{{date_conversation}}</span></p>
 	      <div class="col-sm-8">
 		<a href="/deleteconv?_id={{_id}}">
 		  <button type="button" class="btn btn-danger">Suprimer</button>
@@ -34,9 +34,38 @@
 	    </div>
 	  </div>
 	  {{/each}}
+	  <div class="box box-primary">
+	    <div class="box-body">
+	      <h3 class="box-title">Nouvelle conversation</h3>
+              <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="/addconv">
+		<div class="form-group">
+		  <label for="titre_conversation" class="col-sm-2 control-label">Titre de la conversation</label>
+		  <div class="col-sm-6">
+		    <input class="form-control" type="text" name="titre_conversation" title="This field is required" required="required"/>
+		  </div>
+		</div>
+		<div class="form-group">
+		  <label for="contenu_commentaire">
+		    Premier commentaire
+		  </label>
+		  <div class="col-sm-6">
+		    <textarea class="form-control" name="contenu_commentaire" rows="5" cols="100"></textarea>
+		  </div>
+		</div>
+		<button type="submit" name="button" id="button" class="btn btn-primary">Valider</button>
+              </form>
+	    </div>
+	  </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
-
+      <script>
+	    $(".date_conv").each(function(){
+		var date = $(this).text();
+		var tab = date.split(' ');
+		$(this).text(tab[2]+' '+tab[0]+' '+tab[1]+' '
+			     +' '+tab[3]+' à '+tab[4]);
+	    });
+      </script>
 {{/content}}
 {{#content "footer"}}
     {{> footer}}
