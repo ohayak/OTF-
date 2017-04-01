@@ -112,6 +112,62 @@ exports.finder = {
         }
     },
 
+     oneUpComponent: function (req, cb) {
+        // Input security Controle
+        if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
+            error = new Error('req.session undefined');
+            return cb(error);
+        }
+        //
+        var _controler = req.session.controler;
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state
+        //@TODO not safety
+        logger.debug('Finders.one params  : ', _controler.params);
+        //logger.debug('Finders.one params  : ', _controler.params['login'].source);
+        logger.debug('Finders.one room    : ', _controler.room);
+        logger.debug('Finders.one model   : ' + _controler.data_model);
+        logger.debug('Finders.one schema  : ' + _controler.schema);
+        // Test emit WebSocket Event
+        logger.debug(" One User emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
+        try {
+            var list_user = {}
+            var model1 = GLOBAL.schemas["Sous_categories"];
+            model1.getMultiDocuments({}, function (err, list_users) {
+                logger.debug('data list  :', JSON.stringify(list_users));
+                // On ajoute une propriété 'js' à notre litse_users qui contiendra les données sous forme de chaîne pour l'exploitation dans du JavaScript
+                list_users.str = JSON.stringify(list_users);
+                list_user = list_users;
+                logger.debug(" -----------------------------------------------------DEBUUUUUUG--------1---------------------------------------------------------------");
+                logger.debug(list_users);
+                logger.debug(" ----------------------------------------------------------------------------------------------------------------------------");
+            });
+            var one_us = {};
+            var model2 = GLOBAL.schemas[_controler.data_model];
+            model2.getDocument(_controler.params, function (err, one_user) {
+                logger.debug('Utilisateurs :', one_user);
+                one_user.str =  JSON.stringify(one_user);
+                one_us = one_user;
+                logger.debug(" -----------------------------------------------------DEBUUUUUUG----------2-------------------------------------------------------------");
+                logger.debug(one_user);
+                logger.debug(" ----------------------------------------------------------------------------------------------------------------------------");
+            });
+
+            logger.debug(" -----------------------------------------------------DEBUUUUUUG-----------------------------------------------------------------------");
+            logger.debug(one_us);
+            logger.debug(list_user);
+            logger.debug(" ----------------------------------------------------------------------------------------------------------------------------");
+            return cb(null, {result: one_us, cat: list_user, "state": state, room: _controler.room});
+        }
+        catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+        logger.error(err);
+        }
+    },
+
     the_one_connected: function (req, cb) {
         // Input security Controle
         if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
