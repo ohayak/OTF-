@@ -440,9 +440,9 @@ exports.finder = {
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
         try {
             var model = GLOBAL.schemas[_controler.data_model];
-            //var _params = { query: _controler.params, ref: _controler.data_ref};
-            model.getDocuments(_controler.params, function (err, list) {
-                logger.debug('populateCommantaires Result  :', list);
+            var _params = { query: _controler.params, ref: _controler.data_ref};
+            model.popDocuments(_params, function (err, list) {
+                logger.debug('populateCommantaires Result  :', JSON.stringify(list));
                 logger.debug('req.session : ' , req.session );
 		list.sort(function(com1, com2){
 		    return outil.compareStringDate(com2.date_commentaire, com2.date_commentaire);
