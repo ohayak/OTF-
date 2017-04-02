@@ -16,20 +16,33 @@
         <!-- Main content -->
         <section class="content">
 	  {{#each result}}
-	  <div class="box box-primary bg-gray">
+	  <!--<div class="box box-primary bg-gray">-->
+	  <div class="box_conv">
+	    <p class="box_conv_title">Sujet : {{titre_conversation}}</p>
 	    <div class="box-body">
-	      <h3 class="box-title">{{titre_conversation}}</h3>
 	      <p>Par {{id_auteur.prenom}} {{id_auteur.nom}}</p>
 	      <p>Date : le <span class="date_conv">{{date_conversation}}</span></p>
-	      <div class="col-sm-8">
-		<a href="/deleteconv?_id={{_id}}">
-		  <button type="button" class="btn btn-danger">Suprimer</button>
-		</a>
-	      </div>
-	      <div class="col-sm-6">
-		<a href="/forum_conv?id_conversation={{_id}}">
-		  <button type="button" class="btn btn-info">Voir les commantaires</button>
-		</a>
+	      <div class="row">
+		<div class="col-sm-3">
+		  <a href="/forum_conv?id_conversation={{_id}}">Voir les commantaires</a>
+		</div>
+		<div class="col-sm-3">
+		  <a href="/deleteconv?_id={{_id}}" title="Supprimer" class="btn btn-sm btn-default"><i class="fa fa-trash-o"></i></a>
+		</div>
+		<div class="col-sm-3">
+		  <p>
+		    {{#compare conversation_resolue 'true' operator='=='}}
+		    Résolue
+		    {{else}}
+		    Non résolue
+		    {{/compare}}
+		  </p>
+		</div>
+		{{#compare ../user.role.code 'user' operator='!='}}
+		<div class="col-sm-3">
+		  <a href="">Signaler comme résolue</a>
+		</div>
+		{{/compare}}
 	      </div>
 	    </div>
 	  </div>
@@ -62,7 +75,7 @@
 	    $(".date_conv").each(function(){
 		var date = $(this).text();
 		var tab = date.split(' ');
-		$(this).text(tab[2]+' '+tab[0]+' '+tab[1]+' '
+		$(this).text(tab[0]+' '+tab[2]+' '+tab[1]+' '
 			     +' '+tab[3]+' à '+tab[4]);
 	    });
       </script>

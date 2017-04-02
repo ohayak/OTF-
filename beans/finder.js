@@ -503,6 +503,9 @@ exports.finder = {
 		list.sort(function(com1, com2){
 		    return Date.parse(com1.date_commentaire) <= Date.parse(com2.date_commentaire) ;
 		});
+		for(com in list) {
+		    list[com].contenu_commentaire = list[com].contenu_commentaire.replace(/\n/g, "<br/>");
+		}
                 list.str = JSON.stringify(list);
                 return cb(null, {result: list}); //, user:req.session.login_info.user, "state": state, room: _controler.room});
             });
