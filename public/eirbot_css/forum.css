@@ -1,0 +1,13 @@
+div.box_conv {
+    border : 2px solid gray;
+    background-color : white;
+    margin : 5px;
+    padding : 10px;
+    padding-bottom : 0px;
+}
+
+p.box_conv_title {
+    border : 2px solid gray;
+    padding : 3px;
+    color : black;
+}
