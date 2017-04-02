@@ -228,6 +228,15 @@
                     <i class="fa fa-history"></i> <span>Historique des modifications</span>
                   </a>
                 </li>
+    	<li class="treeview {{#compare url 'account' operator='indexof'}}active{{/compare}}">
+		  <a href="#">
+                    <i class="fa fa-cog"></i> <span>Espace d'administration</span><i class="fa fa-angle-left pull-right"></i>
+          </a>
+		  <ul class="treeview-menu">
+		    <li class="{{#compare url '/accounts' operator='=='}}active{{/compare}}"><a href="/accounts"><i class="fa fa-circle-o"></i> <span>Liste</span></a></li>
+  		    <li class="{{#compare url '/formaddaccount' operator='=='}}active{{/compare}}"><a href="/formaddaccount"><i class="fa fa-circle-o"></i> Créer</a></li>
+		  </ul>
+		</li>
 		<br><br><br>
 	    </ul>
         </section>

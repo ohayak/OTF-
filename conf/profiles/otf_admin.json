@@ -586,6 +586,71 @@
         "params_names": [],
         "redirect": true,
         "redirect_action": "composants"
+    },
+    "GET/accounts": {
+	"module": "finder",
+        "methode": "populateInfinite",
+        "screen": "tab_accounts",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Accounts",
+        "data_ref": [["role"]]
+    },
+    "GET/json/accountsjson": {
+        "module": "finder",
+        "methode": "populateInfinite",
+        "screen": "tab_accounts",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Accounts",
+	"data_ref": [["role"]],
+        "return_type": "application/json"
+    },
+    "GET/formaddaccount": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "formaddaccount",
+        "auth": true,
+        "data_model": "Role"
+    },
+    "POST/addaccount": {
+        "module": "inserter",
+        "methode": "one",
+        "screen": "accounts",
+        "auth": true,
+        "params_names": ["_id", "login", "email", "password", "role"],
+        "data_model": "Accounts",
+        "redirect": true,
+        "redirect_action" : "accounts"
+    },
+    "GET/fiche_account": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "formupdateaccount",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Accounts",
+        "data_ref": ["Role"]
+    },
+    "POST/updateaccount": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "accounts",
+        "auth": true,
+        "params_names": ["_id", "login", "email", "role"],
+        "data_model": "AccountId",
+        "redirect": true,
+        "redirect_action": "accounts"
+    },
+    "GET/deleteaccount": {
+        "module": "deleter",
+        "methode": "oneById",
+        "screen": "accounts",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "AccountId",
+	"redirect": true,
+        "redirect_action": "accounts"
     }
 }
 
