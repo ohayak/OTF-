@@ -20,27 +20,29 @@
 	  <div class="box_conv">
 	    <p class="box_conv_title">Sujet : {{titre_conversation}}</p>
 	    <div class="box-body">
-	      <p>Par {{id_auteur.prenom}} {{id_auteur.nom}}</p>
+	      <p>Par {{id_auteur.login}}</p>
 	      <p>Date : le <span class="date_conv">{{date_conversation}}</span></p>
 	      <div class="row">
 		<div class="col-sm-3">
 		  <a href="/forum_conv?id_conversation={{_id}}">Voir les commantaires</a>
 		</div>
+		{{#compare ../user.role.code 'user' operator='!='}}
 		<div class="col-sm-3">
 		  <a href="/deleteconv?_id={{_id}}" title="Supprimer" class="btn btn-sm btn-default"><i class="fa fa-trash-o"></i></a>
 		</div>
+		{{/compare}}
 		<div class="col-sm-3">
 		  <p>
-		    {{#compare conversation_resolue 'true' operator='=='}}
+		    {{#if conversation_resolue}}
 		    Résolue
 		    {{else}}
 		    Non résolue
-		    {{/compare}}
+		    {{/if}}
 		  </p>
 		</div>
 		{{#compare ../user.role.code 'user' operator='!='}}
 		<div class="col-sm-3">
-		  <a href="">Signaler comme résolue</a>
+		  <a href="/resoudre_conv?_id={{_id}}&conversation_resolue=true">Signaler comme résolue</a>
 		</div>
 		{{/compare}}
 	      </div>

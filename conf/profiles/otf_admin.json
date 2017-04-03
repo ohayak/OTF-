@@ -312,24 +312,34 @@
         "redirect": true,
         "redirect_action" : "forum_title"
     },
-     "POST/addcom": {
-         "module": "inserter",
-         "methode": "newCommentaire",
-         "screen": "forum_title",
-         "auth": true,
-         "params_names": ["id_conversation", "contenu_commentaire"],
-         "redirect": true,
+    "POST/addcom": {
+        "module": "inserter",
+        "methode": "newCommentaire",
+        "screen": "forum_title",
+        "auth": true,
+        "params_names": ["id_conversation", "contenu_commentaire"],
+        "redirect": true,
         "redirect_action" : "forum_conv"
-     },
-     "GET/deleteconv": {
-         "module": "deleter",
-         "methode": "delConversation",
-         "screen": "index",
-         "auth": true,
-         "params_names": ["_id"],
-         "redirect": true,
-         "redirect_action" : "forum_title"
-     },
+    },
+    "GET/deleteconv": {
+        "module": "deleter",
+        "methode": "delConversation",
+        "screen": "index",
+        "auth": true,
+        "params_names": ["_id"],
+        "redirect": true,
+        "redirect_action" : "forum_title"
+    },
+    "GET/resoudre_conv": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "forum_title",
+        "auth": true,
+	"data_model":"Conversations",
+        "params_names": ["_id", "conversation_resolue"],
+        "redirect": true,
+        "redirect_action" : "forum_title"
+    },
     "POST/addcomposant": {
         "module": "inserter",
         "methode": "oneComponent",
