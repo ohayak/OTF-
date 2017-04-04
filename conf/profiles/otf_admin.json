@@ -388,7 +388,7 @@
     },
     "POST/addcategories": {
         "module": "inserter",
-        "methode": "one",
+        "methode": "newCategorie",
         "screen": "tab_categories",
         "auth": true,
         "params_names": ["_id","nom_categorie"],
@@ -441,7 +441,7 @@
     },
     "GET/deletecategories": {
         "module": "deleter",
-        "methode": "oneAndSetToDefaultReference",
+        "methode": "delCategories",
         "screen": "tab_categories",
         "auth": true,
         "params_names": ["_id"],
@@ -596,6 +596,16 @@
         "params_names": [],
         "redirect": true,
         "redirect_action": "composants"
+    },
+    "POST/vider_historique": {
+        "module": "deleter",
+        "methode": "historique",
+        "screen": "index",
+        "auth": true,
+        "params_names": [],
+	"data_model": "Modifications",
+        "redirect": true,
+        "redirect_action": "historique"
     },
     "GET/accounts": {
 	"module": "finder",

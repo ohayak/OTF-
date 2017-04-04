@@ -840,6 +840,31 @@ mongooseGeneric.prototype.deleteModification = function (_condition, _callback) 
 };
 
 
+mongooseGeneric.prototype.deleteHistorique = function (_condition, _callback) {
+
+    var model = GLOBAL.schemas["Modifications"];
+    model.document.find({}).exec(function (err, result) {
+        if (err) {
+            _callback(err, null);
+        }
+        else {
+	    var modele_composant_avant = GLOBAL.schemas["Composants_avant_modification"];
+	    var modele_composant_apres = GLOBAL.schemas["Composants_apres_modification"];
+	    var modele_pretes_avant = GLOBAL.schemas["Pretes_avant_modification"];
+	    var modele_pretes_apres = GLOBAL.schemas["Pretes_apres_modification"];
+	    for(var i=0; i<result.length; i++){
+		modele_composant_avant.document.remove({_id: result[i].id_avant},function(){});
+		modele_composant_apres.document.remove({_id: result[i].id_apres},function(){});
+		modele_pretes_avant.document.remove({_id: result[i].id_prete_avant},function(){});
+		modele_pretes_apres.document.remove({_id: result[i].id_prete_apres},function(){});
+		model.document.remove({_id: result[i]._id},function(){});
+	    }
+            _callback(null, result);
+        }
+    });
+};
+
+
 
 mongooseGeneric.prototype.getPaginateDocuments = function (_condition, _callback) {
 
