@@ -38,6 +38,21 @@ exports.deleter = {
         }
     },
 
+    historique: function (req, cb) {
+        var _controler = req.session.controler;
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
+        try {
+            var model = GLOBAL.schemas[_controler.data_model];
+            model.deleteHistorique({}, function (err, nb_deleted) {
+                logger.debug('delete row :', nb_deleted);
+                return cb(null, {data: nb_deleted, room: _controler.room});
+            });
+        } catch (err) { 
+            logger.error(err);
+        }
+    },
+
+
         delete_modification: function (req, cb) {
         // CONTROLER
         var _controler = req.session.controler;
