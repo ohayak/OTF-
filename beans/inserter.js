@@ -125,5 +125,33 @@ exports.inserter = {
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             return cb(err);
         }
+    },
+
+    newCategorie : function(req, cb) {
+	var _controler = req.session.controler;
+        var model = GLOBAL.schemas["Categories"];
+        //@TODO not safety
+        logger.debug('path    : ', _controler.path);
+        logger.debug('room    : ', _controler.room);
+        logger.debug('model   : ', _controler.data_model);
+        logger.debug('params  : ', _controler.params);
+        logger.debug('schema  : ', _controler.schema);
+        //-- Accounts Model
+        //var modele = mongoose.model(model);
+        // Test Emit WebSocket Event
+        logger.debug(" One User emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
+        try {
+            model.createDocument(_controler.params, function (err, nb_inserted) {
+                logger.debug('nombre documents insérés :', nb_inserted);
+		model = GLOBAL.schemas["Sous_categories"];
+		model.createDocument({ nom_sous_categorie: "Default", id_categorie: nb_inserted._id }, function (err, nb_inserted2){
+		    logger.debug('nombre documents insérés :', nb_inserted2);
+		    return cb(null, {data: {categorie: nb_inserted, sous_categorie: nb_inserted2}, room: _controler.room});
+		});
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            return cb(err);
+        }
     }
 };
