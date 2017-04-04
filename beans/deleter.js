@@ -205,7 +205,7 @@ exports.deleter = {
 	} catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.error(err);
         }
-	// Change reference of other cathégories
+	// Change reference des autres cathégories
 	try {
 	    model_categories.getDocument({nom_categorie: "Default"}, function (err, one_default) {
 		logger.debug('Default document :', one_default);
