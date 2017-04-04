@@ -304,6 +304,8 @@ exports.finder = {
                 }
             });
 
+
+
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.error(err);
         }
@@ -342,11 +344,14 @@ oneAndListMultiSchemasComponent: function (req, cb) {
                 result.one.str = JSON.stringify(one_user);
                 try {
                     var listSchemas = _controler.data_ref;
+                    logger.debug(" ----------------------------------------------------LISTSCHEMAS-----------------------------------------------------------------------");
+                    logger.debug(listSchemas);
+                    logger.debug(" ----------------------------------------------------------------------------------------------------------------------------");
                         
                     function getDocsMultiSchemas(i, cbk) {
                         if (i < listSchemas.length) {
                             var model = GLOBAL.schemas[listSchemas[i]];
-                            model.getDocuments({}, function (err, list_datas) {
+                            model.getMultiDocuments({}, function (err, list_datas) {
                                 if (err) {
                                     console.log('error: ' + err)
                                 }
@@ -354,7 +359,9 @@ oneAndListMultiSchemasComponent: function (req, cb) {
                                     logger.debug('listes des données des schemas passés en data_model  :', JSON.stringify(list_datas));
                                     result[listSchemas[i]] = list_datas;
                                     (result[listSchemas[i]]).str = JSON.stringify(list_datas);
+                                      logger.debug(" ----------------------------------------------------RESULT ----------------------------------------------------------------------");
                                     logger.debug('affiche result pour i=' + i + '   : ', result);
+                                      logger.debug(" ----------------------------------------------------------------------------------------------------------------------------");
                                     // L'asynchronicité peut être géré d'une autre façon soit promise soit async, ici récursivité
                                     getDocsMultiSchemas(i + 1, cbk);
                                 }
@@ -367,6 +374,9 @@ oneAndListMultiSchemasComponent: function (req, cb) {
                     getDocsMultiSchemas(0, function () {
                         var t2 = new Date().getMilliseconds();
                         logger.info('into Finder.listMultiSchema before return cb TIME (ms) : ' + (t2 - t1) + 'ms');
+                        logger.debug(" -----------------------------------------------------DEBUUUUUUG-----------------------------------------------------------------------");
+                    logger.debug(result.Sous_categories.tabCategories.sous_categories);
+                    logger.debug(" ----------------------------------------------------------------------------------------------------------------------------");
                         return cb(null, {result: result, "state": state || "TEST", room: _controler.room});
                     });
                 } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric

@@ -63,16 +63,12 @@ mongooseGeneric.prototype.getMultiDocuments = function (_condition, _callback) {
 			for(var i = 0; i<result.length; i++){
 				var categorie = {};
 				var tab_sous_categories = [];
-				var sous_categorie = {}
 				var ok = 1;
 				logger.debug("--------------------------NOM CAT---------------------------------------------------");
 				logger.debug(result[i].id_categorie.nom_categorie);
 				logger.debug("-----------------------------------------------------------------------------");
 				for (var k = 0; k<tabNomCategories.length; k++) {
-					logger.debug("--------------------------ID--------------------------------------------------");
-					logger.debug(result[i].id_categorie._id);
-					logger.debug(tabNomCategories[k]._id);
-					logger.debug("-----------------------------------------------------------------------------");
+					
 					if(!(result[i].id_categorie._id < tabNomCategories[k]._id || result[i].id_categorie._id > tabNomCategories[k]._id)){
 					    ok = 0;
 					}
@@ -85,16 +81,22 @@ mongooseGeneric.prototype.getMultiDocuments = function (_condition, _callback) {
 					categorie.nom_categorie = result[i].id_categorie.nom_categorie;
 					for(var j = 0; j<result.length; j++){
 						if(!(result[i].id_categorie._id < result[j].id_categorie._id || result[i].id_categorie._id > result[j].id_categorie._id)){
-							logger.debug("-----------------------------------COUCOU------------------------------------------");
+							var sous_categorie = {}
+							logger.debug("-----------------------------------+ souscat------------------------------------------");
 							sous_categorie._id = result[j]._id;
-							logger.debug("--------------------------ID--------------------------------------------------");
+							logger.debug("--------------------------ID--NOM------------------------------------------------");
 							logger.debug(sous_categorie._id);
+							logger.debug(result[j].nom_sous_categorie);
 							logger.debug("-----------------------------------------------------------------------------");
 							sous_categorie.nom_sous_categorie = result[j].nom_sous_categorie;
+							sous_categorie.id_categorie = result[j].id_categorie;
 							tab_sous_categories.push(sous_categorie);
 						}
 					}
 					categorie.sous_categories = tab_sous_categories;
+					logger.debug("--------------------------RESULT:---------------------------------------------------");
+			logger.debug(result.tabCategories);
+			logger.debug("-----------------------------------------------------------------------------");
 					tabNomCategories.push(categorie);
 				}
 				
@@ -741,7 +743,7 @@ mongooseGeneric.prototype.updateAndModif = function (_conditions, _values, _call
 
     
     var model = GLOBAL.schemas["Composants"];
-    model.document.find({"_id": _conditions._id}).populate({path:"id_categorie"}).populate({path:"id_sous_categorie"}).exec(function (err, result) {
+    model.document.find({"_id": _conditions._id}).populate({path:"id_categorie"}).populate({path:"id_sous_categorie", populate: {path: "id_categorie"}}).exec(function (err, result) {
         if (err) {
             _callback(err, null);
         }
@@ -756,6 +758,10 @@ mongooseGeneric.prototype.updateAndModif = function (_conditions, _values, _call
 	    var id_apres = new ObjectId();
 	    var id_modif = new ObjectId();
 	    var id_default = new ObjectId();
+
+	    	logger.debug("--------------------------VALUE--------------------------------------------------");
+				logger.debug(_values);
+				logger.debug("-----------------------------------------------------------------------------");
 	    
 	    var modification = {"_id":id_modif, "type_modification":"Modification des attributs d'un composant", "date_modification":date , "modification":1, "rendu_partiel":0, "rendu_total":0, "pret":0, "creation":0, "suppression":0, "id_composant":_conditions._id, "id_pret":id_default, "id_avant":id_avant, "id_apres":id_apres, "ids_suppressions":[], "id_prete_avant":id_default, "id_prete_apres":id_default};  
 	    
@@ -781,6 +787,10 @@ mongooseGeneric.prototype.updateAndModif = function (_conditions, _values, _call
 	    
 	    ap.save(function(){});
 	    
+
+	    	logger.debug("--------------------------VALUE--------------------------------------------------");
+				logger.debug(_values);
+				logger.debug("-----------------------------------------------------------------------------");
 
 	    // MAJ des composants
 	    model.document.update(_conditions, { $set: _values},function(){});
