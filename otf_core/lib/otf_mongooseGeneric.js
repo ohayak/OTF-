@@ -629,46 +629,37 @@ mongooseGeneric.prototype.deleteComposant = function (_condition, _callback) {
 	    _callback(err,null);
 	}
 	else{
-	    var tab_ids_pretes = []; 
-	    for(var i=0; i<result[0].tab_pretes.length; i++){
-		tab_ids_pretes.push(result[0].tab_pretes[i]._id);
+	    if(result[0].tab_pretes.length == 0){
+		var tab_ids_pretes = []; 
+		for(var i=0; i<result[0].tab_pretes.length; i++){
+		    tab_ids_pretes.push(result[0].tab_pretes[i]._id);
+		}
+		var model_pretes = GLOBAL.schemas["Prets"];
+		for(var i=0; i<tab_ids_pretes.length; i++){
+		    model_pretes.document.remove({"_id": tab_ids_pretes[i]}, function(){});
+		}
+
+
+		//mise à jour des modifications
+		var date = new Date();
+		var id_default = new ObjectId();
+		var id_modif = new ObjectId();
+		var id_avant = new ObjectId();
+
+		var avant = {"_id":id_avant, "nom_composant": result[0].nom_composant, "quantite_composant":result[0].quantite_composant, "statut_composant": result[0].statut_composant, "remarques_composant":result[0].remarques_composant, "categorie":result[0].id_categorie.nom_categorie, "sous_categorie":result[0].id_sous_categorie.nom_sous_categorie};
+
+		var modification = {"_id":id_modif, "type_modification":"Suppression d'un composant et des composants prêtés associés", "date_modification":date , "modification":0, "rendu_partiel":0, "rendu_total":0, "pret":0, "creation":0, "suppression":1, "id_composant":id_default, "id_pret": id_default, "id_avant":id_avant, "id_apres":id_default, "ids_suppressions":[], "id_prete_avant":id_default, "id_prete_apres":id_default};
+		
+		var modele_modif = GLOBAL.schemas["Modifications"];
+		var modele_avant = GLOBAL.schemas["Composants_avant_modification"];
+		var mo = new modele_modif.document(modification);
+		var av = new modele_avant.document(avant);
+		mo.save(function(){});
+		av.save(function(){});
+		
+		model.document.remove(_condition, function (){});
+
 	    }
-	    var model_pretes = GLOBAL.schemas["Prets"];
-	    for(var i=0; i<tab_ids_pretes.length; i++){
-		model_pretes.document.remove({"_id": tab_ids_pretes[i]}, function(){});
-	    }
-
-
-	    //mise à jour des modifications
-	    var date = new Date();
-	    var id_default = new ObjectId();
-	    var id_modif = new ObjectId();
-	    var id_avant = new ObjectId();
-
-	    var avant = {"_id":id_avant, "nom_composant": result[0].nom_composant, "quantite_composant":result[0].quantite_composant, "statut_composant": result[0].statut_composant, "remarques_composant":result[0].remarques_composant, "categorie":result[0].id_categorie.nom_categorie, "sous_categorie":result[0].id_sous_categorie.nom_sous_categorie};
-
-
-	    //boucle pour stocker les anciens prêtés dans les modifications
-	    var tab_new_ids = [];
-	    for(var i=0; i<tab_ids_pretes.length; i++){
-		var id_prete_avant = new ObjectId();
-		tab_new_ids.push(id_prete_avant);
-		var prete_avant = {"_id": id_prete_avant, "quantite_pretee": result[0].tab_pretes[i].quantite_pretee, "date_pret":result[0].tab_pretes[i].date_pret, "nom_emprunteur":result[0].tab_pretes[i].nom_emprunteur, "nom_composant":result[0].tab_pretes[i].id_composant.nom_composant, "categorie":result[0].id_categorie.nom_categorie, "sous_categorie": result[0].id_sous_categorie.nom_sous_categorie};
-		var modele_prete_avant = GLOBAL.schemas["Pretes_avant_modification"];
-		var pr_av = new modele_prete_avant.document(prete_avant);
-		pr_av.save(function(){});
-	    }
-
-	    var modification = {"_id":id_modif, "type_modification":"Suppression d'un composant et des composants prêtés associés", "date_modification":date , "modification":0, "rendu_partiel":0, "rendu_total":0, "pret":0, "creation":0, "suppression":1, "id_composant":id_default, "id_pret": id_default, "id_avant":id_avant, "id_apres":id_default, "ids_suppressions":tab_new_ids, "id_prete_avant":id_default, "id_prete_apres":id_default};
-	    
-	    var modele_modif = GLOBAL.schemas["Modifications"];
-	    var modele_avant = GLOBAL.schemas["Composants_avant_modification"];
-	    var mo = new modele_modif.document(modification);
-	    var av = new modele_avant.document(avant);
-	    mo.save(function(){});
-	    av.save(function(){});
-	    
-	    model.document.remove(_condition, function (){});
 	    _callback(null, result);
 	}
     });

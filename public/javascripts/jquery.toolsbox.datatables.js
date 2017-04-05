@@ -337,6 +337,35 @@ function getDeleteIconPng(label, route, idField, nameField){
 }
 
 
+function getDeleteIconPngCompo(label, route, idField, nameField){
+    var sep = "?";
+    if(route.indexOf('?') !== -1)
+      sep = "&";
+
+    if(convertUndefined(idField) === "")
+        idField = idName;
+    if(convertUndefined(nameField) === "")
+        nameField = idField;
+
+    var deleteIconPng = {
+        "sClass": "btn-text-right",
+        "mData": function (x) {
+            if(route.indexOf("supprimer_contact_usager") ){
+              if(x["cloneextrauser"] && x["cloneextrauser"] != "")
+                return '</div>';
+            }
+
+            if (isNullOrUndefined(x[idField]) || x[idField] === 0)
+                return '</div>';
+            else
+                return '<a href="'+route+sep+nameField+'='+x[idField]+'" title="'+label+'" class="btn btn-sm btn-default"><i class="fa fa-trash-o"></i></a>';
+        },
+        "bSortable": false
+    };
+    return deleteIconPng;
+}
+
+
 
 function populateGenericDatatableJson(route, path_json_result, id_datatable, rowIdName, nbRowDisplay, listIndexColumnToHide, tabButtons, listColumnToSort){
 //  console.log("##### populateGenericDatatableJson !! route : ", route);
@@ -363,6 +392,8 @@ console.log("################## id_datatable : ", id_datatable);
           aoColumnTab.push(getUpdateIconPng("Modifier", obj_btn.name, obj_btn.id_name, obj_btn.id_param));
         if(obj_btn.remove_btn)
             aoColumnTab.push(getDeleteIconPng("Supprimer", obj_btn.name, obj_btn.id_name, obj_btn.id_param));
+	if(obj_btn.remove_btn_compo)
+            aoColumnTab.push(getDeleteIconPngCompo("Supprimer (sauf si un prêt est en cours)", obj_btn.name, obj_btn.id_name, obj_btn.id_param));
         if(obj_btn.select_btn)
             aoColumnTab.push(getSelectIconPng("Sélectionner", obj_btn.name, obj_btn.id_name, obj_btn.id_param));
 	if(obj_btn.lend_btn)

@@ -310,32 +310,8 @@
 		      <th class="other">{{this.id_avant.statut_composant}}</th>
 		      <th class="other">{{this.id_avant.remarques_composant}}</th>
 		    </tr>
-		    
 		  </table>
-		  <br>
-		  <div style="font-weight:bold;">Prêts supprimés (prêts initialement associés au composant supprimé)</div>
-		  <table style="width:100%; border:1px solid black;">
-		    <tr>
-		      <th></th>
-		      <th class="title">Nom composant</th>
-		      <th class="title">Catégorie</th>
-		      <th class="title">Sous catégorie</th>
-		      <th class="title">Quantite empruntée</th>
-		      <th class="title">Date emprunt</th>
-		      <th class="title">Nom emprunteur</th>
-		    </tr>
-		    {{#each this.ids_suppressions}}
-		    <tr>
-		      <th class="title"> Prêt supprimé </th>
-		      <th class="other">{{this.nom_composant}}</th>
-		      <th class="other">{{this.categorie}}</th>
-		      <th class="other">{{this.sous_categorie}}</th>
-		      <th class="other">{{this.quantite_pretee}}</th>
-		      <th class="other">{{this.date_pret}}</th>
-		      <th class="other">{{this.nom_emprunteur}}</th>
-		    </tr>
-		    {{/each}}
-		  </table>
+
 		  {{/if}}
 
 
