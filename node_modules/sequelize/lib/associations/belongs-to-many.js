@@ -572,6 +572,8 @@ BelongsToMany.prototype.injectSetter = function(obj) {
     }
 
     where[identifier] = this.get(sourceKey);
+    _.assign(where, association.through.scope);
+    
     return association.through.model.findAll(_.defaults({
       where: where,
       raw: true,
@@ -784,3 +786,5 @@ BelongsToMany.prototype.injectCreator = function(obj) {
 };
 
 module.exports = BelongsToMany;
+module.exports.BelongsToMany = BelongsToMany;
+module.exports.default = BelongsToMany;

@@ -4,6 +4,7 @@
 var Utils = require('../../utils')
   , DataTypes = require('../../data-types')
   , AbstractQueryGenerator = require('../abstract/query-generator')
+  , randomBytes = require('crypto').randomBytes
   , semver = require('semver');
 
 /* istanbul ignore next */
@@ -689,6 +690,26 @@ var QueryGenerator = {
     return sql;
   },
 
+  getPrimaryKeyConstraintQuery: function(table, attributeName) {
+    var tableName = wrapSingleQuote(table.tableName || table);
+    return [
+      'SELECT K.TABLE_NAME AS tableName,',
+      'K.COLUMN_NAME AS columnName,',
+      'K.CONSTRAINT_NAME AS constraintName',
+      'FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS C',
+      'JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS K',
+      'ON C.TABLE_NAME = K.TABLE_NAME',
+      'AND C.CONSTRAINT_CATALOG = K.CONSTRAINT_CATALOG',
+      'AND C.CONSTRAINT_SCHEMA = K.CONSTRAINT_SCHEMA',
+      'AND C.CONSTRAINT_NAME = K.CONSTRAINT_NAME',
+      'WHERE C.CONSTRAINT_TYPE = \'PRIMARY KEY\'',
+      'AND K.COLUMN_NAME =',
+      wrapSingleQuote(attributeName),
+      'AND K.TABLE_NAME =',
+      tableName + ';',
+    ].join(' ');
+  },
+
   dropForeignKeyQuery: function(tableName, foreignKey) {
     return Utils._.template('ALTER TABLE <%= table %> DROP <%= key %>')({
       table: this.quoteTable(tableName),
@@ -726,6 +747,10 @@ var QueryGenerator = {
     }
 
     return 'SET TRANSACTION ISOLATION LEVEL ' + value + ';';
+  },
+
+  generateTransactionId: function () {
+    return randomBytes(10).toString('hex');
   },
 
   startTransactionQuery: function(transaction, options) {
