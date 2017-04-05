@@ -12,4 +12,15 @@ function paramEscape(param) {
     return param;
 }
 
+function deleteDefault(array, name) {
+    var narray = [];
+    for(doc in array) {
+	if(array[doc][name] != "Default"){
+	    narray.push(array[doc]);
+	}
+    }
+    return narray;
+}
+
 exports.paramEscape = paramEscape;
+exports.deleteDefault = deleteDefault;

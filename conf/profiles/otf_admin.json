@@ -431,7 +431,7 @@
     },
     "GET/json/categoriesjson": {
         "module": "finder",
-        "methode": "populate",
+        "methode": "populateCat",
         "screen": "tab_categories",
         "auth": true,
         "params_names": [],
@@ -488,12 +488,12 @@
     },
     "GET/json/souscategoriesjson": {
         "module": "finder",
-        "methode": "populateInfinite",
+        "methode": "populateSCat",
         "screen": "tab_categories",
         "auth": true,
         "params_names": [],
         "data_model": "Sous_categories",
-	"data_ref": [["id_categorie"]],
+	"data_ref": "id_categorie",
         "return_type": "application/json"
     },
     "GET/deletesouscategories": {
