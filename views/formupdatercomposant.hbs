@@ -4,7 +4,7 @@
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Nom du composant</label>
     <div class="col-sm-6">
-     <input class="form-control" placeholder="Nom du composant" type="text" name="nom_composant" title="This field is required" value="{{result.nom_composant}}" required="required"/>
+     <input class="form-control" placeholder="{{result.one.nom_composant}}"" type="text" name="nom_composant" title="This field is required" value="{{result.one.nom_composant}}" required="required"/>
     </div>
   </div>
 
@@ -12,11 +12,27 @@
 <div class="form-group">
 <label for="inputName" class="col-sm-2 control-label">Quantité du composant</label>
     <div class="col-sm-6">
-      <input class="form-control" placeholder="Quantité du composant" type="number" min="0" name="quantite_composant" title="This field is required" value="{{result.quantite_composant}}" required="required"/>
+      <input class="form-control" placeholder="{{result.one.quantite_composant}}" type="number" min="0" name="quantite_composant" title="This field is required" value="{{result.one.quantite_composant}}" required="required"/>
     </div>
   </div>
 
 
+<div class="form-group">
+  <label for="inputName" class="col-sm-2 control-label">Sous-catégorie du composant</label>
+  <div class="col-sm-6">
+       <select name="id_sous_categorie" id="sous-categorie">
+          {{#each result.Sous_categories.tabCategories}}
+           <optgroup label="{{this.nom_categorie}}">
+               {{#each this.sous_categories}}
+               <option id="sous_categorie_{{this._id}}" value="{{this._id}}">{{this.nom_sous_categorie}}</option>
+               {{/each}}
+           </optgroup>
+          {{/each}}          
+    </select>
+  </div>
+</div>
+
+<input type="hidden" value="0" id="id_categorie" name="id_categorie" />
 
 
   <div class="form-group">
@@ -35,7 +51,7 @@
 <div class="form-group">
  <label for="inputName" class="col-sm-2 control-label">Remarques sur le composant</label>
     <div class="col-sm-6">
-      <input class="form-control" placeholder="Remarques sur le composant" type="text" name="remarques_composant" title="This field is required" value="{{result.remarques_composant}}" required="required"/>
+      <input class="form-control" placeholder="{{result.one.remarques_composant}}" type="text" name="remarques_composant" title="This field is required" value="{{result.one.remarques_composant}}" required="required"/>
     </div>
   </div>     
 
@@ -50,3 +66,29 @@
   </div>
 
 </form>
+
+<script>  
+
+  $('#sous-categorie').change(function(){
+    console.log('work');
+    }); 
+
+  $('#sous-categorie').on('change',function(){
+
+  console.log($('#id_categorie').val());
+  console.log(this.value);
+
+  {{#each result.Sous_categories.tabCategories}}
+    {{#each this.sous_categories}}
+       
+    if (this.value == '{{this._id}}') {
+      $('#id_categorie').attr('value','{{this.id_categorie._id}}');
+    }
+     {{/each}}
+   {{/each}}
+
+
+  console.log($('#id_categorie').val());
+
+  });
+</script>
