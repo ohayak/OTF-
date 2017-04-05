@@ -1,9 +1,15 @@
 {{#compare user.role.code 'admin' operator='in'}}
   {{> nav_ADMIN}}
 {{else}}
-    {{#compare user.role.code 'user' operator='=='}}
-        {{> nav_USER}}
-     {{else}}
+	 {{#compare user.role.code 'respo' operator='=='}}
+	 	{{> nav_RESPO}}
+	 {{else}}
+        {{#compare user.role.code 'user' operator='=='}}
+    	    {{> nav_USER}}
+     	{{else}}
+     
+    
         {{> nav_DEFAULT}}
-    {{/compare}}
+     {{/compare}}
+  {{/compare}}
 {{/compare}}

@@ -5,12 +5,6 @@
         "screen": "index",
         "auth": true
     },
-    "GET/index": {
-        "module": "index",
-        "methode": "titre",
-        "screen": "index",
-        "auth": true
-    },
     "GET/login": {
         "module": "login",
         "methode": "titre",
@@ -18,49 +12,37 @@
         "auth": false
     },
     "POST/signupAccount": {
-        "module": "signupAccount",
-        "methode": "signup",
-        "screen": "index",
+        "module": "signupAccount", 
+        "methode": "signup", 
+        "screen": "index", 
         "params_names": ["login", "password"],
         "auth": false,
-        "data_model": "Accounts",
-        "redirect": true,
-        "redirect_action" : "index"
+        "data_model": "Accounts", 
+        "redirect": true, 
+        "redirect_action" : "index" 
     },
     "GET/logout": {
         "module": "signupAccount",
         "methode": "logout",
         "screen": "login",
         "params_names": [],
-        "auth": false,
+        "auth": true,
         "redirect": true,
         "redirect_action" : "login"
     },
-    "GET/logs": {
-        "module": "finder",
-        "methode": "list",
-        "screen": "log_list",
-        "auth": false,
+    "GET/multipart": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "multipart_oneFile",
         "params_names": [],
-        "data_model": "Logs"
+        "auth": true
     },
-    "GET/testcontenttype" : {
-        "module": "finder",
-        "methode": "list",
-        "screen": "log_list",
-        "auth": false,
-        "return_type" : "text/plain",
-        "params_names": [],
-        "data_model": "Logs"
-    },
-    "GET/jsoncontenttype" : {
-        "module": "finder",
-        "methode": "list",
-        "screen": "log_list",
-        "auth": false,
-        "return_type" : "application/json",
-        "params_names": [],
-        "data_model": "Logs"
+    "POST/uploadFile": {
+        "module": "uploader",
+        "methode": "oneFile",
+        "screen": "index",
+        "auth": true,
+        "redirect": true
     },
     "GET/fiche_profil": {
         "module": "finder",
@@ -71,14 +53,142 @@
         "data_model": "Accounts",
         "data_ref": ["Role"]
     },
-    "GET/json/logsjson": {
-        "module": "finder",
-        "methode": "populate",
-        "screen": "log_list",
+    "GET/index": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true
+    },
+    "GET/glances": {
+        "module": "glances",
+        "methode": "getData",
+        "screen": "glancesviewtab",
+        "auth": true
+    },
+    "GET/json/getdatanetwork" : {
+        "module": "glances",
+        "methode": "getDatanetwork",
         "auth": false,
-        "params_names": [],
-        "data_model": "Logs",
-        "data_ref": "user_id",
         "return_type": "application/json"
+    },
+    "GET/listmulti" : {
+        "module": "finder",
+        "methode": "listMultiSchemas",
+        "screen": "resultmultischema",
+        "auth": true,
+        "params_names": [],
+        "data_model": ["Accounts", "Logs"]
+    },
+    "GET/listmultiasync" : {
+        "module": "finder",
+        "methode": "listMultiSchemasAsync",
+        "screen": "resultmultischema",
+        "auth": true,
+        "params_names": [],
+        "data_model": ["Accounts", "Logs"]
+    },
+    "GET/composants": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "tab_composants_user",
+        "auth":true,
+    "data_model": "Composants"
+    },
+    "GET/json/composantsjson": {
+        "module": "finder",
+        "methode": "populateInfinite",
+        "screen": "tab_composants_user",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Composants",
+    "data_ref": [["id_categorie"], ["id_sous_categorie"], ["sum", "tab_pretes", "quantite_pretee", "quantite_totale_pretee"]],
+        "return_type": "application/json"
+    },
+    "GET/composants_pretes": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "tab_composants_pretes_user",
+        "auth":true
+    },
+    "GET/json/composantsPretesjson": {
+        "module": "finder",
+        "methode": "populateInfinite",
+        "screen": "tab_composants_pretes_user",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Prets",
+    "data_ref": [["id_composant", "id_categorie"], ["id_composant", "id_sous_categorie", "id_categorie"]],
+        "return_type": "application/json"
+    },
+    "GET/forum_title": {
+        "module": "finder",
+        "methode": "populateConversations",
+        "screen": "forum_title",
+        "auth":true,
+        "data_ref": "id_auteur",
+        "data_model": "Conversations"
+    },
+    "GET/forum_newconv": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "forum_newconv",
+        "auth": true,
+        "data_model":"Conversations"
+    },
+     "GET/forum_conv": {
+         "module": "finder",
+         "methode": "populateCommantaires",
+         "screen": "forum_conv",
+         "auth": true,
+         "data_model":"Commentaires",
+         "params_names": ["id_conversation"],
+     "data_ref": "id_auteur"
+    },
+
+    "POST/addconv": {
+        "module": "inserter",
+        "methode": "newConversation",
+        "screen": "forum_newconv",
+        "auth": true,
+        "params_names": ["titre_conversation", "contenu_commentaire"],
+        "redirect": true,
+        "redirect_action" : "forum_title"
+    },
+    "POST/addcom": {
+        "module": "inserter",
+        "methode": "newCommentaire",
+        "screen": "forum_title",
+        "auth": true,
+        "params_names": ["id_conversation", "contenu_commentaire"],
+        "redirect": true,
+        "redirect_action" : "forum_conv"
+    },
+    "GET/mon_compte": {
+        "module": "finder",
+        "methode": "the_one_connected",
+        "screen": "layout_mon_compte",
+        "auth": true,
+        "params_names": [],
+        "data_model": "AccountId"
+    },
+    "POST/modifier_mon_email": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "layout_mon_compte",
+        "auth": true,
+        "params_names": ["_id", "email"],
+        "data_model": "AccountId",
+        "redirect": true,
+        "redirect_action": "mon_compte"
+    },
+    "POST/modifier_mon_mdp": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "layout_mon_compte",
+        "auth": true,
+        "params_names": ["_id", "password"],
+        "data_model": "AccountId",
+        "redirect": true,
+        "redirect_action": "mon_compte"
     }
 }

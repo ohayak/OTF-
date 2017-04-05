@@ -5,12 +5,6 @@
         "screen": "index",
         "auth": true
     },
-    "GET/index": {
-        "module": "index",
-        "methode": "titre",
-        "screen": "index",
-        "auth": true
-    },
     "GET/login": {
         "module": "login",
         "methode": "titre",
@@ -18,49 +12,37 @@
         "auth": false
     },
     "POST/signupAccount": {
-        "module": "signupAccount",
-        "methode": "signup",
-        "screen": "index",
+        "module": "signupAccount", 
+        "methode": "signup", 
+        "screen": "index", 
         "params_names": ["login", "password"],
         "auth": false,
-        "data_model": "Accounts",
-        "redirect": true,
-        "redirect_action" : "index"
+        "data_model": "Accounts", 
+        "redirect": true, 
+        "redirect_action" : "index" 
     },
     "GET/logout": {
         "module": "signupAccount",
         "methode": "logout",
         "screen": "login",
         "params_names": [],
-        "auth": false,
+        "auth": true,
         "redirect": true,
         "redirect_action" : "login"
     },
-    "GET/logs": {
-        "module": "finder",
-        "methode": "list",
-        "screen": "log_list",
-        "auth": false,
+    "GET/multipart": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "multipart_oneFile",
         "params_names": [],
-        "data_model": "Logs"
+        "auth": true
     },
-    "GET/testcontenttype" : {
-        "module": "finder",
-        "methode": "list",
-        "screen": "log_list",
-        "auth": false,
-        "return_type" : "text/plain",
-        "params_names": [],
-        "data_model": "Logs"
-    },
-    "GET/jsoncontenttype" : {
-        "module": "finder",
-        "methode": "list",
-        "screen": "log_list",
-        "auth": false,
-        "return_type" : "application/json",
-        "params_names": [],
-        "data_model": "Logs"
+    "POST/uploadFile": {
+        "module": "uploader",
+        "methode": "oneFile",
+        "screen": "index",
+        "auth": true,
+        "redirect": true
     },
     "GET/fiche_profil": {
         "module": "finder",
@@ -71,21 +53,46 @@
         "data_model": "Accounts",
         "data_ref": ["Role"]
     },
-    "GET/json/logsjson": {
-        "module": "finder",
-        "methode": "populate",
-        "screen": "log_list",
-        "auth": false,
-        "params_names": [],
-        "data_model": "Logs",
-        "data_ref": "user_id",
-        "return_type": "application/json"
-    },
-    "GET/composants": {
+    "GET/index": {
         "module": "index",
         "methode": "titre",
+        "screen": "index",
+        "auth": true
+    },
+    "GET/glances": {
+        "module": "glances",
+        "methode": "getData",
+        "screen": "glancesviewtab",
+        "auth": true
+    },
+    "GET/json/getdatanetwork" : {
+        "module": "glances",
+        "methode": "getDatanetwork",
+        "auth": false,
+        "return_type": "application/json"
+    },
+    "GET/listmulti" : {
+        "module": "finder",
+        "methode": "listMultiSchemas",
+        "screen": "resultmultischema",
+        "auth": true,
+        "params_names": [],
+        "data_model": ["Accounts", "Logs"]
+    },
+    "GET/listmultiasync" : {
+        "module": "finder",
+        "methode": "listMultiSchemasAsync",
+        "screen": "resultmultischema",
+        "auth": true,
+        "params_names": [],
+        "data_model": ["Accounts", "Logs"]
+    },
+    "GET/composants": {
+        "module": "finder",
+        "methode": "list",
         "screen": "tab_composants",
-        "auth":true
+        "auth":true,
+    "data_model": "Composants"
     },
     "GET/json/composantsjson": {
         "module": "finder",
@@ -94,7 +101,7 @@
         "auth": true,
         "params_names": [],
         "data_model": "Composants",
-	"data_ref": [["id_categorie"], ["id_sous_categorie"], ["sum", "tab_pretes", "quantite_pretee", "quantite_totale_pretee"]],
+    "data_ref": [["id_categorie"], ["id_sous_categorie"], ["sum", "tab_pretes", "quantite_pretee", "quantite_totale_pretee"]],
         "return_type": "application/json"
     },
     "GET/composants_pretes": {
@@ -110,49 +117,142 @@
         "auth": true,
         "params_names": [],
         "data_model": "Prets",
-	"data_ref": [["id_composant", "id_categorie"], ["id_composant", "id_sous_categorie", "id_categorie"]],
+    "data_ref": [["id_composant", "id_categorie"], ["id_composant", "id_sous_categorie", "id_categorie"]],
         "return_type": "application/json"
     },
     "GET/rendre_composant": {
         "module": "finder",
-        "methode": "oneAndListMultiSchemas",
+        "methode": "populateInfinite",
         "screen": "formrendrecomposant",
         "auth": true,
         "params_names": ["_id"],
         "data_model": "Prets",
-        "data_ref": ["Composants"]
+        "data_ref": [["id_composant"]]
     },
     "POST/rendrecomposant": {
         "module": "updater",
-        "methode": "one",
+        "methode": "prets_rendus_incomplet",
         "screen": "formrendrecomposant",
+        "auth": true,
+        "params_names": ["_id", "quantite_pretee", "quantite_rendue"],
+        "data_model": "Prets",
+    "data_ref" : [["id_composant", "tab_pretes"], ["id_composant", "id_categorie"], ["id_composant", "id_sous_categorie"]],
+        "redirect": true,
+        "redirect_action": "composants_pretes"
+    },
+    "POST/supprimer_des_prets": {
+        "module": "deleter",
+        "methode": "prets_rendus_total",
+        "screen": "formrendrecomposant",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Prets",
+    "data_ref": [["id_composant", "tab_pretes"], ["id_composant", "id_categorie"], ["id_composant", "id_sous_categorie"]], 
+        "redirect": true,
+        "redirect_action": "composants_pretes"
+    },
+    "GET/preter_composant": {
+        "module": "finder",
+        "methode": "populateInfinite",
+        "screen": "formpretercomposant",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Composants",
+        "data_ref": [["tab_pretes"]]
+    },
+    "POST/pretercomposant": {
+        "module": "updater",
+        "methode": "newPret",
+        "screen": "formpretercomposant",
         "auth": true,
         "params_names": ["_id", "quantite_pretee", "date_pret", "nom_emprunteur", "id_composant"],
         "data_model": "Prets",
         "redirect": true,
-        "redirect_action": "composants_pretes"
+        "redirect_action": "composants"
+    },
+    "GET/forum_title": {
+        "module": "finder",
+        "methode": "populateConversations",
+        "screen": "forum_title",
+        "auth":true,
+        "data_ref": "id_auteur",
+        "data_model": "Conversations"
+    },
+    "GET/forum_newconv": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "forum_newconv",
+        "auth": true,
+        "data_model":"Conversations"
+    },
+     "GET/forum_conv": {
+         "module": "finder",
+         "methode": "populateCommantaires",
+         "screen": "forum_conv",
+         "auth": true,
+         "data_model":"Commentaires",
+         "params_names": ["id_conversation"],
+     "data_ref": "id_auteur"
+    },
+
+    "POST/addconv": {
+        "module": "inserter",
+        "methode": "newConversation",
+        "screen": "forum_newconv",
+        "auth": true,
+        "params_names": ["titre_conversation", "contenu_commentaire"],
+        "redirect": true,
+        "redirect_action" : "forum_title"
+    },
+    "POST/addcom": {
+        "module": "inserter",
+        "methode": "newCommentaire",
+        "screen": "forum_title",
+        "auth": true,
+        "params_names": ["id_conversation", "contenu_commentaire"],
+        "redirect": true,
+        "redirect_action" : "forum_conv"
+    },
+    "GET/deleteconv": {
+        "module": "deleter",
+        "methode": "delConversation",
+        "screen": "index",
+        "auth": true,
+        "params_names": ["_id"],
+        "redirect": true,
+        "redirect_action" : "forum_title"
+    },
+    "GET/resoudre_conv": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "forum_title",
+        "auth": true,
+    "data_model":"Conversations",
+        "params_names": ["_id", "conversation_resolue"],
+        "redirect": true,
+        "redirect_action" : "forum_title"
     },
     "POST/addcomposant": {
         "module": "inserter",
-        "methode": "one",
+        "methode": "oneComponent",
         "screen": "tab_composants",
         "auth": true,
-        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant",   "quantite_pretee", "id_categorie", "id_sous_categorie"],
+        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant",   "quantite_pretee", "statut_composant", "id_categorie", "tab_pretes", "id_sous_categorie"],
         "data_model": "Composants",
         "redirect": true,
         "redirect_action" : "composants"
     },
     "GET/formaddcomposant": {
         "module": "finder",
-        "methode": "list",
+        "methode": "listMultiple",
         "screen": "formaddcomposant",
         "auth": true,
-        "data_model":"Composants"
+        "data_model":"Sous_categories"
 
     },
     "GET/deletecomposant": {
         "module": "deleter",
-        "methode": "oneById",
+        "methode": "delete_composant",
         "screen": "tab_composants",
         "auth": true,
         "params_names": ["_id"],
@@ -161,21 +261,242 @@
     },
     "GET/fiche_composant": {
         "module": "finder",
-        "methode": "oneAndListMultiSchemas",
+        "methode": "oneAndListMultiSchemasComponent",
         "screen": "formupdatecomposant",
         "auth": true,
         "params_names": ["_id"],
         "data_model": "Composants",
-        "data_ref": []
+        "data_ref": ["Sous_categories"]
     },
     "POST/updatecomposant": {
         "module": "updater",
-        "methode": "one",
+        "methode": "one_and_modif",
         "screen": "tab_composants",
         "auth": true,
-        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant",   "quantite_pretee", "id_categorie", "id_sous_categorie"],
+        "params_names": ["_id","nom_composant", "quantite_composant", "remarques_composant", "quantite_pretee", "statut_composant", "id_categorie", "id_sous_categorie"],
         "data_model": "Composants",
         "redirect": true,
         "redirect_action": "composants"
+    },
+    "POST/addcategories": {
+        "module": "inserter",
+        "methode": "newCategorie",
+        "screen": "tab_categories",
+        "auth": true,
+        "params_names": ["_id","nom_categorie"],
+        "data_model": "Categories",
+        "redirect": true,
+        "redirect_action" : "categories"
+    },
+    "GET/formaddcategories": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "formaddcategories",
+        "auth": true,
+        "data_model":"Categories"
+    },
+    "GET/categories": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "tab_categories",
+        "auth":true,
+    "data_model": "Categories"
+    },
+    "POST/updatecategories": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "tab_categorie",
+        "auth": true,
+        "params_names": ["_id","nom_categorie"],
+        "data_model": "Categories",
+        "redirect": true,
+        "redirect_action": "categories"
+    },
+    "GET/fiche_categories": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "formupdatecategories",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Categories",
+        "data_ref": []
+    },
+    "GET/json/categoriesjson": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "tab_categories",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Categories",
+    "data_ref": "categories",
+        "return_type": "application/json"
+    },
+    "GET/deletecategories": {
+        "module": "deleter",
+        "methode": "delCategories",
+        "screen": "tab_categories",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": ["Categories", "Sous_categories"],
+        "data_ref": ["nom_categorie", "id_categorie"],
+        "redirect": true,
+        "redirect_action": "categories"
+    },
+    "POST/addsouscategories": {
+        "module": "inserter",
+        "methode": "one",
+        "screen": "tab_categories",
+        "auth": true,
+        "params_names": ["nom_sous_categorie", "id_categorie"],
+        "data_model": "Sous_categories",
+        "redirect": true,
+        "redirect_action" : "categories"
+    },
+    "GET/formaddsouscategories": {
+        "module": "finder",
+        "methode": "listMultiple",
+        "screen": "formaddsouscategories",
+        "auth": true,
+        "data_model":"Sous_categories"
+    },
+    "POST/updatesouscategories": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "tab_categorie",
+        "auth": true,
+        "params_names": ["_id","nom_sous_categorie","id_categorie"],
+        "data_model": "Sous_categories",
+        "redirect": true,
+        "redirect_action": "categories"
+    },
+    "GET/fiche_souscategories": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "formupdatesouscategories",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Sous_categories",
+        "data_ref": []
+    },
+    "GET/json/souscategoriesjson": {
+        "module": "finder",
+        "methode": "populateInfinite",
+        "screen": "tab_categories",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Sous_categories",
+    "data_ref": [["id_categorie"]],
+        "return_type": "application/json"
+    },
+    "GET/deletesouscategories": {
+        "module": "deleter",
+        "methode": "oneById",
+        "screen": "tab_categories",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Sous_categories",
+        "redirect": false
+    },
+    "GET/mon_compte": {
+        "module": "finder",
+        "methode": "the_one_connected",
+        "screen": "layout_mon_compte",
+        "auth": true,
+        "params_names": [],
+        "data_model": "AccountId"
+    },
+    "POST/modifier_mon_email": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "layout_mon_compte",
+        "auth": true,
+        "params_names": ["_id", "email"],
+        "data_model": "AccountId",
+        "redirect": true,
+        "redirect_action": "mon_compte"
+    },
+    "POST/modifier_mon_mdp": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "layout_mon_compte",
+        "auth": true,
+        "params_names": ["_id", "password"],
+        "data_model": "AccountId",
+        "redirect": true,
+        "redirect_action": "mon_compte"
+    },
+    "GET/historique": {
+        "module": "finder",
+        "methode": "populateInfinite",
+        "screen": "historique",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Modifications",
+    "data_ref": [["ids_suppressions", "id_composant", "id_categorie"], ["id_suppressions", "id_composant", "id_sous_categorie"], ["id_pret", "id_composant"], ["id_composant"], ["id_avant", "id_categorie"], ["id_apres", "id_categorie"], ["id_avant", "id_sous_categorie"], ["id_apres", "id_sous_categorie"], ["id_prete_avant", "id_composant", "id_categorie"], ["id_prete_avant", "id_composant", "id_sous_categorie"], ["id_prete_apres", "id_composant", "id_categorie"], ["id_prete_apres", "id_composant", "id_sous_categorie"]]
+    },
+    "POST/effacer_de_historique": {
+        "module": "deleter",
+        "methode": "delete_modification",
+        "screen": "historique",
+        "auth": true,
+        "params_names": ["modif_a_effacer"],
+        "data_model": "Modifications",
+        "redirect": true,
+        "redirect_action": "historique"
+    },
+    "POST/redirection_update": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true,
+        "params_names": ["_id"],
+        "redirect": true,
+        "redirect_action": "fiche_composant"
+    },
+    "POST/redirection_rendre": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true,
+        "params_names": ["_id"],
+        "redirect": true,
+        "redirect_action": "rendre_composant"
+    },
+    "POST/redirection_preter": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true,
+        "params_names": ["_id"],
+        "redirect": true,
+        "redirect_action": "preter_composant"
+    },
+    "POST/redirection_nouveau_composant": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true,
+        "params_names": [],
+        "redirect": true,
+        "redirect_action": "formaddcomposant"
+    },
+    "POST/redirection_composants": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true,
+        "params_names": [],
+        "redirect": true,
+        "redirect_action": "composants"
+    },
+    "POST/vider_historique": {
+        "module": "deleter",
+        "methode": "historique",
+        "screen": "index",
+        "auth": true,
+        "params_names": [],
+    "data_model": "Modifications",
+        "redirect": true,
+        "redirect_action": "historique"
     }
 }
