@@ -210,27 +210,31 @@ exports.deleter = {
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.error(err);
         }
-	// Delete sous_categorie Default
+	// Delete sous_categories
 	try {
 	    var model_sous_categories = GLOBAL.schemas["Sous_categories"];
-	    model_sous_categories.deleteDocument({id_categorie: _controler.params._id, nom_sous_categorie: "Default"}, function (err, nb_deleted) {
+	    model_sous_categories.deleteDocument({id_categorie: _controler.params._id}, function (err, nb_deleted) {
                 logger.debug('delete row Sous_Categories Default :', nb_deleted);
             });
 	    
 	} catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.error(err);
         }
-	// Change reference des autres cathégories
+	// Change reference des composant
 	try {
-	    model_categories.getDocument({nom_categorie: "Default"}, function (err, one_default) {
-		logger.debug('Default document :', one_default);
-		model_sous_categories.updateDocuments({id_categorie: _controler.params._id}, {id_categorie: one_default._id}, function (err, numberAffected) {
-		    if (err) {
-			logger.info('----> error : ' + err);
-		    } else {
-			logger.debug('modification id référence Sous_Categorie : ', numberAffected);
-			return cb(null, {data: numberAffected, room: _controler.room});
-		    }
+	    model_categories.getDocument({nom_categorie: "Default"}, function (err, cat_default) {
+		logger.debug('Default document :', JSON.stringify(cat_default));
+		model_sous_categories.getDocument({nom_sous_categorie: "Default", id_categorie: cat_default._id}, function (err, scat_default) {
+		    logger.debug('Default document :', JSON.stringify(scat_default));
+		    var model_composant = GLOBAL.schemas["Composants"];
+		    model_composant.updateDocuments({id_categorie: _controler.params._id}, {id_categorie: cat_default._id, id_sous_categorie: scat_default}, function (err, numberAffected) {
+			if (err) {
+			    logger.info('----> error : ' + err);
+			} else {
+			    logger.debug('modification id référence composant : ', numberAffected);
+			    return cb(null, {data: numberAffected, room: _controler.room});
+			}
+		    });
 		});
 	    });
 	    
