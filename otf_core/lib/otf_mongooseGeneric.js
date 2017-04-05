@@ -380,11 +380,7 @@ mongooseGeneric.prototype.suppression_pretes = function (_condition, _callback){
 
 
 	    //mise à jour des modifications
-	    var now = new Date();
-	    var annee = now.getFullYear();
-	    var mois = now.getMonth() + 1;
-	    var jour = now.getDate();
-	    var date = jour + "/" + mois + "/" + annee;
+	    var date = new Date();
 	    var id_avant = new ObjectId();
 	    var id_apres = new ObjectId();
 	    var id_modif = new ObjectId();
@@ -514,11 +510,7 @@ mongooseGeneric.prototype.modification_pretes = function (_condition, _callback)
 
 
 	    //mise à jour des modifications
-	    var now = new Date();
-	    var annee = now.getFullYear();
-	    var mois = now.getMonth() + 1;
-	    var jour = now.getDate();
-	    var date = jour + "/" + mois + "/" + annee;
+	    var date = new Date();
 	    var id_avant = new ObjectId();
 	    var id_apres = new ObjectId();
 	    var id_modif = new ObjectId();
@@ -613,11 +605,7 @@ mongooseGeneric.prototype.lendObject = function(_values, _callback){
 
 		
 		//mise à jour des modifications
-		var now = new Date();
-		var annee = now.getFullYear();
-		var mois = now.getMonth() + 1;
-		var jour = now.getDate();
-		var date = jour + "/" + mois + "/" + annee;
+		var date = new Date();
 		var id_avant = new ObjectId();
 		var id_apres = new ObjectId();
 		var id_modif = new ObjectId();
@@ -691,11 +679,7 @@ mongooseGeneric.prototype.deleteComposant = function (_condition, _callback) {
 
 
 	    //mise à jour des modifications
-	    var now = new Date();
-	    var annee = now.getFullYear();
-	    var mois = now.getMonth() + 1;
-	    var jour = now.getDate();
-	    var date = jour + "/" + mois + "/" + annee;
+	    var date = new Date();
 	    var id_default = new ObjectId();
 	    var id_modif = new ObjectId();
 	    var id_avant = new ObjectId();
@@ -749,11 +733,7 @@ mongooseGeneric.prototype.updateAndModif = function (_conditions, _values, _call
         }
         else {
 	    //mise à jour des modifications
-	    var now = new Date();
-	    var annee = now.getFullYear();
-	    var mois = now.getMonth() + 1;
-	    var jour = now.getDate();
-	    var date = jour + "/" + mois + "/" + annee;
+	    var date = new Date();
 	    var id_avant = new ObjectId();
 	    var id_apres = new ObjectId();
 	    var id_modif = new ObjectId();

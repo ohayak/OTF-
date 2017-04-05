@@ -535,7 +535,7 @@
     },
     "GET/historique": {
         "module": "finder",
-        "methode": "populateInfinite",
+        "methode": "populateHistorique",
         "screen": "historique",
         "auth": true,
         "params_names": [],
