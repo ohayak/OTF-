@@ -239,8 +239,50 @@ exports.deleter = {
 	}
     },
     
+    delSousCategories: function(req, cb){
+	var _controler = req.session.controler;
+        //@TODO not safety
+        logger.debug('room   : ', _controler.room);
+        logger.debug('model  : ' + _controler.data_model);
+        logger.debug('params  : ', _controler.params);
+	logger.debug('ref  : ', _controler.data_ref);
+        //-- Accounts Model
+        //var modele = mongoose.model(model);
+        // Test Emit WebSocket Event
+        logger.debug(" Deleted One Categorie emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
+	
+	try {
+            var model_sous_categories = GLOBAL.schemas["Sous_categories"];
+	    model_sous_categories.getDocument({ _id: _controler.params._id }, function (err, one) {
+		logger.debug('Sous Categorie to delete :', one);
+		
+		// Delete sous categorie
+		model_sous_categories.deleteDocument({_id: _controler.params._id}, function (err, nb_deleted) {
+                    logger.debug('delete row Sous Categorie :', nb_deleted);
+
+		    // Change reference des autres composants
+		    model_sous_categories.getDocument({ nom_sous_categorie: "Default", id_categorie: one.id_categorie }, function (err, one_default) {
+			logger.debug('Default Sous Categorie :', one_default);
+			var model_composant = GLOBAL.schemas["Composants"];
+			model_composant.updateDocuments({id_sous_categorie: _controler.params._id}, {id_sous_categorie: one_default._id}, function (err, numberAffected) {
+			    if (err) {
+				logger.info('----> error : ' + err);
+			    } else {
+				logger.debug('modification id référence Composants : ', numberAffected);
+				return cb(null, {data: numberAffected, room: _controler.room});
+			    }
+			});
+		    });
+		});
+	    });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.error(err);
+        }
+    },
+    
     delConversation : function(req, cb) {
-	 var _controler = req.session.controler;
+	var _controler = req.session.controler;
         logger.debug('room   : ', _controler.room);
         logger.debug('params  : ', _controler.params);
         logger.debug(" Deleted One Conv emmit call");

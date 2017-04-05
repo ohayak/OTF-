@@ -498,12 +498,12 @@
     },
     "GET/deletesouscategories": {
         "module": "deleter",
-        "methode": "oneById",
+        "methode": "delSousCategories",
         "screen": "tab_categories",
         "auth": true,
         "params_names": ["_id"],
-        "data_model": "Sous_categories",
-        "redirect": false
+        "redirect": true,
+	"redirect_action": "categories"
     },
     "GET/mon_compte": {
         "module": "finder",
