@@ -525,7 +525,7 @@
     },
     "POST/modifier_mon_mdp": {
         "module": "updater",
-        "methode": "one",
+        "methode": "account",
         "screen": "layout_mon_compte",
         "auth": true,
         "params_names": ["_id", "password"],
@@ -635,7 +635,7 @@
     },
     "POST/addaccount": {
         "module": "inserter",
-        "methode": "one",
+        "methode": "account",
         "screen": "accounts",
         "auth": true,
         "params_names": ["_id", "login", "email", "password", "role"],
@@ -654,10 +654,10 @@
     },
     "POST/updateaccount": {
         "module": "updater",
-        "methode": "one",
+        "methode": "account",
         "screen": "accounts",
         "auth": true,
-        "params_names": ["_id", "login", "email", "role"],
+        "params_names": ["_id", "login", "email", "role", "password"],
         "data_model": "AccountId",
         "redirect": true,
         "redirect_action": "accounts"

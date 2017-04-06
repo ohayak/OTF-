@@ -6,6 +6,7 @@ var moment = require('moment');
 var uuid = require('node-uuid');
 var crypto = require('crypto');
 var util = require('./otf_util');
+var bcrypt = require('bcrypt');
 //var bcrypt = require('../../node_modules/bcrypt')
 
 module.exports = {
@@ -18,8 +19,10 @@ module.exports = {
   formatFieldsFromMultipart: formatFieldsFromMultipart,
   formatFields: formatFields,
   toTitleCase: toTitleCase,
-  toUpperCaseValues: toUpperCaseValues,
-  verifyUploadImagePathVmsExist: verifyUploadImagePathVmsExist
+    toUpperCaseValues: toUpperCaseValues,
+    verifyUploadImagePathVmsExist: verifyUploadImagePathVmsExist,
+    cypherPassword: cypherPassword,
+    comparePassword: comparePassword
 }
 
 function toUpperCaseValues(obj){
@@ -90,18 +93,18 @@ function generatePassword (howMany, chars) {
     return value.join('');
 }
 
-/*
+
 function cypherPassword(passwd) {
   var salt = bcrypt.genSaltSync(10); //the parameter is the number of rounds
   var hash = bcrypt.hashSync(passwd, salt);
   return hash; //hash has now to be stored in the db
-}*/
+}
 
 /* compare a password to a hash stored in db. I don't know how bcrypt does, hope it works, though.
 Has to be used at the connection of a user to check if the password is the right one */
-/*function comparePassword(passwd, hash) {
+function comparePassword(passwd, hash) {
   return bcrypt.compareSync(passwd, hash);
-}*/
+}
 
 
 function formatFieldsFromMultipart (params, model){

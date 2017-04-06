@@ -5,6 +5,7 @@
 // load all the things we need
 var passport = require('passport');
 var mongoose = require('mongoose');
+var util = require('./otf_util');
 var logger = require('log4js').getLogger('otf_passport');
 logger.setLevel(GLOBAL.config["LOGS"].level);
 var genericModel = require(__dirname + '/otf_mongooseGeneric');
@@ -55,7 +56,7 @@ module.exports = function (app) {
             // callback
         },
         // -- Check auth account in DB
-        function (req, login, password, done) {
+	function (req, login, password, done) {
             logger.debug('OTF² Passport  login [%s], password: [%s], body [%s]',
                 login, password, req.body);
             var Accounts = GLOBAL.schemas['Accounts'];
@@ -87,7 +88,8 @@ module.exports = function (app) {
                         logger.debug("OTF² Passport account find : [%j], session id [%s]", _account, req.sessionID);
                         //-
                         //Test Password
-                        if (login === _account.login && password === _account.password) {
+                        if (login === _account.login && util.comparePassword(password,_account.password)) {
+			    
                             return done(null, _account, {"flag": "ok", "login": login, "message": null  });
                         } else {
                             //Bab Password

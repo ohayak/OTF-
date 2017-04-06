@@ -8,6 +8,7 @@ var logger = require('log4js').getLogger('updater');
 logger.setLevel(GLOBAL.config["LOGS"].level);
 var mongoose = require('mongoose');
 var genericModel = require('../otf_core/lib/otf_mongooseGeneric');
+var util = require('../otf_core/lib/otf_util');
 
 /*
  * SET users datas into MongoDB.
@@ -38,6 +39,33 @@ exports.updater = {
         }
     },
 
+
+    account: function (req, cb) {
+        var _controler = req.session.controler;
+        var values = _controler.params;
+        // ici params est un objet simple à insérer
+        var theId = values._id;
+	logger.debug('id updater : ', theId);
+        delete values._id;
+        var model = GLOBAL.schemas[_controler.data_model];
+        logger.debug('params updater : ', values);
+
+	values.password = util.cypherPassword(values.password);
+	
+        try {
+            model.updateDocument({_id: theId}, values, function (err, numberAffected) {
+                if (err) {
+                    logger.info('----> error : ' + err);
+                } else {
+                    logger.debug('modification utilisateur : ', numberAffected);
+                    return cb(null, {data: numberAffected, room: _controler.room});
+                }
+            });
+        } catch (errc) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.debug('----> error catch : ' + errc);
+            return cb(err);
+        }
+    },
 
     one_and_modif: function (req, cb) {
         var _controler = req.session.controler;
