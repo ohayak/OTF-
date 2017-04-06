@@ -57,10 +57,11 @@
 		      </p>
 		    </div>
 
+		    
 		    {{#if conversation_resolue}}
 
 		    {{else}}
-		    {{#compare ../user.role.code 'user' operator='!='}}
+		    {{#compare ../../user.role.code 'user' operator='!='}}
 		    <div class="col-sm-6">
 		      <a href="/resoudre_conv?_id={{_id}}&conversation_resolue=true">Signaler comme résolue</a>
 		    </div>
