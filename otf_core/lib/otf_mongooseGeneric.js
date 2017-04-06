@@ -706,8 +706,24 @@ mongooseGeneric.prototype.updateAndModif = function (_conditions, _values, _call
 	    
 
 	    // MAJ des composants
-	    model.document.update(_conditions, { $set: _values},function(){});
-	    _callback(null, result);
+	    logger.debug("BBBBBBBBBBBBBBBBBBBBB");
+	    logger.debug(_conditions);
+	    logger.debug(_values);
+	    logger.debug("BBBBBBBBBBBBBBBBBBBBB");
+
+	    var model2 = GLOBAL.schemas["Composants"];
+	    logger.debug(model2.document);
+	    logger.debug("BBBBBBBBBBBBBBBBBBBBB");
+	    model2.document.update(_conditions, { $set: _values},function(err2,result2){
+		if(err){
+		    logger.debug("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEER");
+		    _callback(err2,null);
+		}
+		else{
+		    logger.debug("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+		    _callback(null, result2);
+		}
+	    });
         }
     });
 };

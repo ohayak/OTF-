@@ -77,6 +77,26 @@ exports.updater = {
         delete values._id;
         var model = GLOBAL.schemas[_controler.data_model];
         logger.debug('params updater : ', values);
+
+	logger.debug("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	logger.debug(_controler.params._id);
+	logger.debug(_controler.params.nom_composant);
+	logger.debug(_controler.params.quantite_composant);
+	logger.debug(_controler.params.remarques_composant);
+	logger.debug(_controler.params.statut_composant);
+	logger.debug(_controler.params.id_categorie);
+	logger.debug(_controler.params.id_sous_categorie);
+	logger.debug("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	logger.debug(values.nom_composant);
+	logger.debug(values.quantite_composant);
+	logger.debug(values.remarques_composant);
+	logger.debug(values.statut_composant);
+	logger.debug(values.id_categorie);
+	logger.debug(values.id_sous_categorie);
+	logger.debug("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+	logger.debug(theId);
+	
         try {
             model.updateAndModif({_id: theId}, values, function (err, numberAffected) {
                 if (err) {
