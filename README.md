@@ -94,10 +94,6 @@ Mon Apr 27 10:33:17.163 	going into namespace [otf_demo.log]
 Mon Apr 27 10:33:17.164 	Creating index: { key: { _id: 1 }, ns: "otf_demo.log", name: "_id_" }
 </pre></code>
 
-<b>Create log directory</b>
-Go back to the OTF's root directory.
-<pre><code>$ cd ..</code></pre>
-<pre><code>$ mkdir log</code></pre>
 
 # Quick Start
 
