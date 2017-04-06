@@ -654,10 +654,29 @@
     },
     "POST/updateaccount": {
         "module": "updater",
+        "methode": "one",
+        "screen": "accounts",
+        "auth": true,
+        "params_names": ["_id", "login", "email", "role"],
+        "data_model": "AccountId",
+        "redirect": true,
+        "redirect_action": "accounts"
+    },
+    "GET/fiche_account_mdp": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "formupdateaccountmdp",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Accounts",
+        "data_ref": ["Role"]
+	},
+    "POST/updateaccountmdp": {
+        "module": "updater",
         "methode": "account",
         "screen": "accounts",
         "auth": true,
-        "params_names": ["_id", "login", "email", "role", "password"],
+        "params_names": ["_id", "password"],
         "data_model": "AccountId",
         "redirect": true,
         "redirect_action": "accounts"

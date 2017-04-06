@@ -332,10 +332,10 @@
 		</div><!-- /.row -->
 		<div class="row">
 		  <br>
-		  <div class="col-md-6">
+		  <div class="col-md-12">
 		  <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" id="formulaire" action="/effacer_de_historique">
 		    <div class="form-group">
-		      <div class="col-sm-offset-5 col-sm-10">
+		      <div class="col-sm-offset-5 col-sm-2">
 			<input type="hidden" name="modif_a_effacer" value="{{this._id}}"/>
 			<button type="submit" name="valider" id="button" value="valider" class="btn btn-primary">Effacer de l'historique</button>
 		      </div>
@@ -343,7 +343,7 @@
 		  </form>
 		  </div>
 
-		  <div class="col-md-6">
+	<!--	  <div class="col-md-6">
 		  <form class="form-horizontal" id="formulaire_redirection" role="form" method="POST" accept-charset="utf-8" id="formulaire" action="{{#if this.modification}}/redirection_update{{else}}{{#if this.pret}}/redirection_rendre{{else}}{{#if this.rendu_total}}/redirection_preter{{else}}{{#if this.rendu_partiel}}/redirection_preter{{else}}{{#if this.suppression}}/redirection_nouveau_composant{{else}}{{#if this.creation}}/redirection_composants{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}">
 		    <div class="form-group">
 		      <div class="col-sm-offset-1 col-sm-10">
@@ -369,8 +369,8 @@
 		      </div>
 		    </div>
 		  </form>
-		  </div>
-		</div>
+		  </div>-->
+		</div> 
 
 
 

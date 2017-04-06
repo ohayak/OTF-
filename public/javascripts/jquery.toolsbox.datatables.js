@@ -242,6 +242,30 @@ function getLendIconPng(label, route, idField, nameField){
     return LendIconPng;
 }
 
+function getMDPIconPng(label, route, idField, nameField){
+  var sep = "?";
+  if(route.indexOf('?') !== -1)
+    sep = "&";
+
+  console.log("## getMDPIconPng !!!");
+    if(convertUndefined(idField) === "")
+        idField = idName;
+    if(convertUndefined(nameField) === "")
+        nameField = idField;
+
+    var MDPIconPng = {
+        "sClass": "btn-text-right",
+        "mData": function (x) {
+            if (isNullOrUndefined(x[idField]) || x[idField] === 0)
+                return '</div>';
+            else
+                return '<a href="'+route+sep+nameField+'='+x[idField]+'" title="'+label+'" class="btn btn-xs btn-default"><i class="fa fa-key fa-2x"></i></a>';
+        },
+        "bSortable": false
+    };
+    return MDPIconPng;
+}
+
 function getReturnIconPng(label, route, idField, nameField){
   var sep = "?";
   if(route.indexOf('?') !== -1)
@@ -398,6 +422,8 @@ console.log("################## id_datatable : ", id_datatable);
             aoColumnTab.push(getSelectIconPng("Sélectionner", obj_btn.name, obj_btn.id_name, obj_btn.id_param));
 	if(obj_btn.lend_btn)
             aoColumnTab.push(getLendIconPng("Prêter", obj_btn.name, obj_btn.id_name, obj_btn.id_param));
+	if(obj_btn.password_btn)
+            aoColumnTab.push(getMDPIconPng("Réinitialiser le mot de passe", obj_btn.name, obj_btn.id_name, obj_btn.id_param));
 	if(obj_btn.return_btn)
 	    aoColumnTab.push(getReturnIconPng("Rendre", obj_btn.name, obj_btn.id_name, obj_btn.id_param));
         if(obj_btn.detail_btn)

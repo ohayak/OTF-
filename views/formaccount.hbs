@@ -4,30 +4,37 @@
   </div>
 
   <div class="form-group">
+    <div class="row">
     <label for="inputName" class="col-sm-2 control-label">Login / Mot de passe</label>
     <div class="col-sm-4">
       <input type="text" class="form-control" placeholder="Login" id="login" name="login" required="required" value="{{#if result.one}}{{result.one.login}}{{/if}}">
     </div>
+    </div>
+    <!--
     <div class="col-sm-3">
       <input type="password" class="form-control" placeholder="Mot de passe" id="login" onchange="form.password2.pattern = this.value;" name="password" required="required" value="{{#if result.one}}{{result.one.password}}{{/if}}">
     </div>
     <div class="col-sm-3">
       <input type="password" class="form-control" placeholder="Confirmer le mot de passe" id="password2" name="password2" required="required" value="{{#if result.one}}{{result.one.password}}{{/if}}">
     </div>
-  </div>
+  </div>-->
 
-  <div class="form-group">
+    </br>
+    <div class="form-group">
+      <div class="row">
     <label for="inputName" class="col-sm-2 control-label">Adresse email</label>
-    <div class="col-sm-5">
+    <div class="col-sm-4">
       <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 	<input class="form-control" type="email" placeholder="Adresse email" name="email" value="{{#if result.one}}{{result.one.email}}{{/if}}" title="'Ce champs est requis et doit être de la forme 'example@domain.com'" onchange="form.email2.pattern = this.value;" required="required"/>
       </div>
     </div>
-  </div>
+      </div>
+      </div>
+
 
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Nom du rôle</label>
-    <div class="col-sm-10">
+    <div class="col-sm-4">
       <select class="form-control" id="role" name="role" required="required">
           {{#compare url 'fiche_account' operator='indexof'}}
               {{#each result.Role}}
