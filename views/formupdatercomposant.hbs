@@ -24,7 +24,7 @@
           {{#each result.Sous_categories.tabCategories}}
            <optgroup label="{{this.nom_categorie}}">
                {{#each this.sous_categories}}
-               <option id="sous_categorie_{{this._id}}" value="{{this._id}}">{{this.nom_sous_categorie}}</option>
+               <option id="sous_categorie_{{this._id}}" value="{{this._id}}" {{#compare this._id ../../result.one.id_sous_categorie operator='>'}} {{else}}{{#compare this._id ../../../result.one.id_sous_categorie operator='<'}} {{else}}selected{{/compare}}{{/compare}}>{{this.nom_sous_categorie}}</option>
                {{/each}}
            </optgroup>
           {{/each}}          
@@ -41,10 +41,9 @@
     <label for="inputName" class="col-sm-2 control-label">Statut du composant</label>
     <div class="col-sm-6">
       <select class="form-control" id="statut" name="statut_composant" required="required">
-              {{#if result.one}}{{else}}
- {{/if}}          <option value="En Stock" {{#if result.one}}{{#compare result.one.statut 'En stock' operator='=='}}selected{{/compare}}{{/if}} >En Stock</option>
-                  <option value="Epuisé" {{#if result.one}}{{#compare result.one.statut 'Epuisé' operator='=='}}selected{{/compare}}{{/if}} >Epuisé</option>
-                  <option value="En cours d'expédition" {{#if result.one}}{{#compare result.one.statut 'En cours dexpedition' operator='=='}}selected{{/compare}}{{/if}} >En cours d'expédition</option>             
+      <option value="En Stock" {{#compare result.one.statut_composant 'En Stock' operator='=='}}selected{{/compare}} >En Stock</option>
+      <option value="Epuisé" {{#compare result.one.statut_composant 'Epuisé' operator='=='}}selected{{/compare}} >Epuisé</option>
+      <option value="En cours d'expédition" {{#compare result.one.statut_composant 'En cours d\'expédition' operator='=='}}selected{{/compare}} >En cours d'expédition </option>
       </select>
     </div>
   </div>     

@@ -44,7 +44,7 @@
       <select class="form-control" id="role" name="role" required="required">
           {{#compare url 'fiche_account' operator='indexof'}}
               {{#each result.Role}}
-                  <option value="{{this._id}}" {{#compare this._id.id ../result.one.role.id operator='==='}}selected{{/compare}}>{{this.code}} - {{this.libelle}}</option>
+          <option value="{{this._id}}"  {{#compare this._id ../result.one.role operator='<'}} {{else}}{{#compare this._id ../../result.one.role operator='>'}} {{else}}selected{{/compare}}{{/compare}}>{{this.code}} - {{this.libelle}}</option>
               {{/each}}
           {{else}}
               {{#each result}}
