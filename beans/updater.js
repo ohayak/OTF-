@@ -9,6 +9,7 @@ logger.setLevel(GLOBAL.config["LOGS"].level);
 var mongoose = require('mongoose');
 var genericModel = require('../otf_core/lib/otf_mongooseGeneric');
 var util = require('../otf_core/lib/otf_util');
+var outil = require('./outil');
 
 /*
  * SET users datas into MongoDB.
@@ -17,7 +18,7 @@ var util = require('../otf_core/lib/otf_util');
 exports.updater = {
     one: function (req, cb) {
         var _controler = req.session.controler;
-        var values = _controler.params;
+        var values = outil.paramEscape(_controler.params);
         // ici params est un objet simple à insérer
         var theId = values._id;
 	logger.debug('id updater : ', theId);
@@ -42,7 +43,7 @@ exports.updater = {
 
     account: function (req, cb) {
         var _controler = req.session.controler;
-        var values = _controler.params;
+        var values = outil.paramEscape(_controler.params);
         // ici params est un objet simple à insérer
         var theId = values._id;
 	logger.debug('id updater : ', theId);
@@ -69,7 +70,7 @@ exports.updater = {
 
     one_and_modif: function (req, cb) {
         var _controler = req.session.controler;
-        var values = _controler.params;
+        var values = outil.paramEscape(_controler.params);
         // ici params est un objet simple à insérer
         var theId = values._id;
 	logger.debug('id updater : ', theId);
@@ -110,7 +111,7 @@ exports.updater = {
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
         try {
             var model = GLOBAL.schemas[_controler.data_model];
-            var _params = { query: _controler.params, ref: _controler.data_ref};
+            var _params = { query: outil.paramEscape(_controler.params), ref: _controler.data_ref};
             model.modification_pretes(_params, function (err, list) {
                 logger.debug('Populate Result  :', list);
                 logger.debug('req.session : ' , req.session );
@@ -140,7 +141,7 @@ exports.updater = {
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
         try {
             var model = GLOBAL.schemas[_controler.data_model];
-            model.lendObject(_controler.params, function (err, list) {
+            model.lendObject(outil.paramEscape(_controler.params), function (err, list) {
                 logger.debug('Populate Result  :', list);
                 logger.debug('req.session : ' , req.session );
                 list.str = JSON.stringify(list);

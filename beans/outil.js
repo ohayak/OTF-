@@ -7,7 +7,8 @@ function htmlEscape(text) {
 
 function paramEscape(param) {
     for(id in param) {
-	param[id] = htmlEscape(param[id]);
+	if(typeof param[id] == 'string')
+	    param[id] = htmlEscape(param[id]);
     }
     return param;
 }
@@ -22,5 +23,6 @@ function deleteDefault(array, name) {
     return narray;
 }
 
+exports.htmlEscape = htmlEscape;
 exports.paramEscape = paramEscape;
 exports.deleteDefault = deleteDefault;

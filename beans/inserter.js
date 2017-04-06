@@ -9,6 +9,7 @@ logger.setLevel(GLOBAL.config["LOGS"].level);
 var mongoose = require('mongoose');
 var util = require('../otf_core/lib/otf_util');
 //var genericModel = require(__dirname + '/../../../ressources/models/mongooseGeneric');
+var outil = require('./outil');
 
 /*
  * SET users datas into MongoDB.
@@ -30,7 +31,7 @@ exports.inserter = {
         logger.debug(" One User emmit call");
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
         try {
-            model.createDocument(_controler.params, function (err, nb_inserted) {
+            model.createDocument(outil.paramEscape(_controler.params), function (err, nb_inserted) {
                 logger.debug('nombre documents insérés :', nb_inserted);
                 return cb(null, {data: nb_inserted, room: _controler.room});
             });
@@ -57,7 +58,7 @@ exports.inserter = {
 	_controler.params.password = util.cypherPassword(_controler.params.password);
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
         try {
-            model.createDocument(_controler.params, function (err, nb_inserted) {
+            model.createDocument(outil.paramEscape(_controler.params), function (err, nb_inserted) {
                 logger.debug('nombre documents insérés :', nb_inserted);
                 return cb(null, {data: nb_inserted, room: _controler.room});
             });
@@ -82,7 +83,7 @@ exports.inserter = {
         logger.debug(" One User emmit call");
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
         try {
-            model.createDocumentComponent(_controler.params, function (err, nb_inserted) {
+            model.createDocumentComponent(outil.paramEscape(_controler.params), function (err, nb_inserted) {
                 logger.debug('nombre documents insérés :', nb_inserted);
                 return cb(null, {data: nb_inserted, room: _controler.room});
             });
@@ -115,7 +116,7 @@ exports.inserter = {
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
 	var id_conv, nb_inserted1;
         try {
-            model.createDocument({ titre_conversation: _controler.params.titre_conversation, date_conversation: new Date().toString(), conversation_resolue: false, id_auteur: req.session.login_info.user._id }, function (err, nb_inserted) {
+            model.createDocument({ titre_conversation: outil.htmlEscape(_controler.params.titre_conversation), date_conversation: new Date().toString(), conversation_resolue: false, id_auteur: req.session.login_info.user._id }, function (err, nb_inserted) {
                 logger.debug('nombre documents insérés :', nb_inserted);
 		id_conv = nb_inserted._id;
 		logger.debug('\n\n\n ID CONV :'+id_conv+'\n\n\n');
@@ -123,7 +124,7 @@ exports.inserter = {
 		model = GLOBAL.schemas["Commentaires"];
 		try {
 		    logger.debug('\n\n\n ID CONV :'+id_conv+'\n\n\n');
-		    model.createDocument({ contenu_commentaire: _controler.params.contenu_commentaire, date_commentaire: new Date().toString(), id_auteur: req.session.login_info.user._id, id_conversation: id_conv }, function (err, nb_inserted) {
+		    model.createDocument({ contenu_commentaire: outil.htmlEscape(_controler.params.contenu_commentaire), date_commentaire: new Date().toString(), id_auteur: req.session.login_info.user._id, id_conversation: id_conv }, function (err, nb_inserted) {
 			logger.debug('nombre documents insérés :', nb_inserted);
 			return cb(null, {data: {conversation: nb_inserted1, commentaires: nb_inserted}, room: _controler.room});
 		    });
@@ -146,7 +147,7 @@ exports.inserter = {
         logger.debug(" One User emmit call");
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
         try {
-            model.createDocument({ contenu_commentaire: _controler.params.contenu_commentaire, date_commentaire: new Date().toString(), id_auteur: req.session.login_info.user._id, id_conversation: _controler.params.id_conversation }, function (err, nb_inserted) {
+            model.createDocument({ contenu_commentaire: outil.htmlEscape(_controler.params.contenu_commentaire), date_commentaire: new Date().toString(), id_auteur: req.session.login_info.user._id, id_conversation: _controler.params.id_conversation }, function (err, nb_inserted) {
                 logger.debug('nombre documents insérés :', nb_inserted);
                 return cb(null, {data: nb_inserted, room: _controler.room});
             });
@@ -170,7 +171,7 @@ exports.inserter = {
         logger.debug(" One User emmit call");
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
         try {
-            model.createDocument(_controler.params, function (err, nb_inserted) {
+            model.createDocument(outil.paramEscape(_controler.params), function (err, nb_inserted) {
                 logger.debug('nombre documents insérés :', nb_inserted);
 		model = GLOBAL.schemas["Sous_categories"];
 		model.createDocument({ nom_sous_categorie: "Default", id_categorie: nb_inserted._id }, function (err, nb_inserted2){
