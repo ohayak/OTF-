@@ -648,7 +648,7 @@ mongooseGeneric.prototype.deleteComposant = function (_condition, _callback) {
 
 		var avant = {"_id":id_avant, "nom_composant": result[0].nom_composant, "quantite_composant":result[0].quantite_composant, "statut_composant": result[0].statut_composant, "remarques_composant":result[0].remarques_composant, "categorie":result[0].id_categorie.nom_categorie, "sous_categorie":result[0].id_sous_categorie.nom_sous_categorie};
 
-		var modification = {"_id":id_modif, "type_modification":"Suppression d'un composant et des composants prêtés associés", "date_modification":date , "modification":0, "rendu_partiel":0, "rendu_total":0, "pret":0, "creation":0, "suppression":1, "id_composant":id_default, "id_pret": id_default, "id_avant":id_avant, "id_apres":id_default, "ids_suppressions":[], "id_prete_avant":id_default, "id_prete_apres":id_default};
+		var modification = {"_id":id_modif, "type_modification":"Suppression d'un composant", "date_modification":date , "modification":0, "rendu_partiel":0, "rendu_total":0, "pret":0, "creation":0, "suppression":1, "id_composant":id_default, "id_pret": id_default, "id_avant":id_avant, "id_apres":id_default, "ids_suppressions":[], "id_prete_avant":id_default, "id_prete_apres":id_default};
 		
 		var modele_modif = GLOBAL.schemas["Modifications"];
 		var modele_avant = GLOBAL.schemas["Composants_avant_modification"];
@@ -691,31 +691,39 @@ mongooseGeneric.prototype.updateAndModif = function (_conditions, _values, _call
 	    var modification = {"_id":id_modif, "type_modification":"Modification des attributs d'un composant", "date_modification":date , "modification":1, "rendu_partiel":0, "rendu_total":0, "pret":0, "creation":0, "suppression":0, "id_composant":_conditions._id, "id_pret":id_default, "id_avant":id_avant, "id_apres":id_apres, "ids_suppressions":[], "id_prete_avant":id_default, "id_prete_apres":id_default};  
 	    
 	    var avant = {"_id":id_avant, "nom_composant": result[0].nom_composant, "quantite_composant":result[0].quantite_composant, "statut_composant": result[0].statut_composant, "remarques_composant":result[0].remarques_composant, "categorie":result[0].id_categorie.nom_categorie, "sous_categorie":result[0].id_sous_categorie.nom_sous_categorie};
-	    
-	    var apres = {"_id":id_apres, "nom_composant": _values.nom_composant, "quantite_composant":_values.quantite_composant, "statut_composant": _values.statut_composant, "remarques_composant":_values.remarques_composant, "categorie":_values.id_categorie.nom_categorie, "sous_categorie":_values.id_sous_categorie.nom_sous_categorie};
-	    
-	    var modele_modif = GLOBAL.schemas["Modifications"];	    
-	    var modele_avant = GLOBAL.schemas["Composants_avant_modification"];	    
-	    var modele_apres = GLOBAL.schemas["Composants_apres_modification"];	    
-	    var mo = new modele_modif.document(modification);	    
-	    var av = new modele_avant.document(avant);	    
-	    var ap = new modele_apres.document(apres);	    
-	    mo.save(function(){});	    
-	    av.save(function(){});	    
-	    ap.save(function(){});
-	    
 
-	    // MAJ des composants
+	    var model_sous_cat = GLOBAL.schemas["Sous_categories"];
+	    model_sous_cat.document.find({_id: _values.id_sous_categorie}).populate("id_categorie").exec(function (err2, result2){
 
-	    var model2 = GLOBAL.schemas["Composants"];
-	    model2.document.update(_conditions, { $set: _values},function(err2,result2){
-		if(err){
-		    _callback(err2,null);
-		}
-		else{
-		    _callback(null, result2);
-		}
+		var nom_sous_cat = result2[0].nom_sous_categorie;
+		var nom_cat = result2[0].id_categorie.nom_categorie;
+		
+		var apres = {"_id":id_apres, "nom_composant": _values.nom_composant, "quantite_composant":_values.quantite_composant, "statut_composant": _values.statut_composant, "remarques_composant":_values.remarques_composant, "categorie":nom_cat, "sous_categorie":nom_sous_cat};
+		
+		var modele_modif = GLOBAL.schemas["Modifications"];	    
+		var modele_avant = GLOBAL.schemas["Composants_avant_modification"];	    
+		var modele_apres = GLOBAL.schemas["Composants_apres_modification"];	    
+		var mo = new modele_modif.document(modification);	    
+		var av = new modele_avant.document(avant);	    
+		var ap = new modele_apres.document(apres);	    
+		mo.save(function(){});	    
+		av.save(function(){});	    
+		ap.save(function(){});
+		
+
+		// MAJ des composants
+
+		var model2 = GLOBAL.schemas["Composants"];
+		model2.document.update(_conditions, { $set: _values},function(err2,result2){
+		    if(err){
+			_callback(err2,null);
+		    }
+		    else{
+			_callback(null, result2);
+		    }
+		});
 	    });
+	    
         }
     });
 };
