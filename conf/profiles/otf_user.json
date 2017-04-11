@@ -5,6 +5,12 @@
         "screen": "index",
         "auth": true
     },
+    "GET/index": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true
+    },
     "GET/login": {
         "module": "login",
         "methode": "titre",
@@ -34,8 +40,18 @@
         "module": "index",
         "methode": "titre",
         "screen": "multipart_oneFile",
+        "auth": false,
         "params_names": [],
+        "data_model": "Logs"
+    },
+    "GET/testcontenttype" : {
+        "module": "finder",
+        "methode": "list",
+        "screen": "log_list",
         "auth": true
+        "return_type" : "text/plain",
+        "params_names": [],
+        "data_model": "Logs"
     },
     "POST/uploadFile": {
         "module": "uploader",
@@ -43,6 +59,8 @@
         "screen": "index",
         "auth": true,
         "redirect": true
+        "params_names": [],
+        "data_model": "Logs"
     },
     "GET/fiche_profil": {
         "module": "finder",

@@ -113,6 +113,7 @@
         "screen": "formadduser",
         "auth": true,
         "data_model":"Role"
+
     },
     "POST/adduser": {
         "module": "inserter",

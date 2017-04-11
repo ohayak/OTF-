@@ -1,6 +1,10 @@
+# OTF²
+On The Fly Framework : OTF²
 # Eirbot Inventory Application
 
 This application have been designed to help Eirbot managing its inventory. The application is based on the framework On The Fly, and was designed by ENSEIRB-MATMECA students (Bordeaux, France).
+
+Also, OTF² has some generic modules to produce specific actions : writing / reading / deleting / updating  mongoDB collection, files uploading, signup account, demo application.
 
 # Pre-requisites
 
@@ -19,6 +23,9 @@ And you to install mongoDB v2.6.10 :
 <pre><code>$ sudo apt-get update</code></pre>
 <pre><code>$ sudo apt-get install -y mongodb-org</code></pre>
 
+It's possible to define the version number like below :
+<pre><code>$ apt-get install mongodb-org=2.6.0 mongodb-org-server=2.6.0 mongodb-org-shell=2.6.0 mongodb-org-mongos=2.6.0 mongodb-org-tools=2.6.0</code></pre>
+
 Create « /data/db/ » folder , on your system's root. (cd /)
 In sudoer mode
 <pre><code>$ sudo -s</code></pre>
@@ -33,6 +40,7 @@ After mongoDB installation, you can restore the database of the demo application
 Change the current directory to name "otf" :
 
 <pre><code>$ mv eirbot-inventory otf</code></pre>
+<pre><code>$ cd otf</code></pre>
 
 You need to start mongoDB with a ReplicatSet,
 Go to  /data/db folder
@@ -125,11 +133,174 @@ Stand "redis-server" start into the Terminal.
 
 Now in the otf directory you can start the application :
 <pre><code>$ ./start.sh</code></pre>
+<pre><code>sudoer password : </code></pre>
 
 Now that the application is running on your server, you can access it by accessing your server's url. 
+```js
+{
+    "ENV": {
+        "mode": "TEST"
+    },
+    "WWW": {
+        "port": "3000",
+        "host": "0.0.0.0"
+    },
+    "LOGS": {
+        "path": "/../../conf/log4js.json",
+        "reload": "300",
+        "mongodb": "localhost:27017/log",
+        "level": "ERROR"
+    },
+    "MONGO": {
+        "url": "mongodb://@127.0.0.1:27017/otf_demo",
+        "options": {
+            "server": {
+                "poolSize": 5
+            }
+        }
+    },
+    "WEBSOCK": {
+        "log": false
+
+    },
+    "SESSION": {
+        "secret": "7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ",
+        "cookie_name": "connect.sid",
+        "ttl": "900",
+        "prefix": "sess:",
+        "store": "MEMORY"
+
+    },
+    "GLANCES": {
+        "host": "127.0.0.1"
+    },
+    "CLUSTER": {
+        "mode": "OFF",
+        "nb_cpu": "3"
+    }
+}
+```
+Put to "ON" the mode attribute of CLUSTER entry to run OTF over multi CPU.
+
+NB : <i>We conducted a test on a 24-cpu server, we allocated 23 CPU OTF² and we launch 10 million authentications per 5000 simultaneously. The test lasted 40 minutes, no errors and little RAM used</i>
 
 If you want to access it in localhost, just use the url :
 <pre><code>http://localhost:3000</code></pre>
+
+You can see authenticaton page of otf_demo application :
+
+<img src="http://www.huile-de-code.fr/otf/public/img/Capture-login.png" />
+
+You can access backend by giving the login "admin" and the password "otf" into the authentication page of the demo application. You can now see a menu bar at the top of the index page.
+
+<img src="http://www.huile-de-code.fr/otf/public/img/Capture-back_office.png" />
+
+# How to ?
+
+You can see in demo application the menu "users" which displays the list of users authorized to connect to the backend. 
+
+<img src="http://www.huile-de-code.fr/otf/public/img/Capture-list_user.png" />
+
+What happens when you click on "users" link in the top menu :
+
+1- You send a pathname "<b>/users</b>" from GET HTTP method<br/>
+2- You request the server to read into the accounts collection of MongoDB,<br/>
+3- You need to display the data into a JQuery DataTable<br/>
+
+How can we do this into OTF² ?
+Follow the rabbit ;-) :
+
+You need to set the "<b>conf/profiles/otf_admin.json</b>" file. It defines actions (pathnames) which can be used by the user account :
+```js
+(...)
+   "GET/users": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "user_list",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Accounts"
+   },
+(...)
+```        
+Nb : OTF² is listening the changes of conf files and charging them by the module "otf globals.js"
+
+To understand the "<b>Flight Plan</b>", we need to explore all the attributes in the json file "<b>otf_admin.json</b>" :
+<ul>
+    <li> <b>module</b> : define the name of the module to load (i.e : "<b>finder</b>"),</li>
+    <li> <b>methode</b> : define the name of the function which will be called to make the action (i.e. : "<b>list</b>"),</li>
+    <li> <b>screen</b> : define the template page which will be displayed once the action is done ("i.e. : "<b>user_list</b>),</li>
+    <li> <b>auth</b> : define if the action requires an authentication : (i.e. : "<b>true</b>),</li>
+    <li> <b>params_names</b> : define into an array the "params" which can be used to filter the reading into MongoDB. <br>Data can be used to be inserted into a collection. The result depends on the generic component used : finder => filter / inserter => params to insert</li>
+    <li> <b>datas_model</b> : define the name of the mongoose schema which maps the data of MongoDB's collections.<br> You can see some examples of schema into the file named "<b>directory_schema.json</b>"   
+</ul>
+
+Extract of "<b>directory_schema.json</b>" :
+```js
+"Accounts": {
+        "collection": "accounts",
+        "schema": {
+                "login": "String",
+                "password": "String",
+                "profile": []
+        }
+},(...)
+```
+
+To generate a view, OTF² is using the template ["Handlebars"] (http://handlebarsjs.com/). Now we'll see the template which is displaying for the users list
+when a click is happening on Users's menu :<br/>
+Extract of "**views/user_list.hbs**" :
+```js
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "header"}}
+    {{> header}}
+{{/content}}
+{{#content "body"}}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <h3>List Users</h3>
+        </div>
+    </div>
+    <button id="suppr" type="button" class="btn btn-primary btn-lg btn-block">Delete Row</button>
+    <script>
+        //<![CDATA[
+        $(document).ready(function() {
+            setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
+         });
+        //]]>
+    </script>
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="monitor" class="panel panel-default"></div>
+        </div><!-- /.col-lg-12 -->
+    </div>
+</div>
+    {{#content "footer"}}
+        {{> footer}}
+    {{/content}}
+{{/content}}
+```
+For convenience we have implemented a javascript function to create dynamically a JQuery DataTable :
+
+```js
+setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
+```
+* The first parameter is an Handlebars expression to get json data from the OTF² module,
+* The second parameter is a String which defined the pathname of modification's action,
+* The third parameter is a String which defined the pathname of delete's action, it is using the first column to get the Id of the row sent to delete.
+ 
+# Bootstrap's Interface
+
+OTF use bootstrap interface. The default Components are located into /public/
+
+If you want <b>to customise the Front-End</b>, use the "custom_css" directory, and "style.css" file.
+
+For add a new css file's link into "head" document, please use /views/partials/head.hbs file.
+
+(to be continued...)
 
 # Licence
 
